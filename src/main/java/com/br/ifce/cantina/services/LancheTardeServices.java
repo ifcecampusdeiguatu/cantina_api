@@ -6,20 +6,22 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.br.ifce.cantina.models.LancheTarde;
+import com.br.ifce.cantina.repository.LancheTardeRepository;
 
-public class LancheTardeServices<LancheTardeRepository> {
+@Service
+public class LancheTardeServices {
 
   @Autowired
   private LancheTardeRepository lanchetardeRepository;
 
   public List<LancheTarde> listAll() {
-    return ((JpaRepository<LancheTarde, Long>) this.lanchetardeRepository).findAll();
+    return this.lanchetardeRepository.findAll();
   }
 
   public LancheTarde createLancheTarde(LancheTarde lanchetarde) {
