@@ -11,55 +11,48 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.br.ifce.cantina.models.Alimento;
 import com.br.ifce.cantina.models.LancheTarde;
-import com.br.ifce.cantina.repository.AlimentosRepository;
 
 public class LancheTardeServices<LancheTardeRepository> {
 
-	@Autowired
-	  private LancheTardeRepository lanchetardeRepository;
+  @Autowired
+  private LancheTardeRepository lanchetardeRepository;
 
-	  public List<LancheTarde> listAll() {
-	    return ((JpaRepository<LancheTarde,Long>) this.lanchetardeRepository).findAll();
-	  }
+  public List<LancheTarde> listAll() {
+    return ((JpaRepository<LancheTarde, Long>) this.lanchetardeRepository).findAll();
+  }
 
-	  public LancheTarde createLancheTarde(LancheTarde lanchetarde) {
-		return null;
-	}
-	  
+  public LancheTarde createLancheTarde(LancheTarde lanchetarde) {
+    return null;
+  }
 
-	  public ResponseEntity<LancheTarde> updateLancheTarde(long id, @Valid LancheTarde lanchetarde) {
-	    Optional<LancheTarde> lanchetardeExists = ((CrudRepository<LancheTarde,Long>) this.lanchetardeRepository).findById(id);
+  public ResponseEntity<LancheTarde> updateLancheTarde(long id, @Valid LancheTarde lanchetarde) {
+    Optional<LancheTarde> lanchetardeExists = ((CrudRepository<LancheTarde, Long>) this.lanchetardeRepository)
+        .findById(id);
 
-	    if (!lanchetardeExists.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+    if (!lanchetardeExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	    LancheTarde updateLancheTarde =lanchetardeExists.get();
+    LancheTarde updateLancheTarde = lanchetardeExists.get();
 
-	    updateLancheTarde.setId(id);
-	    updateLancheTarde.setCategoria(lanchetarde.getCategoria());
+    updateLancheTarde.setId(id);
 
-	    ((CrudRepository<LancheTarde,Long>) this.lanchetardeRepository).save(updateLancheTarde);
+    ((CrudRepository<LancheTarde, Long>) this.lanchetardeRepository).save(updateLancheTarde);
 
-	    return new ResponseEntity<LancheTarde>(updateLancheTarde, HttpStatus.OK);
-	  }
+    return new ResponseEntity<LancheTarde>(updateLancheTarde, HttpStatus.OK);
+  }
 
-	
-	  public ResponseEntity<LancheTarde> deleteLancheTarde(long id) {
-	    Optional<LancheTarde> lanchetardeExists = ((CrudRepository<LancheTarde,Long>) this.lanchetardeRepository).findById(id);
+  public ResponseEntity<LancheTarde> deleteLancheTarde(long id) {
+    Optional<LancheTarde> lanchetardeExists = ((CrudRepository<LancheTarde, Long>) this.lanchetardeRepository)
+        .findById(id);
 
-	    if (!lanchetardeExists.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+    if (!lanchetardeExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	    ((CrudRepository<LancheTarde,Long>) lanchetardeRepository).deleteById(id);
+    ((CrudRepository<LancheTarde, Long>) lanchetardeRepository).deleteById(id);
 
-	    return new ResponseEntity<>(HttpStatus.OK);
-	  }
-	}
-	
-	
-
-
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+}

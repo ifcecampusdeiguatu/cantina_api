@@ -12,50 +12,48 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.br.ifce.cantina.models.CardapioMensal;
+
 @Service
 public class CardapioMensalServices {
-	
-	 @Autowired
-	
-	private JpaRepository<CardapioMensal, Long> cardapiomensalRepository;
 
-	  public List<CardapioMensal> listAll() {
-	    return ((JpaRepository<CardapioMensal, Long>) this.cardapiomensalRepository).findAll();
-	  }
+  @Autowired
 
-	  public CardapioMensal createCardapioMensal(CardapioMensal cardapiomensal) {
-	    return this.cardapiomensalRepository.save(cardapiomensal);
-	  }
+  private JpaRepository<CardapioMensal, Long> cardapiomensalRepository;
 
-	  public ResponseEntity<CardapioMensal> updateCardapioMensal(long id, @Valid CardapioMensal cardapiomensal) {
-	    Optional<CardapioMensal> cardapiomensalExists = this.cardapiomensalRepository.findById(id);
+  public List<CardapioMensal> listAll() {
+    return ((JpaRepository<CardapioMensal, Long>) this.cardapiomensalRepository).findAll();
+  }
 
-	    Optional<CardapioMensal> cardapiomensalExists1;
-		if (!cardapiomensalExists1.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+  public CardapioMensal createCardapioMensal(CardapioMensal cardapiomensal) {
+    return this.cardapiomensalRepository.save(cardapiomensal);
+  }
 
-	    CardapioMensal updateCardapioMensal= cardapiomensalExists1.get();
+  public ResponseEntity<CardapioMensal> updateCardapioMensal(long id, @Valid CardapioMensal cardapiomensal) {
+    Optional<CardapioMensal> cardapiomensalExists = this.cardapiomensalRepository.findById(id);
 
-	    updateCardapioMensal.setId(id);
-	    updateCardapioMensal.setCategoria(cardapiomensal.getCategoria());
+    if (!cardapiomensalExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	    this.cardapiomensalRepository.save(updateCardapioMensal);
+    CardapioMensal updateCardapioMensal = cardapiomensalExists.get();
 
-	    return new ResponseEntity<CardapioMensal>(updateCardapioMensal, HttpStatus.OK);
-	  }
+    updateCardapioMensal.setId(id);
 
-	 
-	  public ResponseEntity<CardapioMensal> deleteCardapioMensal(long id) {
-	    Optional<CardapioMensal> cardapiomensalExists = this.cardapiomensalRepository.findById(id);
+    this.cardapiomensalRepository.save(updateCardapioMensal);
 
-	    if (!cardapiomensalExists.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+    return new ResponseEntity<CardapioMensal>(updateCardapioMensal, HttpStatus.OK);
+  }
 
-	    cardapiomensalRepository.deleteById(id);
+  public ResponseEntity<CardapioMensal> deleteCardapioMensal(long id) {
+    Optional<CardapioMensal> cardapiomensalExists = this.cardapiomensalRepository.findById(id);
 
-	    return new ResponseEntity<>(HttpStatus.OK);
-	  }
+    if (!cardapiomensalExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    cardapiomensalRepository.deleteById(id);
+
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 
 }

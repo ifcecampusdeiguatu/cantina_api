@@ -14,49 +14,46 @@ import com.br.ifce.cantina.models.Alimento;
 import com.br.ifce.cantina.models.LancheNoite;
 import com.br.ifce.cantina.repository.LancheNoiteRepository;
 
-@Service 
+@Service
 public class LancheNoiteServices {
-	@Autowired
-	  private LancheNoiteRepository lancheNoiteRepository;
+  @Autowired
+  private LancheNoiteRepository lancheNoiteRepository;
 
-	  public List<LancheNoite> listAll() {
-	    return this.lancheNoiteRepository.findAll();
-	  }
-	  
-	  public LancheNoite createLanche(LancheNoite lancheNoite) {
-		    return this.lancheNoiteRepository.save(lancheNoite);
-}
-	  
-	  public ResponseEntity<LancheNoite> updateLancheNoite(long id, @Valid LancheNoite lancheNoite) {
-		    Optional<LancheNoite> lancheNoiteExists = this.lancheNoiteRepository.findById(id);
+  public List<LancheNoite> listAll() {
+    return this.lancheNoiteRepository.findAll();
+  }
 
-		    if (!lancheNoiteExists.isPresent()) {
-		      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		    }
-		
-			
-			LancheNoite updateLancheNoite = lancheNoiteExists.get();
+  public LancheNoite createLanche(LancheNoite lancheNoite) {
+    return this.lancheNoiteRepository.save(lancheNoite);
+  }
 
-		    updateLancheNoite.setId(id);
-		    updateLancheNoite.setCategoria(lancheNoite.getCategoria());
+  public ResponseEntity<LancheNoite> updateLancheNoite(long id, @Valid LancheNoite lancheNoite) {
+    Optional<LancheNoite> lancheNoiteExists = this.lancheNoiteRepository.findById(id);
 
-		    this.lancheNoiteRepository.save(updateLancheNoite);
+    if (!lancheNoiteExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-		    return new ResponseEntity<LancheNoite>(updateLancheNoite, HttpStatus.OK);
-	  }
-	  
-	  
-	  /**
-	   * Método deve retornar apenas o status code.
-	   * -------
-	   * Todo:
-	   * - Alterar o tipo do retorno.
-	   * 
-	   * @param id
-	   * @return
-	   */
-	  
-public ResponseEntity<LancheNoite> deleteLancheNoite(long id) {
+    LancheNoite updateLancheNoite = lancheNoiteExists.get();
+
+    updateLancheNoite.setId(id);
+
+    this.lancheNoiteRepository.save(updateLancheNoite);
+
+    return new ResponseEntity<LancheNoite>(updateLancheNoite, HttpStatus.OK);
+  }
+
+  /**
+   * Método deve retornar apenas o status code.
+   * -------
+   * Todo:
+   * - Alterar o tipo do retorno.
+   * 
+   * @param id
+   * @return
+   */
+
+  public ResponseEntity<LancheNoite> deleteLancheNoite(long id) {
     Optional<LancheNoite> lancheNoiteExists = this.lancheNoiteRepository.findById(id);
 
     if (!lancheNoiteExists.isPresent()) {
@@ -68,4 +65,3 @@ public ResponseEntity<LancheNoite> deleteLancheNoite(long id) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }
-

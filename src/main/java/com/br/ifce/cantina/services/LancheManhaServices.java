@@ -5,53 +5,53 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.br.ifce.cantina.models.LancheManha;
+import com.br.ifce.cantina.repository.LancheManhaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 @Service
-public class LancheManhaServices<LancheManha> {
+public class LancheManhaServices {
 
-	@Autowired
-	  private LancheManha lancheManhaRepository;
+  @Autowired
+  private LancheManhaRepository lancheManhaRepository;
 
-	  public List<LancheManha> listAll() {
-	    return this.lancheManhaRepository.findAll();
-	  }
+  public List<LancheManha> listAll() {
+    return this.lancheManhaRepository.findAll();
+  }
 
-	  public LacheManhacreateLancheManha(lancheManha lanchemanha) {
-	    return this.lancheManhaRepository.save(lancheManha);
-	  }
+  public LancheManha createLancheManha(LancheManha lancheManha) {
+    return this.lancheManhaRepository.save(lancheManha);
+  }
 
-	  public ResponseEntity<LancheManha> updateLancheManha(long id, @Valid LancheManha lancheManha) {
-	    Optional<LancheManha> lancheManhaExists = this.lancheManhaRepository.findById(id);
+  public ResponseEntity<LancheManha> updateLancheManha(long id, @Valid LancheManha lancheManha) {
+    Optional<LancheManha> lancheManhaExists = this.lancheManhaRepository.findById(id);
 
-	    if (!lancheManhaExists.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+    if (!lancheManhaExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	    LancheManhaServices updateLancheManha = lancheManhaExists.get();
+    LancheManha updateLancheManha = lancheManhaExists.get();
 
-	    updateLancheManha.setId(id);
-	    updateLancheManha.setCategoria(lancheManha.getCategoria());
+    updateLancheManha.setId(id);
 
-	    this.lancheManhaRepository.save(updateLancheManha);
+    this.lancheManhaRepository.save(updateLancheManha);
 
-	    return new ResponseEntity<LancheManha>(updateLancheManha, HttpStatus.OK);
-	  }
+    return new ResponseEntity<LancheManha>(updateLancheManha, HttpStatus.OK);
+  }
 
-	  
-	  public ResponseEntity<LancheManha> deleteLancheManha(long id) {
-	    Optional<LancheManha>lancheManhaExists = this.lancheManhaRepository.findById(id);
+  public ResponseEntity<LancheManha> deleteLancheManha(long id) {
+    Optional<LancheManha> lancheManhaExists = this.lancheManhaRepository.findById(id);
 
-	    if (!lancheManhaExists.isPresent()) {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+    if (!lancheManhaExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	    lancheManhaRepository.deleteById(id);
+    lancheManhaRepository.deleteById(id);
 
-	    return new ResponseEntity<>(HttpStatus.OK);
-	  }
-	}
-
-
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+}
