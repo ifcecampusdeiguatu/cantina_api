@@ -2,8 +2,8 @@ package com.br.ifce.cantina.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.br.ifce.cantina.models.lanche_manha;
+import com.br.ifce.cantina.models.LancheManha;
 
-public interface LancheManhaRepository extends JpaRepository<lanche_manha, Long>{
+public interface LancheManhaRepository extends JpaRepository<LancheManha, Long> {
 
 }
