@@ -10,18 +10,13 @@ import lombok.Data;
 
 @Data
 @Entity
-
-
-public class lanche_manha {
-	 @Id
+public class CardapioMensal {
+	  @Id
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  private Long id;
 
 	  @Column(nullable = false, length = 45)
-	  private String alimento;
-	  
-	  @Column(nullable = false, length = 45)
-	  private String bebidas;
+	  private String periodo;
 
 	public Long getId() {
 		return id;
@@ -31,23 +26,13 @@ public class lanche_manha {
 		this.id = id;
 	}
 
-	public String getAlimento() {
-		return alimento;
+	public String getPeriodo() {
+		return periodo;
 	}
 
-	public void setAlimento(String alimento) {
-		this.alimento = alimento;
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 
-	public String getBebidas() {
-		return bebidas;
-	}
 
-	public void setBebidas(String bebidas) {
-		this.bebidas = bebidas;
-	}
-	  
-	}
-
-	 
-
+}

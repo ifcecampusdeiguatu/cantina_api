@@ -1,18 +1,12 @@
 package com.br.ifce.cantina.models;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Data;
+public class LancheTarde {
 
-@Data
-@Entity
-
-
-public class lanche_manha {
 	 @Id
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  private Long id;
@@ -46,8 +40,7 @@ public class lanche_manha {
 	public void setBebidas(String bebidas) {
 		this.bebidas = bebidas;
 	}
+
+	
 	  
-	}
-
-	 
-
+}

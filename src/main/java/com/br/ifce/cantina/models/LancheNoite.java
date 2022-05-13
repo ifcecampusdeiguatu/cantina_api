@@ -21,5 +21,30 @@ public class LancheNoite {
 		  
 		  @Column(nullable = false, length = 45)
 		  private String bebidas;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getAlimento() {
+			return alimento;
+		}
+
+		public void setAlimento(String alimento) {
+			this.alimento = alimento;
+		}
+
+		public String getBebidas() {
+			return bebidas;
+		}
+
+		public void setBebidas(String bebidas) {
+			this.bebidas = bebidas;
+		}
+		  
 		}
 }

@@ -18,8 +18,19 @@ public class Alimento {
   @Column(nullable = false, length = 45)
   private String categoria;
 
-public Object getCategoria() {
-	// TODO Auto-generated method stub
-	return null;
+public Long getId() {
+	return id;
+}
+
+public void setId(Long id) {
+	this.id = id;
+}
+
+public String getCategoria() {
+	return categoria;
+}
+
+public void setCategoria(String categoria) {
+	this.categoria = categoria;
 }
 }
