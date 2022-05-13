@@ -43,7 +43,7 @@ public class Almoco {
   @ManyToMany
   @JoinTable(name = "almoco_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_almoco" }), joinColumns = @JoinColumn(name = "id_almoco"), inverseJoinColumns = @JoinColumn(name = "id_alimento"))
-  private Set<Alimento> alimentos;
+  private Set<Alimento> alimentos = new HashSet<>();
 
   @OneToMany(mappedBy = "almoco", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<CardapioDiario> cardapiosDiario = new HashSet<>();

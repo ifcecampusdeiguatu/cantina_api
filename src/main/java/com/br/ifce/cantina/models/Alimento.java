@@ -1,5 +1,6 @@
 package com.br.ifce.cantina.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,22 +28,22 @@ public class Alimento {
   @ManyToMany
   @JoinTable(name = "lanche_tarde_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_lanche_tarde" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_lanche_tarde"))
-  private Set<LancheNoite> lanchesTarde;
+  private Set<LancheNoite> lanchesTarde = new HashSet<>();
 
   @ManyToMany
   @JoinTable(name = "lanche_manha_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_lanche_manha" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_lanche_manha"))
-  private Set<LancheManha> lanchesManhas;
+  private Set<LancheManha> lanchesManhas = new HashSet<>();
 
   @ManyToMany
   @JoinTable(name = "lanche_noite_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_lanche_noite" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_lanche_noite"))
-  private Set<LancheNoite> lanchesNoites;
+  private Set<LancheNoite> lanchesNoites = new HashSet<>();
 
   @ManyToMany
   @JoinTable(name = "almoco_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_almoco" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_almoco"))
-  private Set<Almoco> almocos;
+  private Set<Almoco> almocos = new HashSet<>();
 
   public Long getId() {
     return id;
