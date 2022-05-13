@@ -15,9 +15,10 @@ import javax.persistence.JoinColumn;
 
 import lombok.Data;
 
-@Data
 @Entity
-public class LancheNoite {
+@Table(name = "lanche_manha")
+@Data
+public class LancheManha {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -29,8 +30,8 @@ public class LancheNoite {
   private String bebidas;
 
   @ManyToMany
-  @JoinTable(name = "lanche_noite_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
-      "id_lanche_noite" }), joinColumns = @JoinColumn(name = "id_lanche_noite"), inverseJoinColumns = @JoinColumn(name = "id_alimento"))
+  @JoinTable(name = "lanche_manha_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
+      "id_lanche_manha" }), joinColumns = @JoinColumn(name = "id_lanche_manha"), inverseJoinColumns = @JoinColumn(name = "id_alimento"))
   private Set<Alimento> alimentos;
 
   public Long getId() {

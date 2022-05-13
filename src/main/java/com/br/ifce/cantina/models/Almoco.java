@@ -1,10 +1,16 @@
 package com.br.ifce.cantina.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
@@ -30,52 +36,56 @@ public class Almoco {
   @Column(nullable = false, length = 45)
   private String sobremesa;
 
-public Long getId() {
-	return id;
-}
+  @ManyToMany
+  @JoinTable(name = "almoco_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
+      "id_almoco" }), joinColumns = @JoinColumn(name = "id_almoco"), inverseJoinColumns = @JoinColumn(name = "id_alimento"))
+  private Set<Alimento> alimentos;
 
-public void setId(Long id) {
-	this.id = id;
-}
+  public Long getId() {
+    return id;
+  }
 
-public String getPrato_proteico() {
-	return prato_proteico;
-}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-public void setPrato_proteico(String prato_proteico) {
-	this.prato_proteico = prato_proteico;
-}
+  public String getPrato_proteico() {
+    return prato_proteico;
+  }
 
-public String getAcompanhamento() {
-	return acompanhamento;
-}
+  public void setPrato_proteico(String prato_proteico) {
+    this.prato_proteico = prato_proteico;
+  }
 
-public void setAcompanhamento(String acompanhamento) {
-	this.acompanhamento = acompanhamento;
-}
+  public String getAcompanhamento() {
+    return acompanhamento;
+  }
 
-public String getGuarnicao() {
-	return guarnicao;
-}
+  public void setAcompanhamento(String acompanhamento) {
+    this.acompanhamento = acompanhamento;
+  }
 
-public void setGuarnicao(String guarnicao) {
-	this.guarnicao = guarnicao;
-}
+  public String getGuarnicao() {
+    return guarnicao;
+  }
 
-public String getSalada() {
-	return salada;
-}
+  public void setGuarnicao(String guarnicao) {
+    this.guarnicao = guarnicao;
+  }
 
-public void setSalada(String salada) {
-	this.salada = salada;
-}
+  public String getSalada() {
+    return salada;
+  }
 
-public String getSobremesa() {
-	return sobremesa;
-}
+  public void setSalada(String salada) {
+    this.salada = salada;
+  }
 
-public void setSobremesa(String sobremesa) {
-	this.sobremesa = sobremesa;
-}
-  
+  public String getSobremesa() {
+    return sobremesa;
+  }
+
+  public void setSobremesa(String sobremesa) {
+    this.sobremesa = sobremesa;
+  }
 }
