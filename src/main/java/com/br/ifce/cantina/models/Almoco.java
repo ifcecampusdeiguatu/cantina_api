@@ -1,15 +1,19 @@
 package com.br.ifce.cantina.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
@@ -40,6 +44,9 @@ public class Almoco {
   @JoinTable(name = "almoco_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_almoco" }), joinColumns = @JoinColumn(name = "id_almoco"), inverseJoinColumns = @JoinColumn(name = "id_alimento"))
   private Set<Alimento> alimentos;
+
+  @OneToMany(mappedBy = "almoco", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<CardapioDiario> cardapiosDiario = new HashSet<>();
 
   public Long getId() {
     return id;
