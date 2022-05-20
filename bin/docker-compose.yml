@@ -5,14 +5,18 @@ services:
     image: "postgres"
     container_name: database_ifce
     restart: always
+    expose:
+      - 5433
     ports:
-      - "5432:5432"
+      - "5433:5433"
     environment:
       POSTGRES_USER: ifce_admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: cantina_db
     volumes:
       - pgdata:/data/ifce/postgres
+    command: -p 5433
+
 
   # app:
   #   build: .

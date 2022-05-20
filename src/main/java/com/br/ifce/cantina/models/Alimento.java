@@ -25,6 +25,9 @@ public class Alimento {
   @Column(nullable = false, length = 45)
   private String categoria;
 
+  @Column(nullable = false, length = 45)
+  private String nome;
+  
   @ManyToMany
   @JoinTable(name = "lanche_tarde_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_lanche_tarde" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_lanche_tarde"))
@@ -59,5 +62,15 @@ public class Alimento {
 
   public void setCategoria(String categoria) {
     this.categoria = categoria;
+    
   }
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+  
 }
