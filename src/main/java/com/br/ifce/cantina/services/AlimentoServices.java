@@ -23,8 +23,7 @@ public class AlimentoServices {
     return this.alimentosRepository.findAll();
   }
 
-  public Alimento createAlimento(Alimento alimento) {
-    return this.alimentosRepository.save(alimento);
+  public Alimento createAlimento(Alimento alimento) {   return this.alimentosRepository.save(alimento);
   }
 
   public ResponseEntity<Alimento> updateAlimento(long id, @Valid Alimento alimento) {

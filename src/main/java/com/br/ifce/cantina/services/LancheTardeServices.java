@@ -25,7 +25,7 @@ public class LancheTardeServices {
   }
 
   public LancheTarde createLancheTarde(LancheTarde lanchetarde) {
-    return null;
+    return this.lanchetardeRepository.save(lanchetarde); 
   }
 
   public ResponseEntity<LancheTarde> updateLancheTarde(long id, @Valid LancheTarde lanchetarde) {

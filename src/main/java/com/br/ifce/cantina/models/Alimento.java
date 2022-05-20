@@ -22,9 +22,21 @@ public class Alimento {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 45)
-  private String categoria;
+  @Column(nullable = false, length = 145)
+  private String nome;
+  
+  public String getNome() {
+	return nome;
+}
 
+public void setNome(String nome) {
+	this.nome = nome;
+}
+
+@Column(nullable = false, length = 45)
+  private String categoria;
+  
+  
   @ManyToMany
   @JoinTable(name = "lanche_tarde_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",
       "id_lanche_tarde" }), joinColumns = @JoinColumn(name = "id_alimento"), inverseJoinColumns = @JoinColumn(name = "id_lanche_tarde"))
