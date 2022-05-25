@@ -1,7 +1,6 @@
 package com.br.ifce.cantina.routes;
-
-import com.br.ifce.cantina.models.LancheManha;
-import com.br.ifce.cantina.services.LancheManhaServices;
+import com.br.ifce.cantina.models.LancheNoite;
+import com.br.ifce.cantina.services.LancheNoiteServices;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +16,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/api/v1/lanchemanha")
+@RequestMapping("/api/v1/lanchenoite")
 @ResponseBody
-public class LancheManhaRoutes {
+public class LancheNoiteRoutes {
     @Autowired
-  LancheManhaServices lanchemanhaServices;
+  LancheNoiteServices lanchenoiteServices;
 
   @GetMapping
-  public List<LancheManha> get() {
-    return lanchemanhaServices.listAll();
+  public List<LancheNoite> get() {
+    return lanchenoiteServices.listAll();
   }
 
   @PostMapping
-  public LancheManha post(@Valid @RequestBody LancheManha lanchemanha) {
-    return lanchemanhaServices.createLancheManha(lanchemanha);
+  public LancheNoite post(@Valid @RequestBody LancheNoite lanchenoite) {
+    return lanchenoiteServices.createLanche(lanchenoite);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<LancheManha> put(
+  public ResponseEntity<LancheNoite> put(
       @PathVariable long id,
-      @Valid @RequestBody LancheManha lanchemanha) {
-    return lanchemanhaServices.updateLancheManha(id, lanchemanha);
+      @Valid @RequestBody LancheNoite lanchenoite) {
+    return lanchenoiteServices.updateLancheNoite(id, lanchenoite);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<LancheManha> delete(@PathVariable long id) {
-    return lanchemanhaServices.deleteLancheManha(id);
+  public ResponseEntity<LancheNoite> delete(@PathVariable long id) {
+    return lanchenoiteServices.deleteLancheNoite(id);
   }
 }
+
+
