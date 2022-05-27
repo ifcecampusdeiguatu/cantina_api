@@ -38,6 +38,7 @@ public class CardapioSemanalServices {
     CardapioSemanal updateCardapioMensal = cardapiomensalExists.get();
 
     updateCardapioMensal.setId(id);
+    updateCardapioMensal.setPeriodo(cardapiomensal.getPeriodo());
 
     this.cardapiomensalRepository.save(updateCardapioMensal);
 

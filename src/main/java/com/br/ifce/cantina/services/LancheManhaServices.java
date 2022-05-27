@@ -37,6 +37,8 @@ public class LancheManhaServices {
     LancheManha updateLancheManha = lancheManhaExists.get();
 
     updateLancheManha.setId(id);
+    updateLancheManha.setAlimento(lancheManha.getAlimento());
+    updateLancheManha.setBebidas(lancheManha.getBebidas());
 
     this.lancheManhaRepository.save(updateLancheManha);
 

@@ -36,7 +36,8 @@ public class LancheNoiteServices {
     LancheNoite updateLancheNoite = lancheNoiteExists.get();
 
     updateLancheNoite.setId(id);
-
+    updateLancheNoite.setAlimento(lancheNoite.getAlimento());
+    updateLancheNoite.setBebidas(lancheNoite.getBebidas());
     this.lancheNoiteRepository.save(updateLancheNoite);
 
     return new ResponseEntity<LancheNoite>(updateLancheNoite, HttpStatus.OK);
