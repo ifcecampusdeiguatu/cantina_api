@@ -18,31 +18,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.br.ifce.cantina.models.Alimento;
 import com.br.ifce.cantina.models.Almoco;
 import com.br.ifce.cantina.models.LancheTarde;
-import com.br.ifce.cantina.services.AlimentoServices;
-import com.br.ifce.cantina.services.LancheTardeServices;
+import com.br.ifce.cantina.services.AlmocoServices;
+import com.br.ifce.cantina.services.LancheTardeServices; 
 
-@Controller
-@RequestMapping("/api/v1/lanchetarde")
-@ResponseBody
-public class LancheTardeRoutes {
-	  @Autowired
-	  LancheTardeServices lancheServices;
-	  			
-	  @GetMapping
-	  public List<LancheTarde> get() {
-	    return lancheServices.listAll();
-	  }
-	  
-	  @PostMapping
-	  public LancheTarde post(@Valid @RequestBody LancheTarde lanche) {
-	    return lancheServices.createLancheTarde(lanche);
-}
-
-      @PutMapping("/{id}")
-      public ResponseEntity<LancheTarde> put(
-      @PathVariable long id,
-      @Valid @RequestBody LancheTarde lanchcertarde) {
-      return lanchetardeServices.updateLancheTrade(id, lanche);
-   }
-} 	   
-} 
+	@Controller
+	@RequestMapping("/api/v1/almoco")
+	@ResponseBody
+	public class AlmocoRoutes {
+		  @Autowired
+		  AlmocoServices almocoServices;
+		  			
+		  @GetMapping
+		  public List<Almoco> get() {
+		    return almocoServices.listAll();
+		  }
+		  
+		  @PostMapping
+		  public Almoco post(@Valid @RequestBody Almoco almoco) {
+		      return almocoServices.createAlmoco(almoco);
+		  }
+		   @PutMapping("/{id}")
+           public ResponseEntity<Almoco> put(
+		     @PathVariable long id,
+		     @Valid @RequestBody Almoco almoco) {
+		     return almocoServices.updateAlmoco(id, almoco);
+		      }
+	}
