@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.management.RuntimeErrorException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,22 +23,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter  {
 
-	private static final int TOKEN_EXPIRACAO = 600_000;
-	private static final String TOKEN_SENHA = "JAVINHA";
+	public static final int TOKEN_EXPIRACAO = 600_000;
+	public static final String TOKEN_SENHA = "JAVINHA";
 	
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
 	public JWTAutenticarFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
+	public Authentication attemptAuthentication(HttpServletRequest request, 
+												HttpServletResponse response)
+												throws AuthenticationException {
 		try {
-			Usuario usuario = new ObjectMapper().readValue(
-					request.getInputStream(),
-					Usuario.class);
+			Usuario usuario = new ObjectMapper().readValue(request.getInputStream(),
+															Usuario.class);
 			
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				 usuario.getMatricula(),
@@ -55,15 +53,19 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter  {
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request,
-			HttpServletResponse response, 
-			FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+										    HttpServletResponse response, 
+										    FilterChain chain,
+										    Authentication authResult) throws IOException, ServletException {
 		
 		UsuarioDetalheData usuarioDetalheData = (UsuarioDetalheData) authResult.getPrincipal();
+		
 		String  token = JWT.create().
+				withSubject(usuarioDetalheData.getUsername()).
 				withExpiresAt(new Date(System.currentTimeMillis()+TOKEN_EXPIRACAO)).
 				sign(Algorithm.HMAC512(TOKEN_SENHA));
+		System.out.println(token);
 		
 		response.getWriter().write(token);
 		response.getWriter().flush();
+}
 }

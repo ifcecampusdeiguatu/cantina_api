@@ -34,13 +34,14 @@ public class UsuarioRoutes {
 	
 	  @PostMapping
 	  public Usuario post( @RequestBody Usuario usuario) {
+		  System.out.println("Cheguei");
 	    return usuarioServices.createUsuario(usuario);
 	  }
 	  
-	  @PostMapping("/login")
+	 /* @PostMapping("/login")
 	  public ResponseEntity<Boolean> postLogin(@RequestBody Usuario usuario) {
 		  return usuarioServices.realizarLogin(usuario);
-	  }
+	  }*/
 	  
 	  @DeleteMapping("/{id}")
 	  public ResponseEntity<Usuario> delete(@PathVariable long id) {

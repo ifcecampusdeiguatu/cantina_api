@@ -20,6 +20,7 @@ public class UsuarioServices {
 
 	 @Autowired
 	 private UsuarioRepository usuarioRepository;
+	
 	 @Autowired
 	 private PasswordEncoder encoder;
 	 

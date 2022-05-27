@@ -8,6 +8,6 @@ import com.br.ifce.cantina.models.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>  {
 	
-	public Optional<Usuario> findByMatricula(String login);
+	public Optional<Usuario> findByMatricula(String matricula);
 
 }

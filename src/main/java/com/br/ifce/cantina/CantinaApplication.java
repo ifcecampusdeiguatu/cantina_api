@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+//Exclui a segurança
+//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+
 @EntityScan(basePackages = {
     "com.br.ifce.cantina.models"
 })
@@ -17,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
     "com.br.ifce.cantina.repository"
 })
 
-
+@SpringBootApplication
 public class CantinaApplication {
 
   public static void main(String[] args) {

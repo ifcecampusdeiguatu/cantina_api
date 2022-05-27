@@ -21,7 +21,7 @@ public class Usuario {
   @Column(nullable = false, length = 45)
   private String matricula;
   
-  @Column(nullable = false, length = 45)
+  @Column(nullable = false, length = 255)
   private String senha;
   
 
