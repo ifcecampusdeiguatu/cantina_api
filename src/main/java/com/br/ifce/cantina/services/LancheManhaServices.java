@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.br.ifce.cantina.models.Alimento;
 import com.br.ifce.cantina.models.LancheManha;
 import com.br.ifce.cantina.repository.LancheManhaRepository;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class LancheManhaServices {
@@ -55,5 +57,18 @@ public class LancheManhaServices {
     lancheManhaRepository.deleteById(id);
 
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  public ResponseEntity<Alimento> addAlimento(long id, Alimento Alimento){
+    Optional<LancheManha> lancheManhaExists = this.lancheManhaRepository.findById(id);
+
+    if (!lancheManhaExists.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    LancheManha updateLancheManha = lancheManhaExists.get();
+
+    // updateLancheManha.ge
+
   }
 }

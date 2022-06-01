@@ -1,5 +1,6 @@
 package com.br.ifce.cantina.routes;
 
+import com.br.ifce.cantina.models.Alimento;
 import com.br.ifce.cantina.models.LancheManha;
 import com.br.ifce.cantina.services.LancheManhaServices;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/api/v1/lanchemanha")
@@ -44,4 +46,12 @@ public class LancheManhaRoutes {
   public ResponseEntity<LancheManha> delete(@PathVariable long id) {
     return lanchemanhaServices.deleteLancheManha(id);
   }
+
+  @PostMapping(value="/{id}/alimento")
+  public ResponseEntity<Alimento> postMethodName(
+    @PathVariable long id,
+    @RequestBody Alimento alimento) {
+      return lanchemanhaServices.addAlimento(id, alimento);
+  }
+  
 }
