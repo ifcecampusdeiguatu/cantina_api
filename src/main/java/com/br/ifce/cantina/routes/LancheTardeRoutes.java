@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,23 +27,27 @@ import com.br.ifce.cantina.services.LancheTardeServices;
 @ResponseBody
 public class LancheTardeRoutes {
 	  @Autowired
-	  LancheTardeServices lancheServices;
+	  LancheTardeServices lanchetardeServices;
 	  			
 	  @GetMapping
 	  public List<LancheTarde> get() {
-	    return lancheServices.listAll();
+	    return lanchetardeServices.listAll();
 	  }
 	  
 	  @PostMapping
 	  public LancheTarde post(@Valid @RequestBody LancheTarde lanche) {
-	    return lancheServices.createLancheTarde(lanche);
+	    return lanchetardeServices.createLancheTarde(lanche);
 }
 
       @PutMapping("/{id}")
       public ResponseEntity<LancheTarde> put(
       @PathVariable long id,
-      @Valid @RequestBody LancheTarde lanchcertarde) {
-      return lanchetardeServices.updateLancheTrade(id, lanche);
+      @Valid @RequestBody LancheTarde lanchetarde) {
+      return lanchetardeServices.updateLancheTarde(id, lanchetarde); 
+    }
+      
+      @DeleteMapping("/{id}")
+      public ResponseEntity<LancheTarde> delete(@PathVariable long id) {
+        return lanchetardeServices.deleteLancheTarde(id);
    }
 } 	   
-} 
