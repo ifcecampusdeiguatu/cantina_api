@@ -38,16 +38,16 @@ public class CardapioDiario {
   private Almoco almoco;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id_lanche_noite")
+  @JoinColumn(name = "id_lanche_noite",nullable = true)
   @JsonIgnore
   private LancheNoite lancheNoite;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id_lanche_manha")
+  @JoinColumn(name = "id_lanche_manha",nullable = true)
   private LancheManha lancheManha;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id_lanche_tarde")
+  @JoinColumn(name = "id_lanche_tarde", nullable = true)
   private LancheTarde lancheTarde;
 
   @ManyToMany
@@ -55,4 +55,29 @@ public class CardapioDiario {
       "id_cardapio_diario",
       "id_cardapio_semanal" }), joinColumns = @JoinColumn(name = "id_cardapio_diario"), inverseJoinColumns = @JoinColumn(name = "id_cardapio_semanal"))
   private Set<CardapioSemanal> cardapiosSemanais = new HashSet<>();
+
+public Long getId() {
+	return id;
+}
+
+public void setId(Long id) {
+	this.id = id;
+}
+
+public Date getData() {
+	return data;
+}
+
+public void setData(Date data) {
+	this.data = data;
+}
+
+public Almoco getAlmoco() {
+	return almoco;
+}
+
+public void setAlmoco(Almoco almoco) {
+	this.almoco = almoco;
+}
+  
 }
