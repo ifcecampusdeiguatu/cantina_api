@@ -22,11 +22,12 @@ public class Alimento {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 45)
-  private String categoria;
+  @Column(nullable = false, length = 145)
+  private String nome;
+  
 
   @Column(nullable = false, length = 45)
-  private String nome;
+  private String categoria;
   
   @ManyToMany
   @JoinTable(name = "lanche_tarde_has_alimento", uniqueConstraints = @UniqueConstraint(columnNames = { "id_alimento",

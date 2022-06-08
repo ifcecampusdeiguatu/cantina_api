@@ -25,7 +25,7 @@ public class LancheTardeServices {
   }
 
   public LancheTarde createLancheTarde(LancheTarde lanchetarde) {
-    return null;
+    return this.lanchetardeRepository.save(lanchetarde); 
   }
 
   public ResponseEntity<LancheTarde> updateLancheTarde(long id, @Valid LancheTarde lanchetarde) {
@@ -39,7 +39,8 @@ public class LancheTardeServices {
     LancheTarde updateLancheTarde = lanchetardeExists.get();
 
     updateLancheTarde.setId(id);
-
+    updateLancheTarde.setAlimento(lanchetarde.getAlimento());
+    updateLancheTarde.setBebidas(lanchetarde.getBebidas()); 
     ((CrudRepository<LancheTarde, Long>) this.lanchetardeRepository).save(updateLancheTarde);
 
     return new ResponseEntity<LancheTarde>(updateLancheTarde, HttpStatus.OK);
