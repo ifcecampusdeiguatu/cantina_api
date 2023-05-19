@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Checkin {
+  id                 String             @id @default(uuid())
+  intencao           String?
+  confirmar_intencao Int                @unique
+  createdAt          DateTime           @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime           @default(now()) @db.Timestamp(6)
+  alunos             AlunosCheckin[]
+  refeicoes          AlunosRefeicoes[]
+  RefeicoesCheckin   RefeicoesCheckin[]
+}
+
+model Aluno {
+  matricula String            @id
+  name      String?           @db.VarChar(255)
+  turma     String            @db.VarChar(255)
+  curso     String            @db.VarChar(255)
+  createdAt DateTime          @default(now()) @db.Timestamp(6)
+  updatedAt DateTime          @default(now()) @db.Timestamp(6)
+  checkins  AlunosCheckin[]
+  refeicoes AlunosRefeicoes[]
+}
+
+model Refeicao {
+  id        String             @id @default(uuid())
+  hora      DateTime           @db.Time()
+  local     String?            @db.VarChar(255)
+  data      DateTime           @db.Date()
+  tipo      String?            @db.VarChar(255)
+  alunos    AlunosRefeicoes[]
+  refeicoes RefeicoesCheckin[]
+}
+
+model AlunosCheckin {
+  aluno     Aluno   @relation(fields: [matricula], references: [matricula])
+  matricula String
+  checkin   Checkin @relation(fields: [checkinId], references: [id])
+  checkinId String
+
+  @@id([matricula, checkinId])
+}
+
+model RefeicoesCheckin {
+  refeicao   Refeicao @relation(fields: [refeicaoId], references: [id])
+  refeicaoId String
+  checkin    Checkin  @relation(fields: [checkinId], references: [id])
+  checkinId  String
+
+  @@id([refeicaoId, checkinId])
+}
+
+model AlunosRefeicoes {
+  aluno      Aluno    @relation(fields: [matricula], references: [matricula])
+  matricula  String
+  refeicao   Refeicao @relation(fields: [refeicaoId], references: [id])
+  refeicaoId String
+  Checkin    Checkin? @relation(fields: [checkinId], references: [id])
+  checkinId  String?
+
+  @@id([matricula, refeicaoId])
+}

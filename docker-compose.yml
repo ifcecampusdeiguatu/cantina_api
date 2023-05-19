@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  database:
+    env_file:
+      - .env
+    image: "postgres"
+    container_name: cantina_api
+    restart: always
+    expose:
+      - ${PORT_DATABASE}
+    ports:
+      - "${PORT_DATABASE}:${PORT_DATABASE}"
+    environment:
+      POSTGRES_USER: "${USER_DATABASE}"
+      POSTGRES_PASSWORD: "${PASSWORD_DATABASE}"
+      POSTGRES_DB: cantinadb
+    volumes:
+      - pgdata:/data/ifce/postgres
+    command: -p ${PORT_DATABASE}
+
+volumes:
+  pgdata:
+    driver: local
