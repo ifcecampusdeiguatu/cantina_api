@@ -4,9 +4,13 @@ import express, { NextFunction, Request, Response } from "express";
 
 import { AppError } from "@shared/errors/AppError";
 
+import { router } from "./routes";
+
 const app = express();
 
 app.use(express.json());
+
+app.use("/api", router);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 app.use((err: Error, __: Request, res: Response, next: NextFunction) => {
