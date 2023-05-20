@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 
 import { CreateAlunosController } from "@modules/alunos/useCases/createAlunos/CreateAlunosController";
+import { GetAlunoController } from "@modules/alunos/useCases/getAluno/getAlunoController";
 
 const createAlunosController = new CreateAlunosController();
 const getAlunoController = new GetAlunoController();
