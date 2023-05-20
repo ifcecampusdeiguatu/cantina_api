@@ -4,7 +4,7 @@ import { IAlunosRepository } from "@modules/alunos/repositories/IAlunosRepositor
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
-export class GetAluno {
+export class GetAlunoUseCase {
   constructor(
     @inject("AlunosRepository")
     private alunosRepository: IAlunosRepository
