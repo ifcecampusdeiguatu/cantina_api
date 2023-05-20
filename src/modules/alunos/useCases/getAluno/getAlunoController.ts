@@ -5,7 +5,7 @@ import { GetAlunoUseCase } from "./getAlunoUseCase";
 
 export class GetAlunoController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { matricula } = request.body;
+    const { matricula } = request.params;
 
     const getAlunoUseCase = container.resolve(GetAlunoUseCase);
 
