@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "menu" (
+    "id" UUID NOT NULL,
+    "schedule" TIMESTAMP(6) NOT NULL,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "menu_pkey" PRIMARY KEY ("id")
+);

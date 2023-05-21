@@ -67,3 +67,51 @@ model AlunosRefeicoes {
 
   @@id([matricula, refeicaoId])
 }
+
+model Menu {
+  id        String   @id @default(uuid()) @db.Uuid()
+  schedule  DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  local     Local    @relation(fields: [localID], references: [id])
+  localID   String   @map(name: "local_id") @db.Uuid()
+  Food      Food?    @relation(fields: [foodId], references: [id])
+  foodId    String?  @map(name: "food_id") @db.Uuid()
+
+  @@map(name: "menu")
+}
+
+model Food {
+  id          String       @id @default(uuid()) @db.Uuid()
+  name        String       @db.VarChar(100)
+  description String?      @db.VarChar(255)
+  createdAt   DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime     @default(now()) @db.Timestamp(6)
+  menus       Menu[]
+  ingredients Ingredient[]
+
+  @@map(name: "foods")
+}
+
+model Ingredient {
+  id          String   @id @default(uuid()) @db.Uuid()
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @db.Timestamp(6)
+  foods       Food[]
+
+  @@map(name: "ingredients")
+}
+
+model Local {
+  id        String   @id @default(uuid()) @db.Uuid()
+  name      String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  Menu      Menu[]
+
+  @@map(name: "locations")
+}
+
+//------ Relations -------
