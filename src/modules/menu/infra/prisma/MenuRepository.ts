@@ -31,4 +31,8 @@ export class MenuRepository implements IMenuRepository {
 
     return menu;
   }
+
+  async findMenuBySchedule(schedule: Date): Promise<Menu> {
+    return this.repository.menu.findFirst({ where: { schedule } });
+  }
 }
