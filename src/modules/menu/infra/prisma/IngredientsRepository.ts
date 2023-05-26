@@ -35,4 +35,8 @@ export class IngredientsRepository implements IIngredientsRepository {
   async findIngredientByName(name: string): Promise<Ingredient> {
     return this.repository.ingredient.findFirst({ where: { name } });
   }
+
+  async findIngredientByID(id: string): Promise<Ingredient> {
+    return this.repository.ingredient.findUnique({ where: { id } });
+  }
 }
