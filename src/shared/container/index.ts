@@ -4,6 +4,8 @@ import "./services";
 
 import { AlunosRepository } from "@modules/alunos/infra/prisma/AlunosRepository";
 import { IAlunosRepository } from "@modules/alunos/repositories/IAlunosRepository";
+import { LocationsRepository } from "@modules/locations/infra/prisma/LocationsRepository";
+import { ILocationsRepository } from "@modules/locations/infra/repositories/ILocationsRepository";
 import { FoodsRepository } from "@modules/menu/infra/prisma/FoodsRepository";
 import { IngredientsRepository } from "@modules/menu/infra/prisma/IngredientsRepository";
 import { MenuRepository } from "@modules/menu/infra/prisma/MenuRepository";
@@ -27,3 +29,8 @@ container.registerSingleton<IFoodsRepository>(
 );
 
 container.registerSingleton<IMenuRepository>("MenuRepository", MenuRepository);
+
+container.registerSingleton<ILocationsRepository>(
+  "LocationsRepository",
+  LocationsRepository
+);

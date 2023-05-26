@@ -106,7 +106,7 @@ model Ingredient {
 
 model Local {
   id        String    @id @db.Uuid
-  name      String    @db.VarChar(100)
+  address   String    @db.VarChar(100)
   createdAt DateTime? @default(now()) @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @db.Timestamp(6)
   Menu      Menu[]
