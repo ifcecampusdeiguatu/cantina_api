@@ -4,8 +4,8 @@ import { v4 as uuid } from "uuid";
 import { PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
-import { Local } from "../entities/Local";
 import { ILocationsRepository } from "../../repositories/ILocationsRepository";
+import { Local } from "../entities/Local";
 
 interface ICreateLocalDTO {
   address: string;
@@ -36,5 +36,11 @@ export class LocationsRepository implements ILocationsRepository {
   }
   async findLocalById(id: string): Promise<Local> {
     return this.repository.local.findUnique({ where: { id } });
+  }
+
+  async list(): Promise<Local[]> {
+    const locations = await this.repository.local.findMany();
+
+    return locations;
   }
 }

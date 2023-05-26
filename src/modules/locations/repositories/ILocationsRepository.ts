@@ -7,4 +7,5 @@ interface ICreateLocalDTO {
 export interface ILocationsRepository {
   create({ address }: ICreateLocalDTO): Promise<Local>;
   findLocalById(id: string): Promise<Local>;
+  list();
 }
