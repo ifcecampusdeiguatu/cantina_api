@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
 import { Local } from "../entities/Local";
-import { ILocationsRepository } from "../repositories/ILocationsRepository";
+import { ILocationsRepository } from "../../repositories/ILocationsRepository";
 
 interface ICreateLocalDTO {
   address: string;

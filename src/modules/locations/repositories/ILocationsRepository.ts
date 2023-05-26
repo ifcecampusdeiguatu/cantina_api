@@ -1,4 +1,4 @@
-import { Local } from "../entities/Local";
+import { Local } from "../infra/entities/Local";
 
 interface ICreateLocalDTO {
   address: string;
