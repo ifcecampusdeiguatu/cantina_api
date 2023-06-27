@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Type {
+  aluno
+  servidor
+  funcionario
+}
+
 model Checkin {
   id                 String             @id @default(uuid())
   intencao           String?
@@ -18,6 +24,18 @@ model Checkin {
   RefeicoesCheckin   RefeicoesCheckin[]
 }
 
+model User {
+  id        String   @id @default(uuid())
+  email     String   @db.VarChar(50)
+  password  String   @db.Char(60)
+  type      Type     @default(aluno)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  aluno     Aluno?
+
+  @@map("users")
+}
+
 model Aluno {
   matricula String            @id
   name      String?           @db.VarChar(255)
@@ -25,8 +43,12 @@ model Aluno {
   curso     String            @db.VarChar(255)
   createdAt DateTime          @default(now()) @db.Timestamp(6)
   updatedAt DateTime          @default(now()) @db.Timestamp(6)
+  user      User              @relation(fields: [userId], references: [id])
+  userId    String            @unique @map("user_id")
   checkins  AlunosCheckin[]
   refeicoes AlunosRefeicoes[]
+
+  @@map("alunos")
 }
 
 model Refeicao {
@@ -44,6 +66,7 @@ model AlunosCheckin {
   checkinId String
   checkin   Checkin @relation(fields: [checkinId], references: [id])
   aluno     Aluno   @relation(fields: [matricula], references: [matricula])
+  userId    String?
 
   @@id([matricula, checkinId])
 }
@@ -64,6 +87,7 @@ model AlunosRefeicoes {
   Checkin    Checkin? @relation(fields: [checkinId], references: [id])
   aluno      Aluno    @relation(fields: [matricula], references: [matricula])
   refeicao   Refeicao @relation(fields: [refeicaoId], references: [id])
+  userId     String?
 
   @@id([matricula, refeicaoId])
 }
