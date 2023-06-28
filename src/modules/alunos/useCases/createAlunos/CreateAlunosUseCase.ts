@@ -16,6 +16,7 @@ export class CreateAlunosUseCase {
     name,
     turma,
     curso,
+    userId,
   }: ICreateAlunosDTO): Promise<void> {
     const alunoAlreadyExists = await this.alunosRepository.findAlunoByMatricula(
       matricula
@@ -25,6 +26,12 @@ export class CreateAlunosUseCase {
       throw new AppError("Aluno já foi cadastrado");
     }
 
-    await this.alunosRepository.create({ matricula, name, turma, curso });
+    await this.alunosRepository.create({
+      matricula,
+      name,
+      turma,
+      curso,
+      userId,
+    });
   }
 }

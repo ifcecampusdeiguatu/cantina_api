@@ -21,17 +21,21 @@ export class AlunosRepository implements IAlunosRepository {
     name,
     turma,
     curso,
+    userId,
   }: ICreateAlunosDTO): Promise<Aluno> {
     const aluno: Aluno = {
       matricula,
       name,
       turma,
       curso,
+      userId,
       updatedAt: new Date(),
       createdAt: new Date(),
     };
 
-    await this.repository.aluno.create({ data: aluno });
+    await this.repository.aluno.create({
+      data: { ...aluno, userId },
+    });
 
     return aluno;
   }

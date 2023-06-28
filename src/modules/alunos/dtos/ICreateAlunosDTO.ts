@@ -3,4 +3,5 @@ export interface ICreateAlunosDTO {
   name: string;
   turma: string;
   curso: string;
+  userId: string;
 }
