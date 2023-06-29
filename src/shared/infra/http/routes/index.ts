@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { accountsRoutes } from "./accounts.routes";
 import { alunosRoutes } from "./alunos.routes";
+import { checkinRoutes } from "./checkin.routes";
 import { foodsRoutes } from "./foods.routes";
 import { ingredientsRoutes } from "./ingredients.routes";
 import { locationsRoutes } from "./locations.routes";
@@ -15,5 +16,6 @@ router.use("/ingredients", ingredientsRoutes);
 router.use("/foods", foodsRoutes);
 router.use("/locations", locationsRoutes);
 router.use("/menu", menuRoutes);
+router.use("/checkin", checkinRoutes);
 
 export { router };

@@ -6,6 +6,8 @@ import { UsersRepository } from "@modules/accounts/infra/prisma/UsersRepository"
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AlunosRepository } from "@modules/alunos/infra/prisma/AlunosRepository";
 import { IAlunosRepository } from "@modules/alunos/repositories/IAlunosRepository";
+import { CheckinRepository } from "@modules/checkin/infra/prisma/repositories/CheckinRepository";
+import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
 import { LocationsRepository } from "@modules/locations/infra/prisma/LocationsRepository";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { FoodsRepository } from "@modules/menu/infra/prisma/FoodsRepository";
@@ -40,4 +42,9 @@ container.registerSingleton<ILocationsRepository>(
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
   UsersRepository
+);
+
+container.registerSingleton<ICheckinRepository>(
+  "CheckinRepository",
+  CheckinRepository
 );
