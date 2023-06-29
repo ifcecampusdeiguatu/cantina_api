@@ -13,100 +13,68 @@ enum Type {
   funcionario
 }
 
+enum Status {
+  reseved
+  done
+  canceled
+  lacked
+}
+
 model Checkin {
-  id                 String             @id @default(uuid())
-  intencao           String?
-  confirmar_intencao Int                @unique
-  createdAt          DateTime           @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime           @default(now()) @db.Timestamp(6)
-  alunos             AlunosCheckin[]
-  refeicoes          AlunosRefeicoes[]
-  RefeicoesCheckin   RefeicoesCheckin[]
+  id        String   @id @default(uuid())
+  status    Status   @default(reseved)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  menu      Menu     @relation(fields: [menuId], references: [id])
+  menuId    String   @map("menu_id")
+
+  @@map("checkin")
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @db.VarChar(50)
-  password  String   @db.Char(60)
-  type      Type     @default(aluno)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  id        String    @id @default(uuid())
+  email     String    @unique @db.VarChar(50)
+  password  String    @db.Char(60)
+  type      Type      @default(aluno)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @db.Timestamp(6)
   aluno     Aluno?
+  checkins  Checkin[]
 
   @@map("users")
 }
 
 model Aluno {
-  matricula String            @id
-  name      String?           @db.VarChar(255)
-  turma     String            @db.VarChar(255)
-  curso     String            @db.VarChar(255)
-  createdAt DateTime          @default(now()) @db.Timestamp(6)
-  updatedAt DateTime          @default(now()) @db.Timestamp(6)
-  user      User              @relation(fields: [userId], references: [id])
-  userId    String            @unique @map("user_id")
-  checkins  AlunosCheckin[]
-  refeicoes AlunosRefeicoes[]
+  matricula String   @id
+  name      String?  @db.VarChar(255)
+  turma     String   @db.VarChar(255)
+  curso     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @map("user_id")
 
   @@map("alunos")
 }
 
-model Refeicao {
-  id        String             @id @default(uuid())
-  hora      DateTime           @db.Time(6)
-  local     String?            @db.VarChar(255)
-  data      DateTime           @db.Date
-  tipo      String?            @db.VarChar(255)
-  alunos    AlunosRefeicoes[]
-  refeicoes RefeicoesCheckin[]
-}
-
-model AlunosCheckin {
-  matricula String
-  checkinId String
-  checkin   Checkin @relation(fields: [checkinId], references: [id])
-  aluno     Aluno   @relation(fields: [matricula], references: [matricula])
-  userId    String?
-
-  @@id([matricula, checkinId])
-}
-
-model RefeicoesCheckin {
-  refeicaoId String
-  checkinId  String
-  checkin    Checkin  @relation(fields: [checkinId], references: [id])
-  refeicao   Refeicao @relation(fields: [refeicaoId], references: [id])
-
-  @@id([refeicaoId, checkinId])
-}
-
-model AlunosRefeicoes {
-  matricula  String
-  refeicaoId String
-  checkinId  String?
-  Checkin    Checkin? @relation(fields: [checkinId], references: [id])
-  aluno      Aluno    @relation(fields: [matricula], references: [matricula])
-  refeicao   Refeicao @relation(fields: [refeicaoId], references: [id])
-  userId     String?
-
-  @@id([matricula, refeicaoId])
-}
-
 model Menu {
-  id        String    @id @db.Uuid
+  id        String    @id @default(uuid())
   schedule  DateTime  @db.Timestamp(6)
   createdAt DateTime? @default(now()) @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @db.Timestamp(6)
-  foodId    String?   @map("food_id") @db.Uuid
-  localID   String    @map("local_id") @db.Uuid
+  foodId    String?   @map("food_id")
+  localID   String    @map("local_id")
   Food      Food?     @relation(fields: [foodId], references: [id])
   local     Local     @relation(fields: [localID], references: [id])
+  checkins  Checkin[]
 
   @@map("menu")
 }
 
 model Food {
-  id          String       @id @db.Uuid
+  id          String       @id @default(uuid())
   name        String       @db.VarChar(100)
   description String?      @db.VarChar(255)
   createdAt   DateTime?    @default(now()) @db.Timestamp(6)
@@ -118,7 +86,7 @@ model Food {
 }
 
 model Ingredient {
-  id          String    @id @db.Uuid
+  id          String    @id @default(uuid())
   name        String    @db.VarChar(100)
   description String?   @db.VarChar(255)
   createdAt   DateTime? @default(now()) @db.Timestamp(6)
@@ -129,7 +97,7 @@ model Ingredient {
 }
 
 model Local {
-  id        String    @id @db.Uuid
+  id        String    @id @default(uuid())
   address   String    @db.VarChar(100)
   createdAt DateTime? @default(now()) @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @db.Timestamp(6)
