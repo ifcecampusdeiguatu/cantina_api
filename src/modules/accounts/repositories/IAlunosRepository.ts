@@ -1,14 +1,14 @@
 import { Aluno } from "@prisma/client";
 
-import { ICreateAlunosDTO } from "../dtos/ICreateAlunosDTO";
+import { ICreateAlunosDTO } from "../dtos/alunos/ICreateAlunosDTO";
 
 export interface IAlunosRepository {
   create({
     matricula,
     name,
-    turma,
-    curso,
+    turmaId,
+    cursoId,
     userId,
-  }: ICreateAlunosDTO): Promise<Aluno>;
+  }: ICreateAlunosDTO): Promise<void>;
   findAlunoByMatricula(matricula: string): Promise<Aluno>;
 }

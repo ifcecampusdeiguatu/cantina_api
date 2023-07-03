@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICreateAlunosDTO } from "@modules/alunos/dtos/ICreateAlunosDTO";
-import { IAlunosRepository } from "@modules/alunos/repositories/IAlunosRepository";
+import { ICreateAlunosDTO } from "@modules/accounts/dtos/alunos/ICreateAlunosDTO";
+import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
 import { Aluno, PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
 @injectable()
 export class AlunosRepository implements IAlunosRepository {
-  repository: PrismaClient;
+  private repository: PrismaClient;
 
   constructor(
     @inject("PrismaService")
@@ -19,25 +19,19 @@ export class AlunosRepository implements IAlunosRepository {
   async create({
     matricula,
     name,
-    turma,
-    curso,
+    turmaId,
+    cursoId,
     userId,
-  }: ICreateAlunosDTO): Promise<Aluno> {
-    const aluno: Aluno = {
-      matricula,
-      name,
-      turma,
-      curso,
-      userId,
-      updatedAt: new Date(),
-      createdAt: new Date(),
-    };
-
+  }: ICreateAlunosDTO): Promise<void> {
     await this.repository.aluno.create({
-      data: { ...aluno, userId },
+      data: {
+        matricula,
+        name,
+        cursoId,
+        turmaId,
+        userId,
+      },
     });
-
-    return aluno;
   }
 
   async findAlunoByMatricula(matricula: string): Promise<Aluno> {

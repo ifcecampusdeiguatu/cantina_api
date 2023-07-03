@@ -5,7 +5,7 @@ import { CreateAlunosUseCase } from "./CreateAlunosUseCase";
 
 export class CreateAlunosController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { matricula, name, turma, curso, userId } = request.body;
+    const { matricula, name, turmaId, cursoId, userId } = request.body;
 
     const createAlunosUseCase = container.resolve(CreateAlunosUseCase);
 
@@ -13,8 +13,8 @@ export class CreateAlunosController {
       await createAlunosUseCase.execute({
         matricula,
         name,
-        turma,
-        curso,
+        turmaId,
+        cursoId,
         userId,
       });
 

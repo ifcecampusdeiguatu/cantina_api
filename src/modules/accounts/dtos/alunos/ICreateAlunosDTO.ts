@@ -1,7 +1,7 @@
 export interface ICreateAlunosDTO {
   matricula: string;
   name: string;
-  turma: string;
-  curso: string;
+  turmaId?: string;
+  cursoId?: string;
   userId: string;
 }

@@ -39,4 +39,8 @@ export class UsersRepository implements IUsersRepository {
   async findUserByEmail(email: string): Promise<User> {
     return this.repository.user.findFirst({ where: { email } });
   }
+
+  async findUserById(id: string): Promise<User> {
+    return this.repository.user.findUnique({ where: { id } });
+  }
 }
