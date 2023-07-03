@@ -1,20 +1,19 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { CreateAlunosUseCase } from "./CreateAlunosUseCase";
+import { CreateServidorUseCase } from "./CreateServidorUseCase";
 
-export class CreateAlunosController {
+export class CreateServidorController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { matricula, name, turmaId, cursoId, userId } = request.body;
+    const { siape, name, role, userId } = request.body;
 
-    const createAlunosUseCase = container.resolve(CreateAlunosUseCase);
+    const createServidorUseCase = container.resolve(CreateServidorUseCase);
 
     try {
-      await createAlunosUseCase.execute({
-        matricula,
+      await createServidorUseCase.execute({
+        siape,
         name,
-        turmaId,
-        cursoId,
+        role,
         userId,
       });
 

@@ -34,21 +34,23 @@ model Checkin {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique @db.VarChar(50)
-  password  String    @db.Char(60)
-  type      Type      @default(aluno)
-  createdAt DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt DateTime  @default(now()) @db.Timestamp(6)
-  aluno     Aluno?
-  checkins  Checkin[]
+  id          String       @id @default(uuid())
+  email       String       @unique @db.VarChar(50)
+  password    String       @db.Char(60)
+  type        Type         @default(aluno)
+  createdAt   DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime     @default(now()) @db.Timestamp(6)
+  aluno       Aluno?
+  funcionario Funcionario?
+  servidor    Servidor?
+  checkins    Checkin[]
 
   @@map("users")
 }
 
 model Aluno {
   matricula String   @id
-  name      String?  @db.VarChar(255)
+  name      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   user      User     @relation(fields: [userId], references: [id])
@@ -59,6 +61,30 @@ model Aluno {
   cursoId   String?
 
   @@map("alunos")
+}
+
+model Funcionario {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(255)
+  role      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @map("user_id")
+
+  @@map("funcionarios")
+}
+
+model Servidor {
+  siape     String   @id
+  name      String   @db.VarChar(255)
+  role      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @map("user_id")
+
+  @@map("servidores")
 }
 
 model Turma {

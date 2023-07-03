@@ -41,6 +41,13 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findUserById(id: string): Promise<User> {
-    return this.repository.user.findUnique({ where: { id } });
+    return this.repository.user.findUnique({
+      where: { id },
+      include: {
+        aluno: true,
+        funcionario: true,
+        servidor: true,
+      },
+    });
   }
 }

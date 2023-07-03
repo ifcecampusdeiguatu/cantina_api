@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUser } from "@modules/accounts/types";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -38,10 +39,14 @@ export class CreateAlunosUseCase {
       matricula
     );
 
-    const user = await this.usersRepository.findUserById(userId);
+    const user: IUser = await this.usersRepository.findUserById(userId);
 
     if (!user) {
       throw new AppError("User not exist");
+    }
+
+    if (user.aluno || user.funcionario || user.servidor) {
+      throw new AppError("User already associated with another account");
     }
 
     if (alunoAlreadyExists) {
