@@ -31,8 +31,8 @@
                     "value": {
                       "matricula": "888888",
                       "name": "Carlos Serafim",
-                      "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                      "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                      "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                      "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c",
                       "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da"
                     }
                   }
@@ -45,7 +45,7 @@
             "description": "Possíveis erros: aluno já foi cadastrado, usuário não existe, usuário não é um aluno ou usuário já está associado a outra conta."
           },
           "404": {
-            "description": "Possíveis erros: curso não encontrado ou turma não encontrada."
+            "description": "Possíveis erros: turma não encontrado ou turma não encontrada."
           },
           "201":{
             "description": "Aluno foi criado com sucesso."
@@ -74,8 +74,8 @@
                     "createdAt": "2023-07-06T14:03:39.916Z",
                     "updatedAt": "2023-07-06T14:03:39.916Z",
                     "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
                   },
                   {
                     "matricula": "88888888",
@@ -83,8 +83,8 @@
                     "createdAt": "2023-07-06T14:03:39.916Z",
                     "updatedAt": "2023-07-06T14:03:39.916Z",
                     "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
                   }
                 ]
               }
@@ -129,8 +129,8 @@
                     "createdAt": "2023-07-06T14:03:39.916Z",
                     "updatedAt": "2023-07-06T14:03:39.916Z",
                     "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
                 }
               }
             }
@@ -176,11 +176,11 @@
               },
               "examples": {
                 "Alterar dados": {
-                  "description": "Alterar nome, turma e curso referente ao aluno.",
+                  "description": "Alterar nome, turma e turma referente ao aluno.",
                   "value": {
                     "name": "João Carlos",
-                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
                   }
                 },
                 "Alterar nome": {
@@ -189,11 +189,11 @@
                     "name": "João Carlos"
                   }                  
                 },
-                "Alterar curso e/ou turma": {
-                  "description": "Alterar curso e/ou turma referente ao aluno.",
+                "Alterar turma e/ou turma": {
+                  "description": "Alterar turma e/ou turma referente ao aluno.",
                   "value": {
-                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
                   }
                 }
               }
@@ -234,6 +234,478 @@
           }
         }
       }
+    },
+    "/cursos":{
+      "post": {
+        "summary": "Criar curso",
+        "description": "Rota para criar um novo curso",
+        "tags": ["Cursos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Curso"
+              },
+              "examples": {
+                "Default - Nome [obrigatório]": {
+                  "description": "Passando apenas o nome - A API crias as demais",
+                  "value":{
+                    "name": "Informática"
+                  }
+                },
+                "Full": {
+                  "description": "Passando todas as informações manualmente",
+                  "value": {
+                    "id": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "name": "Informática",
+                    "createdAt": "2023-07-14T20:42:39.612Z",
+		                "updatedAt": "2023-07-14T20:42:39.612Z" 
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso"
+          },
+          "400": {
+            "description": "Já existe um curso com o mesmo nome"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar cursos",
+        "description": "Rota para listar todos os cursos cadastrados",
+        "tags": ["Cursos"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Curso"
+                    }
+                  },
+                  "example": [
+                    {
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "Informática",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      },
+                      {
+                        "id": "98452e4a-7503-49d8-a20a-506c4fd48999",
+                        "name": "Letras",
+                        "createdAt": "2023-07-14T20:42:39.612Z",
+                        "updatedAt": "2023-07-14T20:42:39.612Z"
+                      }
+                    ]
+          
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cursos/{id}": {
+      "put": {
+        "summary": "Atualizar curso",
+        "description": "Rota para atualizar dados do curso pelo **id**",
+        "tags": ["Cursos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Curso",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "A Alteração foi efetuada com sucesso"
+          },
+          "400": {
+            "description": "Já existe um curso com o mesmo nome"
+          },
+          "404": {
+            "description": "Curso não encontrado"
+          }
+        }
+      },
+      "get": {
+        "summary": "Buscar curso por ID",
+        "description": "Rota para buscar um curso pelo **ID**",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Curso",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Curso não encontrado"
+          },
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Curso"
+                    }
+                  },
+                  "example":{
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "Informática",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      }
+          
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar curso",
+        "description": "Rota para deletar um curso pelo **ID**",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Curso",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deletado com sucesso"
+          },
+          "404": {
+            "description": "Curso não encontrado"
+          }
+        }
+      }
+    },
+    "/cursos/search": {
+      "get": {
+        "summary": "Procurar por cursos",
+        "description": "Rota para procurar cursos pelo nome",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do curso ou dos cursos",
+            "schema": {
+              "type": "string"
+            },
+            "example": "inf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Curso"
+                    }
+                  },
+                  "example": [
+                    {
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "Informática",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      },
+                      {
+                        "id": "98452e4a-7503-49d8-a20a-506c4fd48999",
+                        "name": "Letras",
+                        "createdAt": "2023-07-14T20:42:39.612Z",
+                        "updatedAt": "2023-07-14T20:42:39.612Z"
+                      }
+                    ]
+          
+              }
+            }
+          }
+        }
+      }
+    },
+    "/turmas":{
+      "post": {
+        "summary": "Criar turma",
+        "description": "Rota para criar um novo turma",
+        "tags": ["Turmas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Turma"
+              },
+              "examples": {
+                "Default - Nome [obrigatório]": {
+                  "description": "Passando apenas o nome - A API crias as demais",
+                  "value":{
+                    "name": "a-01"
+                  }
+                },
+                "Full": {
+                  "description": "Passando todas as informações manualmente",
+                  "value": {
+                    "id": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "name": "a-1",
+                    "createdAt": "2023-07-14T20:42:39.612Z",
+		                "updatedAt": "2023-07-14T20:42:39.612Z" 
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso"
+          },
+          "400": {
+            "description": "Já existe um turma com o mesmo nome"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar turmas",
+        "description": "Rota para listar todos os turmas cadastrados",
+        "tags": ["Turmas"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Turma"
+                    }
+                  },
+                  "example": [
+                    {
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "a-1",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      },
+                      {
+                        "id": "98452e4a-7503-49d8-a20a-506c4fd48999",
+                        "name": "a-04",
+                        "createdAt": "2023-07-14T20:42:39.612Z",
+                        "updatedAt": "2023-07-14T20:42:39.612Z"
+                      }
+                    ]
+          
+              }
+            }
+          }
+        }
+      }
+    },
+    "/turmas/{id}": {
+      "put": {
+        "summary": "Atualizar turma",
+        "description": "Rota para atualizar dados do turma pelo **id**",
+        "tags": ["Turmas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Turma",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "A Alteração foi efetuada com sucesso"
+          },
+          "400": {
+            "description": "Já existe um turma com o mesmo nome"
+          },
+          "404": {
+            "description": "Turma não encontrado"
+          }
+        }
+      },
+      "get": {
+        "summary": "Buscar turma por ID",
+        "description": "Rota para buscar um turma pelo **ID**",
+        "tags": ["Turmas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Turma",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Turma não encontrado"
+          },
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Turma"
+                    }
+                  },
+                  "example":{
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "a-1",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      }
+          
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar turma",
+        "description": "Rota para deletar um turma pelo **ID**",
+        "tags": ["Turmas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "**ID** do Turma",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "98452e4a-7503-49d8-a20a-506c4fd48999"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deletado com sucesso"
+          },
+          "404": {
+            "description": "Turma não encontrado"
+          }
+        }
+      }
+    },
+    "/turmas/search": {
+      "get": {
+        "summary": "Procurar por turmas",
+        "description": "Rota para procurar turmas pelo nome",
+        "tags": ["Turmas"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome da turma ou das turmas",
+            "schema": {
+              "type": "string"
+            },
+            "example": "a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Turma"
+                    }
+                  },
+                  "example": [
+                    {
+                        "id": "f725d928-02ee-40f4-b207-276a8dcdf30c",
+                        "name": "a-1",
+                        "createdAt": "2023-07-14T17:22:24.892Z",
+                        "updatedAt": "2023-07-14T19:40:34.745Z"
+                      },
+                      {
+                        "id": "98452e4a-7503-49d8-a20a-506c4fd48999",
+                        "name": "a-4",
+                        "createdAt": "2023-07-14T20:42:39.612Z",
+                        "updatedAt": "2023-07-14T20:42:39.612Z"
+                      }
+                    ]
+          
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -247,10 +719,10 @@
           "name": {
             "type": "string"
           },
-          "cursoId": {
+          "turmaId": {
             "type": "string"
           },
-          "turmaId": {
+          "cursoId": {
             "type": "string"
           },
           "userId": {
@@ -258,6 +730,42 @@
           }
         },
         "required": ["matricula", "name", "userId"]
+      },
+      "Curso": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "Turma": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
       }
     }
   } 
