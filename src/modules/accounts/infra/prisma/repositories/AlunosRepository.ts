@@ -63,6 +63,7 @@ export class AlunosRepository implements IAlunosRepository {
         name,
         cursoId,
         turmaId,
+        updatedAt: new Date(),
       },
     });
   }
