@@ -46,15 +46,15 @@ export class CreateAlunosUseCase {
     const user: IUser = await this.usersRepository.findUserById(userId);
 
     if (!user) {
-      throw new AppError("User not exist");
+      throw new AppError("Usuário não existe");
     }
 
     if (user.type !== "aluno") {
-      throw new AppError("User isn't a aluno");
+      throw new AppError("Usuário não é um aluno");
     }
 
     if (user.aluno) {
-      throw new AppError("User already associated with account");
+      throw new AppError("Usuário já está associado a outra conta");
     }
 
     const course = cursoId
@@ -66,11 +66,11 @@ export class CreateAlunosUseCase {
       : undefined;
 
     if (course === null) {
-      throw new AppError("Course not found", 404);
+      throw new AppError("Curso não encontrado", 404);
     }
 
     if (turma === null) {
-      throw new AppError("Turma not found", 404);
+      throw new AppError("Turma não encontrada", 404);
     }
 
     await this.alunosRepository.create({

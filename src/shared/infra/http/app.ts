@@ -3,14 +3,18 @@ import "reflect-metadata";
 import "@shared/container";
 
 import express, { NextFunction, Request, Response } from "express";
+import swagger from "swagger-ui-express";
 
 import { AppError } from "@shared/errors/AppError";
 
+import swaggerDocs from "../../../swagger.json";
 import { router } from "./routes";
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/docs", swagger.serve, swagger.setup(swaggerDocs));
 
 app.use("/api", router);
 
