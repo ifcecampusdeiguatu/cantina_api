@@ -3,25 +3,25 @@ import { inject, injectable } from "tsyringe";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 import { AppError } from "@shared/errors/AppError";
 
-interface IRequest {
-  id?: string;
+interface IUpdateTurmaDTO {
+  id: string;
   name: string;
 }
 
 @injectable()
-export class CreateTurmaUseCase {
+export class UpdateTurmaUseCase {
   constructor(
     @inject("TurmasRepository")
     private turmasRepository: ITurmasRepository
   ) {}
 
-  async execute({ id, name }: IRequest) {
-    const turma = await this.turmasRepository.findTurmaByName(name);
+  async execute({ id, name }: IUpdateTurmaDTO): Promise<void> {
+    const turma = await this.turmasRepository.findTurmaById(id);
 
-    if (turma) {
-      throw new AppError("Already a turma with the same name");
+    if (!turma) {
+      throw new AppError("Turma não encontrado", 404);
     }
 
-    await this.turmasRepository.create({ id, name });
+    await this.turmasRepository.update({ id, name });
   }
 }

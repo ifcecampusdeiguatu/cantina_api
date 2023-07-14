@@ -5,7 +5,7 @@ import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepositor
 import { Turma, PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
-interface ICreateTurmaDTO {
+interface ICreateTurmasDTO {
   id?: string;
   name: string;
 }
@@ -21,7 +21,7 @@ export class TurmasRepository implements ITurmasRepository {
     this.repository = prisma.getConnection();
   }
 
-  async create({ id = uuid(), name }: ICreateTurmaDTO): Promise<void> {
+  async create({ id = uuid(), name }: ICreateTurmasDTO): Promise<void> {
     await this.repository.turma.create({
       data: {
         id,
@@ -42,6 +42,20 @@ export class TurmasRepository implements ITurmasRepository {
 
     return turma;
   }
+
+  async searchTurmasByName(name: string): Promise<Turma[]> {
+    const turma = await this.repository.turma.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    return turma;
+  }
+
   async findTurmaById(id: string): Promise<Turma> {
     const turma = await this.repository.turma.findUnique({ where: { id } });
 
@@ -52,5 +66,19 @@ export class TurmasRepository implements ITurmasRepository {
     const turmas = await this.repository.turma.findMany();
 
     return turmas;
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.turma.delete({ where: { id } });
+  }
+
+  async update({ id, name }: ICreateTurmasDTO): Promise<void> {
+    await this.repository.turma.update({
+      where: { id },
+      data: {
+        name,
+        updatedAt: new Date(),
+      },
+    });
   }
 }

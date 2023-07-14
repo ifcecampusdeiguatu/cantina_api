@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { CreateTurmasUseCase } from "./CreateTurmaUseCase";
+import { CreateTurmaUseCase } from "./CreateTurmaUseCase";
 
 export class CreateTurmaController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id, name } = request.body;
 
-    const createTurmasUseCase = container.resolve(CreateTurmasUseCase);
+    const createTurmasUseCase = container.resolve(CreateTurmaUseCase);
 
     try {
       await createTurmasUseCase.execute({ id, name });
