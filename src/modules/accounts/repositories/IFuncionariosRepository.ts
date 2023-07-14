@@ -5,4 +5,5 @@ import { ICreateFuncionarioDTO } from "../dtos/funcionarios/ICreateFuncionarioDT
 export interface IFuncionariosRepository {
   create({ role, name, userId }: ICreateFuncionarioDTO): Promise<void>;
   findFuncionarioByID(id: string): Promise<Funcionario>;
+  findFuncionarioByUserId(userId: string): Promise<Funcionario>;
 }

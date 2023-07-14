@@ -33,6 +33,6 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts"
+    "dev": "ts-node-dev --exit-child --respawn --inspect -r tsconfig-paths/register --transpile-only --ignore-watch node_modules  src/shared/infra/http/server.ts"
   }
 }

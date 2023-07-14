@@ -39,34 +39,38 @@ export class CreateAlunosUseCase {
       matricula
     );
 
+    if (alunoAlreadyExists) {
+      throw new AppError("Aluno já foi cadastrado");
+    }
+
     const user: IUser = await this.usersRepository.findUserById(userId);
 
     if (!user) {
       throw new AppError("User not exist");
     }
 
-    if (user.aluno || user.funcionario || user.servidor) {
-      throw new AppError("User already associated with another account");
+    if (user.type !== "aluno") {
+      throw new AppError("User isn't a aluno");
     }
 
-    if (alunoAlreadyExists) {
-      throw new AppError("Aluno já foi cadastrado");
+    if (user.aluno) {
+      throw new AppError("User already associated with account");
     }
 
-    if (cursoId) {
-      const course = await this.coursesRepository.findCourseById(cursoId);
+    const course = cursoId
+      ? await this.coursesRepository.findCourseById(cursoId)
+      : undefined;
 
-      if (!course) {
-        throw new AppError("Course not found", 404);
-      }
+    const turma = turmaId
+      ? await this.turmasRepository.findTurmaById(turmaId)
+      : undefined;
+
+    if (course === null) {
+      throw new AppError("Course not found", 404);
     }
 
-    if (turmaId) {
-      const turma = await this.turmasRepository.findTurmaById(turmaId);
-
-      if (!turma) {
-        throw new AppError("Turma not found", 404);
-      }
+    if (turma === null) {
+      throw new AppError("Turma not found", 404);
     }
 
     await this.alunosRepository.create({

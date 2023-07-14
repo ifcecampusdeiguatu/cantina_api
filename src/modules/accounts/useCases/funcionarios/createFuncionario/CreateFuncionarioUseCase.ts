@@ -27,8 +27,12 @@ export class CreateFuncionarioUseCase {
       throw new AppError("User not exist");
     }
 
-    if (user.aluno || user.funcionario || user.servidor) {
-      throw new AppError("User already associated with another account");
+    if (user.type !== "funcionario") {
+      throw new AppError("User isn't a funcionario");
+    }
+
+    if (user.funcionario) {
+      throw new AppError("User already associated with account");
     }
 
     await this.funcionariosRepository.create({ name, role, userId });

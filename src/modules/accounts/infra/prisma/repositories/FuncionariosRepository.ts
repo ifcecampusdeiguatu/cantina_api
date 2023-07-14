@@ -33,4 +33,12 @@ export class FuncionariosRepository implements IFuncionariosRepository {
 
     return aluno;
   }
+
+  async findFuncionarioByUserId(userId: string): Promise<Funcionario> {
+    const funcionario = await this.repository.funcionario.findFirst({
+      where: { userId },
+    });
+
+    return funcionario;
+  }
 }

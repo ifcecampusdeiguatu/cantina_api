@@ -22,9 +22,7 @@ export class CreateServidorUseCase {
   ) {}
 
   async execute({ siape, name, role, userId }: IRequest) {
-    const servidor = await this.servidoresRepository.findFuncionarioBySIAPE(
-      siape
-    );
+    const servidor = await this.servidoresRepository.findServidorBySIAPE(siape);
 
     if (servidor) {
       throw new AppError("Servidor already exists");
@@ -36,8 +34,12 @@ export class CreateServidorUseCase {
       throw new AppError("User not exist");
     }
 
-    if (user.aluno || user.funcionario || user.servidor) {
-      throw new AppError("User already associated with another account");
+    if (user.type !== "servidor") {
+      throw new AppError("User isn't a servidor");
+    }
+
+    if (user.servidor) {
+      throw new AppError("User already associated with account");
     }
 
     await this.servidoresRepository.create({ siape, name, role, userId });

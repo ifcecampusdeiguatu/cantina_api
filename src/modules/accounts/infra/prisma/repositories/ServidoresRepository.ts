@@ -27,9 +27,20 @@ export class ServidoresRepository implements IServidoresRepository {
     });
   }
 
-  async findFuncionarioBySIAPE(siape: string): Promise<Servidor> {
+  async findServidorBySIAPE(siape: string): Promise<Servidor> {
     const servidor = await this.repository.servidor.findUnique({
       where: { siape },
+    });
+
+    return servidor;
+  }
+
+  async findServidorBySIAPEOrUserId(
+    siape: string,
+    userId: string
+  ): Promise<Servidor> {
+    const servidor = await this.repository.servidor.findFirst({
+      where: { OR: [{ siape }, { userId }] },
     });
 
     return servidor;

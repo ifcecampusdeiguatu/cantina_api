@@ -4,5 +4,9 @@ import { ICreateServidorDTO } from "../dtos/servidores/ICreateServidorDTO";
 
 export interface IServidoresRepository {
   create({ siape, role, name, userId }: ICreateServidorDTO): Promise<void>;
-  findFuncionarioBySIAPE(siape: string): Promise<Servidor>;
+  findServidorBySIAPE(siape: string): Promise<Servidor>;
+  findServidorBySIAPEOrUserId(
+    siape?: string,
+    userId?: string
+  ): Promise<Servidor>;
 }
