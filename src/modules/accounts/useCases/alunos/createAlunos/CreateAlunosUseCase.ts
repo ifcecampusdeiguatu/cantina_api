@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUser } from "@modules/accounts/types";
-import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
+import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -22,8 +22,8 @@ export class CreateAlunosUseCase {
     private alunosRepository: IAlunosRepository,
     @inject("TurmasRepository")
     private turmasRepository: ITurmasRepository,
-    @inject("CoursesRepository")
-    private coursesRepository: ICoursesRepository,
+    @inject("CursosRepository")
+    private cursosRepository: ICursosRepository,
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
@@ -57,15 +57,15 @@ export class CreateAlunosUseCase {
       throw new AppError("Usuário já está associado a outra conta");
     }
 
-    const course = cursoId
-      ? await this.coursesRepository.findCourseById(cursoId)
+    const curso = cursoId
+      ? await this.cursosRepository.findCursoById(cursoId)
       : undefined;
 
     const turma = turmaId
       ? await this.turmasRepository.findTurmaById(turmaId)
       : undefined;
 
-    if (course === null) {
+    if (curso === null) {
       throw new AppError("Curso não encontrado", 404);
     }
 

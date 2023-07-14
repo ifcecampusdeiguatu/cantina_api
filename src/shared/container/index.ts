@@ -12,8 +12,8 @@ import { IServidoresRepository } from "@modules/accounts/repositories/IServidore
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { CheckinRepository } from "@modules/checkin/infra/prisma/repositories/CheckinRepository";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
-import { CoursesRepository } from "@modules/courses/infra/prisma/repositories/CoursesRepository";
-import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
+import { CursosRepository } from "@modules/cursos/infra/prisma/repositories/CursosRepository";
+import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { LocationsRepository } from "@modules/locations/infra/prisma/LocationsRepository";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { FoodsRepository } from "@modules/menu/infra/prisma/FoodsRepository";
@@ -67,9 +67,9 @@ container.registerSingleton<ICheckinRepository>(
   CheckinRepository
 );
 
-container.registerSingleton<ICoursesRepository>(
-  "CoursesRepository",
-  CoursesRepository
+container.registerSingleton<ICursosRepository>(
+  "CursosRepository",
+  CursosRepository
 );
 
 container.registerSingleton<ITurmasRepository>(

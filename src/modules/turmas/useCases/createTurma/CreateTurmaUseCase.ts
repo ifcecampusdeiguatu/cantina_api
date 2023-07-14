@@ -16,9 +16,9 @@ export class CreateTurmasUseCase {
   ) {}
 
   async execute({ id, name }: IRequest) {
-    const course = await this.turmasRepository.findTurmaByName(name);
+    const curso = await this.turmasRepository.findTurmaByName(name);
 
-    if (course) {
+    if (curso) {
       throw new AppError("Already a turma with the same name");
     }
 

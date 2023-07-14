@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { accountsRoutes } from "./accounts.routes";
 import { checkinRoutes } from "./checkin.routes";
-import { coursesRoutes } from "./courses.routes";
+import { cursosRoutes } from "./cursos.routes";
 import { foodsRoutes } from "./foods.routes";
 import { ingredientsRoutes } from "./ingredients.routes";
 import { locationsRoutes } from "./locations.routes";
@@ -17,7 +17,7 @@ router.use("/foods", foodsRoutes);
 router.use("/locations", locationsRoutes);
 router.use("/menu", menuRoutes);
 router.use("/checkin", checkinRoutes);
-router.use("/courses", coursesRoutes);
+router.use("/cursos", cursosRoutes);
 router.use("/turmas", turmasRoutes);
 
 export { router };

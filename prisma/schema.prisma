@@ -88,17 +88,21 @@ model Servidor {
 }
 
 model Turma {
-  id    String  @id @default(uuid())
-  name  String  @db.VarChar()
-  Aluno Aluno[]
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar()
+  createdAt DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  Aluno     Aluno[]
 
   @@map("turmas")
 }
 
 model Curso {
-  id    String  @id @default(uuid())
-  name  String  @db.VarChar()
-  Aluno Aluno[]
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar()
+  createdAt DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  Aluno     Aluno[]
 
   @@map("cursos")
 }

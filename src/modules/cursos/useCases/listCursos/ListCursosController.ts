@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ListCoursesUseCase } from "./ListCoursesUseCase";
+import { ListCursosUseCase } from "./ListCursosUseCase";
 
-export class ListCoursesController {
+export class ListCursosController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const listCoursesUseCase = container.resolve(ListCoursesUseCase);
+    const listCursosUseCase = container.resolve(ListCursosUseCase);
 
     try {
-      const courses = await listCoursesUseCase.execute();
+      const cursos = await listCursosUseCase.execute();
 
-      return response.json(courses);
+      return response.json(cursos);
     } catch (error) {
       return response.status(error.statusCode).json({ error: error.message });
     }
