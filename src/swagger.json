@@ -92,6 +92,148 @@
           }
         }
       }
+    },
+    "/accounts/alunos/{matricula}":{
+      "get": {
+        "summary": "Buscar um aluno",
+        "description": "Rota para buscar um aluno pela matrícula",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "matricula",
+            "in": "path",
+            "description": "Matrícula do aluno",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "88888888"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Aluno não encontrado"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "items": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Aluno"
+                  }
+                },
+                "example": {
+                    "matricula": "3333333333",
+                    "name": "Fonseca",
+                    "createdAt": "2023-07-06T14:03:39.916Z",
+                    "updatedAt": "2023-07-06T14:03:39.916Z",
+                    "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
+                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar aluno",
+        "description": "Rota para atualizar dados do aluno",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "matricula",
+            "in": "path",
+            "description": "Matrícula do aluno",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "88888888"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cursoId": {
+                    "type": "string"
+                  },
+                  "turmaId": {
+                    "type": "string"
+                  }
+                },
+                "example":
+                  {
+                    
+                  }
+              },
+              "examples": {
+                "Alterar dados": {
+                  "description": "Alterar nome, turma e curso referente ao aluno.",
+                  "value": {
+                    "name": "João Carlos",
+                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                  }
+                },
+                "Alterar nome": {
+                  "description": "Alterar apenas o nome do aluno.",
+                  "value": {
+                    "name": "João Carlos"
+                  }                  
+                },
+                "Alterar curso e/ou turma": {
+                  "description": "Alterar curso e/ou turma referente ao aluno.",
+                  "value": {
+                    "turmaId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                    "cursoId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Aluno não encontrado"
+          },
+          "204": {
+            "description": "Os dados foram atualizados com sucesso."
+          }
+        }
+      }, 
+      "delete": {
+        "summary": "Delete aluno",
+        "description": "Rota para deletar um aluno pela matrícula.",
+        "tags": ["Alunos"],
+         "parameters": [
+          {
+            "name": "matricula",
+            "in": "path",
+            "description": "Matrícula do aluno",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "88888888"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Aluno não encontrado"
+          },
+          "204": {
+            "description": "Aluno foi deletado com sucesso."
+          }
+        }
+      }
     }
   },
   "components": {
