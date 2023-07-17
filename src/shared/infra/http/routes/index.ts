@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { accountsRoutes } from "./accounts.routes";
+import { authenticateRoutes } from "./authenticate.routes";
 import { checkinRoutes } from "./checkin.routes";
 import { cursosRoutes } from "./cursos.routes";
 import { foodsRoutes } from "./foods.routes";
@@ -19,5 +20,7 @@ router.use("/menu", menuRoutes);
 router.use("/checkin", checkinRoutes);
 router.use("/cursos", cursosRoutes);
 router.use("/turmas", turmasRoutes);
+
+router.use(authenticateRoutes);
 
 export { router };

@@ -23,8 +23,8 @@ enum Status {
 model Checkin {
   id        String   @id @default(uuid())
   status    Status   @default(reseved)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @map("user_id")
   menu      Menu     @relation(fields: [menuId], references: [id])
@@ -34,16 +34,17 @@ model Checkin {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  email       String       @unique @db.VarChar(50)
-  password    String       @db.Char(60)
-  type        Type         @default(aluno)
-  createdAt   DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime     @default(now()) @db.Timestamp(6)
+  id          String        @id @default(uuid())
+  email       String        @unique @db.VarChar(50)
+  password    String        @db.Char(60)
+  type        Type          @default(aluno)
+  createdAt   DateTime      @db.Timestamp(6)
+  updatedAt   DateTime      @db.Timestamp(6)
   aluno       Aluno?
   funcionario Funcionario?
   servidor    Servidor?
   checkins    Checkin[]
+  usersTokens UsersTokens[]
 
   @@map("users")
 }
@@ -51,8 +52,8 @@ model User {
 model Aluno {
   matricula String   @id
   name      String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @unique @map("user_id")
   turma     Turma?   @relation(fields: [turmaId], references: [id])
@@ -67,8 +68,8 @@ model Funcionario {
   id        String   @id @default(uuid())
   name      String   @db.VarChar(255)
   role      String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @unique @map("user_id")
 
@@ -79,8 +80,8 @@ model Servidor {
   siape     String   @id
   name      String   @db.VarChar(255)
   role      String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @unique @map("user_id")
 
@@ -88,20 +89,20 @@ model Servidor {
 }
 
 model Turma {
-  id        String    @id @default(uuid())
-  name      String    @db.VarChar()
-  createdAt DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar()
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   Aluno     Aluno[]
 
   @@map("turmas")
 }
 
 model Curso {
-  id        String    @id @default(uuid())
-  name      String    @db.VarChar()
-  createdAt DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar()
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   Aluno     Aluno[]
 
   @@map("cursos")
@@ -110,8 +111,8 @@ model Curso {
 model Menu {
   id        String    @id @default(uuid())
   schedule  DateTime  @db.Timestamp(6)
-  createdAt DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  createdAt DateTime  @db.Timestamp(6)
+  updatedAt DateTime  @db.Timestamp(6)
   foodId    String?   @map("food_id")
   localID   String    @map("local_id")
   Food      Food?     @relation(fields: [foodId], references: [id])
@@ -125,8 +126,8 @@ model Food {
   id          String       @id @default(uuid())
   name        String       @db.VarChar(100)
   description String?      @db.VarChar(255)
-  createdAt   DateTime?    @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime?    @default(now()) @db.Timestamp(6)
+  createdAt   DateTime     @db.Timestamp(6)
+  updatedAt   DateTime     @db.Timestamp(6)
   menus       Menu[]
   ingredients Ingredient[] @relation("FoodToIngredient")
 
@@ -134,22 +135,32 @@ model Food {
 }
 
 model Ingredient {
-  id          String    @id @default(uuid())
-  name        String    @db.VarChar(100)
-  description String?   @db.VarChar(255)
-  createdAt   DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime? @default(now()) @db.Timestamp(6)
-  foods       Food[]    @relation("FoodToIngredient")
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @db.Timestamp(6)
+  updatedAt   DateTime @db.Timestamp(6)
+  foods       Food[]   @relation("FoodToIngredient")
 
   @@map("ingredients")
 }
 
 model Local {
-  id        String    @id @default(uuid())
-  address   String    @db.VarChar(100)
-  createdAt DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  id        String   @id @default(uuid())
+  address   String   @db.VarChar(100)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   Menu      Menu[]
 
   @@map("locations")
+}
+
+model UsersTokens {
+  id           String   @id @default(uuid())
+  refreshToken String
+  expiresDate  DateTime @db.Timestamp(6)
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+
+  @@map("usersTokens")
 }

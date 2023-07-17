@@ -8,4 +8,5 @@ export interface IUsersRepository {
   list(): Promise<ParsedUser[]>;
   findUserByEmail(email: string): Promise<User>;
   findUserById(id: string): Promise<User>;
+  findUserByMatricula(matricula: string): Promise<User>;
 }

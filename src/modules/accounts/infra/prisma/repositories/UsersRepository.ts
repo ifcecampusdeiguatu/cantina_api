@@ -23,8 +23,17 @@ export class UsersRepository implements IUsersRepository {
     password,
     type = "aluno",
   }: ICreateUserDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.user.create({
-      data: { id: uuid(), email, password, type },
+      data: {
+        id: uuid(),
+        email,
+        password,
+        type,
+        createdAt: dateNow,
+        updatedAt: dateNow,
+      },
     });
   }
 
@@ -49,5 +58,17 @@ export class UsersRepository implements IUsersRepository {
         servidor: true,
       },
     });
+  }
+
+  async findUserByMatricula(matricula: string): Promise<User> {
+    const user = await this.repository.user.findFirst({
+      where: {
+        aluno: {
+          matricula,
+        },
+      },
+    });
+
+    return user;
   }
 }
