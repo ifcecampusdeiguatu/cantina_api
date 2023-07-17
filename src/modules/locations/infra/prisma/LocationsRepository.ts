@@ -23,12 +23,14 @@ export class LocationsRepository implements ILocationsRepository {
   }
 
   async create({ address }: ICreateLocalDTO): Promise<Local> {
+    const dateNow = new Date();
+
     const local = await this.repository.local.create({
       data: {
         id: uuid(),
         address,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
 

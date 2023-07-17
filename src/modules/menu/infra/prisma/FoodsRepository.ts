@@ -25,7 +25,15 @@ export class FoodsRepository implements IFoodsRepository {
       description,
     };
 
-    return this.repository.food.create({ data: food });
+    const dateNow = new Date();
+
+    return this.repository.food.create({
+      data: {
+        ...food,
+        createdAt: dateNow,
+        updatedAt: dateNow,
+      },
+    });
   }
 
   async addIngredientToFood({
@@ -35,6 +43,7 @@ export class FoodsRepository implements IFoodsRepository {
     const food = await this.repository.food.update({
       where: { id: foodID },
       data: {
+        updatedAt: new Date(),
         ingredients: {
           connect: { id: ingredientID },
         },

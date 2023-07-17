@@ -24,6 +24,8 @@ export class AlunosRepository implements IAlunosRepository {
     cursoId,
     userId,
   }: ICreateAlunosDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.aluno.create({
       data: {
         matricula,
@@ -31,6 +33,8 @@ export class AlunosRepository implements IAlunosRepository {
         cursoId,
         turmaId,
         userId,
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
   }

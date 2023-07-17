@@ -17,11 +17,15 @@ export class FuncionariosRepository implements IFuncionariosRepository {
   }
 
   async create({ name, role, userId }: ICreateFuncionarioDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.funcionario.create({
       data: {
         name,
         role,
         userId,
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
   }

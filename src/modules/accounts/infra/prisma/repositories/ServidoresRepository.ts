@@ -22,8 +22,17 @@ export class ServidoresRepository implements IServidoresRepository {
     name,
     userId,
   }: ICreateServidorDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.servidor.create({
-      data: { siape, role, name, userId },
+      data: {
+        siape,
+        role,
+        name,
+        userId,
+        createdAt: dateNow,
+        updatedAt: dateNow,
+      },
     });
   }
 

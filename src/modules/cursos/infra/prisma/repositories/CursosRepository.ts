@@ -22,10 +22,14 @@ export class CursosRepository implements ICursosRepository {
   }
 
   async create({ id = uuid(), name }: ICreateCursosDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.curso.create({
       data: {
         id,
         name,
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
   }

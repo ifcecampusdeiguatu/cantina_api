@@ -19,13 +19,15 @@ export class MenuRepository implements IMenuRepository {
   }
 
   async create({ schedule, localID }: ICreateMenuDTO): Promise<Menu> {
+    const dateNow = new Date();
+
     const menu = await this.repository.menu.create({
       data: {
         id: v4(),
         schedule,
         localID,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
 

@@ -23,8 +23,17 @@ export class CheckinRepository implements ICheckinRepository {
     menuId,
     userId,
   }: ICreateCheckinDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.checkin.create({
-      data: { id, status, menuId, userId },
+      data: {
+        id,
+        status,
+        menuId,
+        userId,
+        createdAt: dateNow,
+        updatedAt: dateNow,
+      },
     });
   }
 }

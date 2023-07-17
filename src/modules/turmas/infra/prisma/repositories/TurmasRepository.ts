@@ -22,10 +22,14 @@ export class TurmasRepository implements ITurmasRepository {
   }
 
   async create({ id = uuid(), name }: ICreateTurmasDTO): Promise<void> {
+    const dateNow = new Date();
+
     await this.repository.turma.create({
       data: {
         id,
         name,
+        createdAt: dateNow,
+        updatedAt: dateNow,
       },
     });
   }
