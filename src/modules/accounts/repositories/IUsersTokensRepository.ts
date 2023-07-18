@@ -1,11 +1,16 @@
 import { UsersTokens } from "@prisma/client";
 
-import { ICreateUserTokenDTO } from "../dtos/users/ICreateUserTokenDTO";
+import { ICreateUserRefreshTokenDTO } from "../dtos/usersTokens/ICreateUserRefreshTokenDTO";
+import { IFindByUserIdAndRefreshTokenDTO } from "../dtos/usersTokens/IFindByUserIdAndRefreshTokenDTO";
 
 export interface IUsersTokensRepository {
   create({
     userId,
     expiresDate,
     refreshToken,
-  }: ICreateUserTokenDTO): Promise<UsersTokens>;
+  }: ICreateUserRefreshTokenDTO): Promise<UsersTokens>;
+  findByUserIdAndRefreshToken({
+    userId,
+    refreshToken,
+  }: IFindByUserIdAndRefreshTokenDTO): Promise<UsersTokens>;
 }

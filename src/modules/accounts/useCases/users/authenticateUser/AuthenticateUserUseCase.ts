@@ -51,7 +51,7 @@ export class AuthenticateUserUseCase {
 
     const refreshToken = sign({}, auth.secret_refresh_token, {
       subject: user.id,
-      expiresIn: auth.expires_in_refresh_token,
+      expiresIn: auth.expires_in_token,
     });
 
     const refreshTokenExpireDate = this.dateProvider.addDays(

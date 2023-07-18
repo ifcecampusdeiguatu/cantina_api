@@ -10,6 +10,8 @@ import { CreateServidorController } from "@modules/accounts/useCases/servidores/
 import { CreateUserController } from "@modules/accounts/useCases/users/createUser/CreateUserController";
 import { ListUsersController } from "@modules/accounts/useCases/users/listUsers/ListUsersController";
 
+import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
+
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 
@@ -27,6 +29,8 @@ const accountsRoutes = Router();
 
 accountsRoutes.post("/users", createUserController.handle);
 accountsRoutes.get("/users", listUsersController.handle);
+
+accountsRoutes.use(ensureAuthenticate);
 
 accountsRoutes.post("/alunos", createAlunosController.handle);
 accountsRoutes.get("/alunos", listAlunosController.handle);
