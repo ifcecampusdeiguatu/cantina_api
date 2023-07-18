@@ -11,6 +11,7 @@ import { CreateUserController } from "@modules/accounts/useCases/users/createUse
 import { ListUsersController } from "@modules/accounts/useCases/users/listUsers/ListUsersController";
 
 import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
+import { ensureFuncionario } from "../middlewares/ensureFuncionario";
 
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
@@ -30,7 +31,14 @@ const accountsRoutes = Router();
 accountsRoutes.post("/users", createUserController.handle);
 accountsRoutes.get("/users", listUsersController.handle);
 
-accountsRoutes.use(ensureAuthenticate);
+/**
+ * Todas as rotas a baixo devem ter autenticação e
+ * usuário deve ser um funcionário.
+ *
+ * ensureAuthenticate -> verifica autenticação
+ * ensureFuncionario -> verifica se usuário é um funcionário
+ */
+accountsRoutes.use(ensureAuthenticate, ensureFuncionario);
 
 accountsRoutes.post("/alunos", createAlunosController.handle);
 accountsRoutes.get("/alunos", listAlunosController.handle);
