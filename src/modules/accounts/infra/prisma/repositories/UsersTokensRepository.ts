@@ -20,9 +20,10 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     userId,
     expiresDate,
     refreshToken,
+    token,
   }: ICreateUserRefreshTokenDTO): Promise<UsersTokens> {
     const userToken = await this.repository.usersTokens.create({
-      data: { userId, expiresDate, refreshToken },
+      data: { userId, expiresDate, refreshToken, token },
     });
 
     return userToken;
@@ -36,6 +37,24 @@ export class UsersTokensRepository implements IUsersTokensRepository {
       where: {
         userId,
         refreshToken,
+      },
+    });
+
+    return userToken;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.repository.usersTokens.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findByToken(token: string): Promise<UsersTokens> {
+    const userToken = await this.repository.usersTokens.findFirst({
+      where: {
+        token,
       },
     });
 

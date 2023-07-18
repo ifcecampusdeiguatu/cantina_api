@@ -8,9 +8,12 @@ export interface IUsersTokensRepository {
     userId,
     expiresDate,
     refreshToken,
+    token,
   }: ICreateUserRefreshTokenDTO): Promise<UsersTokens>;
   findByUserIdAndRefreshToken({
     userId,
     refreshToken,
   }: IFindByUserIdAndRefreshTokenDTO): Promise<UsersTokens>;
+  deleteById(id: string): Promise<void>;
+  findByToken(token: string): Promise<UsersTokens>;
 }
