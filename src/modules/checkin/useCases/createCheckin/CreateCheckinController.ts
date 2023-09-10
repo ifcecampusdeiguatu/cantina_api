@@ -6,14 +6,22 @@ import { CreateCheckinUseCase } from "./CreateCheckinUseCase";
 export class CreateCheckinController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id, status, mealId } = request.body;
-    const { userid: userId } = request.headers;
+    const { id: userId } = request.user;
+    const { userId: userIdHeaders } = request.headers;
 
     const createCheckinUseCase = container.resolve(CreateCheckinUseCase);
 
     try {
-      if (typeof userId === "string") {
-        await createCheckinUseCase.execute({ id, status, mealId, userId });
+      if (userIdHeaders && typeof userIdHeaders === "string") {
+        await createCheckinUseCase.execute({
+          id,
+          status,
+          mealId,
+          userId: userIdHeaders,
+        });
       }
+
+      await createCheckinUseCase.execute({ id, status, mealId, userId });
 
       return response.status(201).send();
     } catch (error) {
