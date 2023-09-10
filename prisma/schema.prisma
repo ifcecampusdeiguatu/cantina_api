@@ -20,15 +20,24 @@ enum Status {
   lacked
 }
 
+model CheckinToken {
+  id           String  @id @default(uuid())
+  token        String  @default(uuid())
+  checkin_code String  @db.VarChar(6)
+  checkin      Checkin @relation(fields: [checkinId], references: [id])
+  checkinId    String  @unique @map("checkin_id")
+}
+
 model Checkin {
-  id        String   @id @default(uuid())
-  status    Status   @default(reseved)
-  createdAt DateTime @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @map("user_id")
-  menu      Menu     @relation(fields: [menuId], references: [id])
-  menuId    String   @map("menu_id")
+  id           String         @id @default(uuid())
+  status       Status         @default(reseved)
+  createdAt    DateTime       @db.Timestamp(6)
+  updatedAt    DateTime       @db.Timestamp(6)
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String         @map("user_id")
+  meal         Meal           @relation(fields: [mealId], references: [id])
+  mealId       String         @map("meal_id")
+  CheckinToken CheckinToken[]
 
   @@map("checkin")
 }
@@ -108,30 +117,30 @@ model Curso {
   @@map("cursos")
 }
 
-model Menu {
+model Meal {
   id        String    @id @default(uuid())
   schedule  DateTime  @db.Timestamp(6)
   createdAt DateTime  @db.Timestamp(6)
   updatedAt DateTime  @db.Timestamp(6)
   foodId    String?   @map("food_id")
   localID   String    @map("local_id")
-  Food      Food?     @relation(fields: [foodId], references: [id])
+  dish      Dish?     @relation(fields: [foodId], references: [id])
   local     Local     @relation(fields: [localID], references: [id])
   checkins  Checkin[]
 
-  @@map("menu")
+  @@map("meals")
 }
 
-model Food {
+model Dish {
   id          String       @id @default(uuid())
   name        String       @db.VarChar(100)
   description String?      @db.VarChar(255)
   createdAt   DateTime     @db.Timestamp(6)
   updatedAt   DateTime     @db.Timestamp(6)
-  menus       Menu[]
+  meals       Meal[]
   ingredients Ingredient[] @relation("FoodToIngredient")
 
-  @@map("foods")
+  @@map("dishes")
 }
 
 model Ingredient {
@@ -140,7 +149,7 @@ model Ingredient {
   description String?  @db.VarChar(255)
   createdAt   DateTime @db.Timestamp(6)
   updatedAt   DateTime @db.Timestamp(6)
-  foods       Food[]   @relation("FoodToIngredient")
+  dishes      Dish[]   @relation("FoodToIngredient")
 
   @@map("ingredients")
 }
@@ -150,7 +159,7 @@ model Local {
   address   String   @db.VarChar(100)
   createdAt DateTime @db.Timestamp(6)
   updatedAt DateTime @db.Timestamp(6)
-  Menu      Menu[]
+  meal      Meal[]
 
   @@map("locations")
 }
