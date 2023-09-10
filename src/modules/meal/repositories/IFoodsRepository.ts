@@ -1,13 +1,13 @@
-import { Food } from "@prisma/client";
+import { Dish } from "@prisma/client";
 
 import { IAddIngredientToFoodDTO } from "../dtos/IAddIngredientToFoodDTO";
 import { ICreateFoodDTO } from "../dtos/ICreateFoodDTO";
 
 export interface IFoodsRepository {
-  create({ name, description }: ICreateFoodDTO): Promise<Food>;
+  create({ name, description }: ICreateFoodDTO): Promise<Dish>;
   addIngredientToFood({
     foodID,
     ingredientID,
-  }: IAddIngredientToFoodDTO): Promise<Food>;
-  findFoodById(id: string): Promise<Food>;
+  }: IAddIngredientToFoodDTO): Promise<Dish>;
+  findFoodById(id: string): Promise<Dish>;
 }

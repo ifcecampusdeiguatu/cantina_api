@@ -1,4 +1,4 @@
-export interface ICreateMenuDTO {
+export interface ICreateMealDTO {
   schedule: Date;
   localID: string;
 }

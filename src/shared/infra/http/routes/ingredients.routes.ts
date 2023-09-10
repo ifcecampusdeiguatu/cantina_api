@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { CreateIngredientController } from "@modules/menu/useCases/createIngredient/CreateIngredientController";
+import { CreateIngredientController } from "@modules/meal/useCases/createIngredient/CreateIngredientController";
 
 const createIngredientController = new CreateIngredientController();
 
