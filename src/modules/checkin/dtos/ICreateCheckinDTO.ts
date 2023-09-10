@@ -4,5 +4,5 @@ export interface ICreateCheckinDTO {
   id?: string;
   status?: Status;
   userId: string;
-  menuId: string;
+  mealId: string;
 }

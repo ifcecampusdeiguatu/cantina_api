@@ -20,7 +20,7 @@ export class CheckinRepository implements ICheckinRepository {
   async create({
     id = uuid(),
     status,
-    menuId,
+    mealId,
     userId,
   }: ICreateCheckinDTO): Promise<void> {
     const dateNow = new Date();
@@ -29,7 +29,7 @@ export class CheckinRepository implements ICheckinRepository {
       data: {
         id,
         status,
-        menuId,
+        mealId,
         userId,
         createdAt: dateNow,
         updatedAt: dateNow,

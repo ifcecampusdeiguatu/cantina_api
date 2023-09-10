@@ -5,14 +5,14 @@ import { CreateCheckinUseCase } from "./CreateCheckinUseCase";
 
 export class CreateCheckinController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id, status, menuId } = request.body;
+    const { id, status, mealId } = request.body;
     const { userid: userId } = request.headers;
 
     const createCheckinUseCase = container.resolve(CreateCheckinUseCase);
 
     try {
       if (typeof userId === "string") {
-        await createCheckinUseCase.execute({ id, status, menuId, userId });
+        await createCheckinUseCase.execute({ id, status, mealId, userId });
       }
 
       return response.status(201).send();

@@ -6,7 +6,7 @@ import { Status } from "@modules/checkin/types";
 interface IRequest {
   id?: string;
   status: Status;
-  menuId: string;
+  mealId: string;
   userId: string;
 }
 
@@ -17,7 +17,7 @@ export class CreateCheckinUseCase {
     private checkinRepository: ICheckinRepository
   ) {}
 
-  async execute({ id, status, menuId, userId }: IRequest) {
-    await this.checkinRepository.create({ id, status, menuId, userId });
+  async execute({ id, status, mealId, userId }: IRequest) {
+    await this.checkinRepository.create({ id, status, mealId, userId });
   }
 }
