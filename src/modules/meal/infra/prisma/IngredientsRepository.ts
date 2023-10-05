@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { inject, injectable } from "tsyringe";
 
-import { ICreateIngredientsDTO } from "@modules/menu/dtos/ICreateIngredientsDTO";
-import { IIngredientsRepository } from "@modules/menu/repositories/IIngredientsReposirory";
+import { ICreateIngredientsDTO } from "@modules/meal/dtos/ICreateIngredientsDTO";
+import { IIngredientsRepository } from "@modules/meal/repositories/IIngredientsReposirory";
 import { PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 

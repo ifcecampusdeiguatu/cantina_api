@@ -21,11 +21,22 @@ export class DayjsProvider implements IDateProvider {
     return dayjs(end_date_utc).diff(start_date_utc, "hours");
   }
 
+  compareInMinutes(start_date: Date, end_date: Date): number {
+    const end_date_utc = this.convertToUTC(end_date);
+    const start_date_utc = this.convertToUTC(start_date);
+
+    return dayjs(end_date_utc).diff(start_date_utc, "minutes");
+  }
+
   compareInDays(start_date: Date, end_date: Date): number {
     const end_date_utc = this.convertToUTC(end_date);
     const start_date_utc = this.convertToUTC(start_date);
 
     return dayjs(end_date_utc).diff(start_date_utc, "days");
+  }
+
+  setHours(start_date: Date,{hours= 0, minutes= 0, seconds= 0}): Date {
+    return dayjs(start_date).hour(hours).minute(minutes).second(seconds).toDate();
   }
 
   addDays(days: number): Date {

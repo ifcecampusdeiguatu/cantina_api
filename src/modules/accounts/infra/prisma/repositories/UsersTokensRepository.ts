@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { ICreateUserRefreshTokenDTO } from "@modules/accounts/dtos/usersTokens/ICreateUserRefreshTokenDTO";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
-import { PrismaClient, UsersTokens } from "@prisma/client";
+import { PrismaClient, User, UsersTokens } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
 @injectable()
@@ -20,10 +20,9 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     userId,
     expiresDate,
     refreshToken,
-    token,
   }: ICreateUserRefreshTokenDTO): Promise<UsersTokens> {
     const userToken = await this.repository.usersTokens.create({
-      data: { userId, expiresDate, refreshToken, token },
+      data: { userId, expiresDate, refreshToken },
     });
 
     return userToken;
@@ -38,6 +37,9 @@ export class UsersTokensRepository implements IUsersTokensRepository {
         userId,
         refreshToken,
       },
+      include: {
+        user: true
+      }
     });
 
     return userToken;
@@ -49,15 +51,5 @@ export class UsersTokensRepository implements IUsersTokensRepository {
         id,
       },
     });
-  }
-
-  async findByToken(token: string): Promise<UsersTokens> {
-    const userToken = await this.repository.usersTokens.findFirst({
-      where: {
-        token,
-      },
-    });
-
-    return userToken;
   }
 }

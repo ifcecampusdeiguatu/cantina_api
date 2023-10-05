@@ -14,7 +14,9 @@ import { IServidoresRepository } from "@modules/accounts/repositories/IServidore
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { CheckinRepository } from "@modules/checkin/infra/prisma/repositories/CheckinRepository";
+import { CheckinTokensRepository } from "@modules/checkin/infra/prisma/repositories/CheckinTokensRepository";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
+import { ICheckinTokensRepository } from "@modules/checkin/repositories/ICheckinTokensRepository";
 import { CursosRepository } from "@modules/cursos/infra/prisma/repositories/CursosRepository";
 import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { LocationsRepository } from "@modules/locations/infra/prisma/LocationsRepository";
@@ -68,6 +70,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<ICheckinRepository>(
   "CheckinRepository",
   CheckinRepository
+);
+
+container.registerSingleton<ICheckinTokensRepository>(
+  "CheckinTokensRepository",
+  CheckinTokensRepository
 );
 
 container.registerSingleton<ICursosRepository>(

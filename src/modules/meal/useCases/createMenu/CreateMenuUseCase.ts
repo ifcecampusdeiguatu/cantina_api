@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
-import { Menu } from "@modules/menu/infra/entities/Menu";
-import { IMenuRepository } from "@modules/menu/repositories/IMenuRepository";
+import { Menu } from "@modules/meal/infra/entities/Menu";
+import { IMealRepository } from "@modules/meal/repositories/IMealRepository";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -13,14 +13,14 @@ interface IRequest {
 @injectable()
 export class CreateMenuUseCase {
   constructor(
-    @inject("MenuRepository")
-    private menuRepository: IMenuRepository,
+    @inject("MealRepository")
+    private mealRepository: IMealRepository,
     @inject("LocationsRepository")
     private locationsRepository: ILocationsRepository
   ) {}
 
   async execute({ schedule, localID }: IRequest): Promise<Menu> {
-    const menu = await this.menuRepository.findMenuBySchedule(schedule);
+    const menu = await this.mealRepository.findMealBySchedule(schedule);
 
     if (menu) {
       throw new AppError("There is already a scheduled menu", 400);
@@ -32,6 +32,6 @@ export class CreateMenuUseCase {
       throw new AppError("Local not found", 404);
     }
 
-    return this.menuRepository.create({ schedule, localID });
+    return this.mealRepository.create({ schedule, localID });
   }
 }

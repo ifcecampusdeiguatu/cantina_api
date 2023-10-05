@@ -21,8 +21,7 @@ enum Status {
 }
 
 model CheckinToken {
-  id           String  @id @default(uuid())
-  token        String  @default(uuid())
+  token        String  @id @unique
   checkin_code String  @db.VarChar(6)
   checkin      Checkin @relation(fields: [checkinId], references: [id])
   checkinId    String  @unique @map("checkin_id")
@@ -33,6 +32,7 @@ model Checkin {
   status       Status         @default(reseved)
   createdAt    DateTime       @db.Timestamp(6)
   updatedAt    DateTime       @db.Timestamp(6)
+  expiresDate  DateTime       @db.Timestamp(6)
   user         User           @relation(fields: [userId], references: [id])
   userId       String         @map("user_id")
   meal         Meal           @relation(fields: [mealId], references: [id])
@@ -167,7 +167,6 @@ model Local {
 model UsersTokens {
   id           String   @id @default(uuid())
   refreshToken String
-  token        String
   expiresDate  DateTime @db.Timestamp(6)
   user         User     @relation(fields: [userId], references: [id])
   userId       String

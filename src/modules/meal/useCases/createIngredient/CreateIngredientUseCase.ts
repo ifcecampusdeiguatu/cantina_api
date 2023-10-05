@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { Ingredient } from "@modules/menu/infra/entities/Ingredients";
-import { IIngredientsRepository } from "@modules/menu/repositories/IIngredientsReposirory";
+import { Ingredient } from "@modules/meal/infra/entities/Ingredients";
+import { IIngredientsRepository } from "@modules/meal/repositories/IIngredientsReposirory";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {

@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
-import { IAddIngredientToFoodDTO } from "@modules/menu/dtos/IAddIngredientToFoodDTO";
-import { Food } from "@modules/menu/infra/entities/Food";
-import { IFoodsRepository } from "@modules/menu/repositories/IFoodsRepository";
-import { IIngredientsRepository } from "@modules/menu/repositories/IIngredientsReposirory";
+import { IAddIngredientToFoodDTO } from "@modules/meal/dtos/IAddIngredientToFoodDTO";
+import { Food } from "@modules/meal/infra/entities/Food";
+import { IFoodsRepository } from "@modules/meal/repositories/IFoodsRepository";
+import { IIngredientsRepository } from "@modules/meal/repositories/IIngredientsReposirory";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()

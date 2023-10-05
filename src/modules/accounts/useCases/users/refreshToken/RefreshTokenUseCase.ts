@@ -13,6 +13,11 @@ interface ITokens {
 
 interface IPayload {
   sub: string;
+  user: {
+    email: string;
+    type: "aluno" | "servidor" | "funcionario";
+    matricula?: string;
+  }
 }
 
 @injectable()
@@ -25,12 +30,10 @@ export class RefreshTokenUseCase {
   ) {}
 
   async execute(refreshToken: string): Promise<ITokens> {
-    const { sub: userId } = verify(
+    const { sub: userId, user } = verify(
       refreshToken,
       auth.secret_refresh_token
     ) as IPayload;
-
-    console.log(userId);
 
     const userToken =
       await this.usersTokensRepository.findByUserIdAndRefreshToken({
@@ -44,12 +47,14 @@ export class RefreshTokenUseCase {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const token = sign({}, auth.secret_token, {
+    const tokenData = user.matricula ? {email: user.email, type: user.type, matricula: user.matricula} : {email: user.email, type: user.type};
+
+    const token = sign({user: {...tokenData}}, auth.secret_token, {
       subject: userToken.userId,
       expiresIn: auth.expires_in_token,
     });
-
-    const newRefreshToken = sign({}, auth.secret_refresh_token, {
+    
+    const newRefreshToken = sign({user: {...tokenData}}, auth.secret_refresh_token, {
       subject: userToken.userId,
       expiresIn: auth.expires_in_refresh_token,
     });
@@ -62,7 +67,6 @@ export class RefreshTokenUseCase {
       userId,
       expiresDate: refreshTokenExpireDate,
       refreshToken: newRefreshToken,
-      token,
     });
 
     return {

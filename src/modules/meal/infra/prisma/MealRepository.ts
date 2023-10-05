@@ -6,8 +6,6 @@ import { IMealRepository } from "@modules/meal/repositories/IMealRepository";
 import { Meal, PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
-import { Menu } from "../entities/Menu";
-
 @injectable()
 export class MealRepository implements IMealRepository {
   repository: PrismaClient;
@@ -16,9 +14,6 @@ export class MealRepository implements IMealRepository {
     private prisma: IPrismaService
   ) {
     this.repository = prisma.getConnection();
-  }
-  findMealBySchedule(schedule: Date): Promise<Meal> {
-    throw new Error(`Method not implemented.${schedule.toString()}`);
   }
 
   findMealById(id: string): Promise<Meal> {
@@ -41,7 +36,7 @@ export class MealRepository implements IMealRepository {
     return menu;
   }
 
-  async findMenuBySchedule(schedule: Date): Promise<Menu> {
+  async findMealBySchedule(schedule: Date): Promise<Meal> {
     return this.repository.meal.findFirst({ where: { schedule } });
   }
 }

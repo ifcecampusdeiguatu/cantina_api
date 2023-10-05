@@ -5,4 +5,5 @@ export interface ICreateCheckinDTO {
   status?: Status;
   userId: string;
   mealId: string;
+  expiresDate: Date;
 }

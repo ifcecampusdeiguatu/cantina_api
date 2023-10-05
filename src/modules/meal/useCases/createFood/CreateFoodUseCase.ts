@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { Food } from "@modules/menu/infra/entities/Food";
-import { IFoodsRepository } from "@modules/menu/repositories/IFoodsRepository";
+import { Food } from "@modules/meal/infra/entities/Food";
+import { IFoodsRepository } from "@modules/meal/repositories/IFoodsRepository";
 
 interface IRequest {
   name: string;

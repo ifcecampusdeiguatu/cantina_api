@@ -1,13 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
-import { container } from "tsyringe";
 
 import auth from "@config/auth";
-import { UsersTokensRepository } from "@modules/accounts/infra/prisma/repositories/UsersTokensRepository";
 import { AppError } from "@shared/errors/AppError";
+import { Type } from "@prisma/client";
 
 interface IPayload {
   sub: string;
+  user: {
+    email: string;
+    type: "aluno" | "servidor" | "funcionario";
+    matricula?: string;
+  }
 }
 
 export async function ensureAuthenticate(
@@ -17,8 +21,6 @@ export async function ensureAuthenticate(
 ) {
   const authHeader = request.headers.authorization;
 
-  const usersTokensRepository = container.resolve(UsersTokensRepository);
-
   if (!authHeader) {
     throw new AppError("Token faltando");
   }
@@ -26,20 +28,16 @@ export async function ensureAuthenticate(
   const token = authHeader.split(" ")[1];
 
   try {
-    const { sub: userId } = verify(token, auth.secret_token) as IPayload;
-
-    const userToken = await usersTokensRepository.findByToken(token);
-
-    if (!userToken) {
-      throw new AppError("Token inválido", 401);
-    }
+    const { sub: userId, user } = verify(token, auth.secret_token) as IPayload;
 
     request.user = {
-      id: userId,
+      id: userId, 
+      type: user.type
     };
 
     next();
-  } catch {
+  } catch(err) {
+    console.log(err);
     throw new AppError("Token inválido", 401);
   }
 

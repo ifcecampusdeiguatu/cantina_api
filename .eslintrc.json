@@ -26,6 +26,7 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
+        "allowForLoopAfterthoughts": true,
         "selector": "interface",
         "format": [
           "PascalCase"
