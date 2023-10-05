@@ -9,6 +9,7 @@ import { GetCheckinTokenController } from "@modules/checkin/useCases/getCheckinT
 import { UpdateStatusController } from "@modules/checkin/useCases/updateStatus/UpdateStatusController";
 import { ensureFuncionario } from "../middlewares/ensureFuncionario";
 import { GetCheckinByCodeController } from "@modules/checkin/useCases/getCheckinByCode/GetCheckinByCodeController";
+import { CreateCheckinCodeController } from "@modules/checkin/useCases/createCheckinCode/CreateCheckinCodeController";
 
 const createCheckinController = new CreateCheckinController();
 const listCheckinsController = new ListCheckinsController();
@@ -16,6 +17,7 @@ const createCheckinTokenController = new CreateCheckinTokenController();
 const getCheckinTokenController = new GetCheckinTokenController();
 const updateStatusController = new UpdateStatusController();
 const getCheckinByCodeController = new GetCheckinByCodeController();
+const createCheckinCodeController = new CreateCheckinCodeController();
 
 const checkinRoutes = Router();
 
@@ -29,6 +31,7 @@ checkinRoutes.post("/token", createCheckinTokenController.handle);
 checkinRoutes.get("/token/:id", getCheckinTokenController.handle);
 
 checkinRoutes.get("/verify", getCheckinByCodeController.handle);
+checkinRoutes.post("/verify", createCheckinCodeController.handle);
 
 
 
