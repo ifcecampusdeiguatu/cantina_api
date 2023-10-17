@@ -21,12 +21,12 @@ import { CursosRepository } from "@modules/cursos/infra/prisma/repositories/Curs
 import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { LocationsRepository } from "@modules/locations/infra/prisma/LocationsRepository";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
-import { FoodsRepository } from "@modules/meal/infra/prisma/FoodsRepository";
+import { DishesRepository } from "@modules/meal/infra/prisma/DishesRepository";
 import { IngredientsRepository } from "@modules/meal/infra/prisma/IngredientsRepository";
-import { MealRepository } from "@modules/meal/infra/prisma/MealRepository";
-import { IFoodsRepository } from "@modules/meal/repositories/IFoodsRepository";
+import { MealsRepository } from "@modules/meal/infra/prisma/MealsRepository";
+import { IDishesRepository } from "@modules/meal/repositories/IDishesRepository";
 import { IIngredientsRepository } from "@modules/meal/repositories/IIngredientsReposirory";
-import { IMealRepository } from "@modules/meal/repositories/IMealRepository";
+import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
 import { TurmasRepository } from "@modules/turmas/infra/prisma/repositories/TurmasRepository";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 
@@ -50,12 +50,15 @@ container.registerSingleton<IIngredientsRepository>(
   IngredientsRepository
 );
 
-container.registerSingleton<IFoodsRepository>(
-  "FoodsRepository",
-  FoodsRepository
+container.registerSingleton<IDishesRepository>(
+  "DishesRepository",
+  DishesRepository
 );
 
-container.registerSingleton<IMealRepository>("MealRepository", MealRepository);
+container.registerSingleton<IMealsRepository>(
+  "MealsRepository",
+  MealsRepository
+);
 
 container.registerSingleton<ILocationsRepository>(
   "LocationsRepository",

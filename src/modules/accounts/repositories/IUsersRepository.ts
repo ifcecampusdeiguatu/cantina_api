@@ -1,6 +1,5 @@
-import { User } from "@prisma/client";
-
 import { ICreateUserDTO } from "../dtos/users/ICreateUserDTO";
+import { User } from "../infra/entities/User";
 import { ParsedUser } from "../mappers/UserMap";
 
 export interface IUsersRepository {

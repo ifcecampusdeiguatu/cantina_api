@@ -5,19 +5,19 @@ services:
     env_file:
       - .env
     image: "postgres"
-    container_name: cantina_api
+    container_name: sisref
     restart: always
     expose:
-      - ${PORT_DATABASE}
+      - ${DOCKER_PORT_DATABASE}
     ports:
-      - "${PORT_DATABASE}:${PORT_DATABASE}"
+      - "${DOCKER_PORT_DATABASE}:${DOCKER_PORT_DATABASE}"
     environment:
-      POSTGRES_USER: "${USER_DATABASE}"
-      POSTGRES_PASSWORD: "${PASSWORD_DATABASE}"
-      POSTGRES_DB: cantinadb
+      POSTGRES_USER: "${DOCKER_USER_DATABASE}"
+      POSTGRES_PASSWORD: "${DOCKER_PASSWORD_DATABASE}"
+      POSTGRES_DB: sisrefdb
     volumes:
       - pgdata:/data/ifce/postgres
-    command: -p ${PORT_DATABASE}
+    command: -p ${DOCKER_PORT_DATABASE}
 
 volumes:
   pgdata:

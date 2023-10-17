@@ -1,28 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
-import { IAddIngredientToFoodDTO } from "@modules/meal/dtos/IAddIngredientToFoodDTO";
-import { Food } from "@modules/meal/infra/entities/Food";
-import { IFoodsRepository } from "@modules/meal/repositories/IFoodsRepository";
+import { IAddIngredientToDishDTO } from "@modules/meal/dtos/IAddIngredientToDishDTO";
+import { Dish } from "@modules/meal/infra/entities/Dish";
+import { IDishesRepository } from "@modules/meal/repositories/IDishesRepository";
 import { IIngredientsRepository } from "@modules/meal/repositories/IIngredientsReposirory";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
-export class AddIngredientToFoodUseCase {
+export class AddIngredientToDishUseCase {
   constructor(
-    @inject("FoodsRepository")
-    private foodsRepository: IFoodsRepository,
+    @inject("DishesRepository")
+    private dishesRepository: IDishesRepository,
     @inject("IngredientsRepository")
     private ingredientsRepository: IIngredientsRepository
   ) {}
 
   async execute({
-    foodID,
+    dishID,
     ingredientID,
-  }: IAddIngredientToFoodDTO): Promise<Food> {
-    const food = await this.foodsRepository.findFoodById(foodID);
+  }: IAddIngredientToDishDTO): Promise<Dish> {
+    const dish = await this.dishesRepository.findDishById(dishID);
 
-    if (!food) {
-      throw new AppError("Food not found", 404);
+    if (!dish) {
+      throw new AppError("Dish not found", 404);
     }
 
     const ingredient = await this.ingredientsRepository.findIngredientByID(
@@ -33,8 +33,8 @@ export class AddIngredientToFoodUseCase {
       throw new AppError("Ingredient not found", 404);
     }
 
-    return this.foodsRepository.addIngredientToFood({
-      foodID,
+    return this.dishesRepository.addIngredientToDish({
+      dishID,
       ingredientID,
     });
   }

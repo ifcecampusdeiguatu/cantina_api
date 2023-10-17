@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { AddIngredientToFoodUseCase } from "./AddIngredientToFoodUseCase";
+import { AddIngredientToDishUseCase } from "./AddIngredientToDishUseCase";
 
-export class AddIngredientToFoodController {
+export class AddIngredientToDishController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { ingredient_id: ingredientID } = request.body;
-    const { food: foodID } = request.params;
+    const { dish: dishID } = request.params;
 
-    const addIngredientFoodToUseCase = container.resolve(
-      AddIngredientToFoodUseCase
+    const addIngredientDishToUseCase = container.resolve(
+      AddIngredientToDishUseCase
     );
 
     try {
-      const food = await addIngredientFoodToUseCase.execute({
-        foodID,
+      const dish = await addIngredientDishToUseCase.execute({
+        dishID,
         ingredientID,
       });
 
-      return response.status(203).json(food);
+      return response.status(203).json(dish);
     } catch (error) {
       return response.status(error.statusCode).json({ error: error.message });
     }

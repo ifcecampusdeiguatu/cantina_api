@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User } from "../infra/entities/User";
 
 export type ParsedUser = {
   id: string;

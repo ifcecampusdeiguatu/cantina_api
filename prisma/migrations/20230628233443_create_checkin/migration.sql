@@ -3,7 +3,7 @@
 
   - You are about to drop the column `confirmar_intencao` on the `Checkin` table. All the data in the column will be lost.
   - You are about to drop the column `intencao` on the `Checkin` table. All the data in the column will be lost.
-  - The primary key for the `foods` table will be changed. If it partially fails, the table could be left without primary key constraint.
+  - The primary key for the `dishes` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - The primary key for the `ingredients` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - The primary key for the `locations` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - The primary key for the `menu` table will be changed. If it partially fails, the table could be left without primary key constraint.
@@ -41,10 +41,10 @@ ALTER TABLE "RefeicoesCheckin" DROP CONSTRAINT "RefeicoesCheckin_checkinId_fkey"
 ALTER TABLE "RefeicoesCheckin" DROP CONSTRAINT "RefeicoesCheckin_refeicaoId_fkey";
 
 -- DropForeignKey
-ALTER TABLE "_FoodToIngredient" DROP CONSTRAINT "_FoodToIngredient_A_fkey";
+ALTER TABLE "_DishToIngredient" DROP CONSTRAINT "_DishToIngredient_A_fkey";
 
 -- DropForeignKey
-ALTER TABLE "_FoodToIngredient" DROP CONSTRAINT "_FoodToIngredient_B_fkey";
+ALTER TABLE "_DishToIngredient" DROP CONSTRAINT "_DishToIngredient_B_fkey";
 
 -- DropIndex
 DROP INDEX "Checkin_confirmar_intencao_key";
@@ -57,13 +57,13 @@ ADD COLUMN     "status" "Status" NOT NULL DEFAULT 'reseved',
 ADD COLUMN     "user_id" TEXT NOT NULL;
 
 -- AlterTable
-ALTER TABLE "_FoodToIngredient" ALTER COLUMN "A" SET DATA TYPE TEXT,
+ALTER TABLE "_DishToIngredient" ALTER COLUMN "A" SET DATA TYPE TEXT,
 ALTER COLUMN "B" SET DATA TYPE TEXT;
 
 -- AlterTable
-ALTER TABLE "foods" DROP CONSTRAINT "foods_pkey",
+ALTER TABLE "dishes" DROP CONSTRAINT "dishes_pkey",
 ALTER COLUMN "id" SET DATA TYPE TEXT,
-ADD CONSTRAINT "foods_pkey" PRIMARY KEY ("id");
+ADD CONSTRAINT "dishes_pkey" PRIMARY KEY ("id");
 
 -- AlterTable
 ALTER TABLE "ingredients" DROP CONSTRAINT "ingredients_pkey",
@@ -102,7 +102,7 @@ ALTER TABLE "Checkin" ADD CONSTRAINT "Checkin_user_id_fkey" FOREIGN KEY ("user_i
 ALTER TABLE "Checkin" ADD CONSTRAINT "Checkin_menu_id_fkey" FOREIGN KEY ("menu_id") REFERENCES "menu"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FoodToIngredient" ADD CONSTRAINT "_FoodToIngredient_A_fkey" FOREIGN KEY ("A") REFERENCES "foods"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_DishToIngredient" ADD CONSTRAINT "_DishToIngredient_A_fkey" FOREIGN KEY ("A") REFERENCES "dishes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FoodToIngredient" ADD CONSTRAINT "_FoodToIngredient_B_fkey" FOREIGN KEY ("B") REFERENCES "ingredients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_DishToIngredient" ADD CONSTRAINT "_DishToIngredient_B_fkey" FOREIGN KEY ("B") REFERENCES "ingredients"("id") ON DELETE CASCADE ON UPDATE CASCADE;

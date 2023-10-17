@@ -1,4 +1,5 @@
 export interface ICreateMealDTO {
   schedule: Date;
-  localID: string;
+  localId: string;
+  dishId: string;
 }

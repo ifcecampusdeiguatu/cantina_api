@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import { Status } from "@modules/checkin/types";
 
 export class Checkin {
@@ -5,6 +7,13 @@ export class Checkin {
   status: Status;
   createdAt: Date;
   updatedAt: Date;
+  expiresDate: Date;
   userId: string;
-  menuId: string;
+  mealId: string;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
 }

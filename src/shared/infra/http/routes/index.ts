@@ -4,7 +4,7 @@ import { accountsRoutes } from "./accounts.routes";
 import { authenticateRoutes } from "./authenticate.routes";
 import { checkinRoutes } from "./checkin.routes";
 import { cursosRoutes } from "./cursos.routes";
-import { foodsRoutes } from "./foods.routes";
+import { dishesRoutes } from "./dishes.routes";
 import { ingredientsRoutes } from "./ingredients.routes";
 import { locationsRoutes } from "./locations.routes";
 import { menuRoutes } from "./menu.routes";
@@ -14,7 +14,7 @@ const router = Router();
 
 router.use("/accounts", accountsRoutes);
 router.use("/ingredients", ingredientsRoutes);
-router.use("/foods", foodsRoutes);
+router.use("/dishes", dishesRoutes);
 router.use("/locations", locationsRoutes);
 router.use("/menu", menuRoutes);
 router.use("/checkin", checkinRoutes);

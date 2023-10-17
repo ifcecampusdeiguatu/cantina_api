@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-import { AddIngredientToFoodController } from "@modules/meal/useCases/addIngredientToFood/AddIngredientToFoodController";
-import { CreateFoodController } from "@modules/meal/useCases/createFood/CreateFoodController";
+import { AddIngredientToDishController } from "@modules/meal/useCases/addIngredientToDish/AddIngredientToDishController";
+import { CreateDishController } from "@modules/meal/useCases/createDish/CreateDishController";
 
-const createFoodController = new CreateFoodController();
-const addIngredientToFoodController = new AddIngredientToFoodController();
+const createDishController = new CreateDishController();
+const addIngredientToDishController = new AddIngredientToDishController();
 
-const foodsRoutes = Router();
+const dishesRoutes = Router();
 
-foodsRoutes.post("/", createFoodController.handle);
-foodsRoutes.post("/:food/ingredients", addIngredientToFoodController.handle);
+dishesRoutes.post("/", createDishController.handle);
+dishesRoutes.post("/:dish/ingredients", addIngredientToDishController.handle);
 
-export { foodsRoutes };
+export { dishesRoutes };

@@ -15,22 +15,15 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "eslint-plugin-import-helpers",
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["eslint-plugin-import-helpers", "@typescript-eslint", "prettier"],
   "rules": {
     "camelcase": "off",
     "import/no-unresolved": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "allowForLoopAfterthoughts": true,
         "selector": "interface",
-        "format": [
-          "PascalCase"
-        ],
+        "format": ["PascalCase"],
         "custom": {
           "regex": "^I[A-Z]",
           "match": true
@@ -55,28 +48,13 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          "module",
-          "/^@/",
-          [
-            "parent",
-            "sibling",
-            "index"
-          ]
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "ignoreCase": true
-        }
+        "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ],
     "import/no-extraneous-dependencies": [
       "error",
-      {
-        "devDependencies": [
-          "**/*.spec.js"
-        ]
-      }
+      { "devDependencies": ["**/*.spec.js"] }
     ],
     "prettier/prettier": "error",
     "no-use-before-define": "off"

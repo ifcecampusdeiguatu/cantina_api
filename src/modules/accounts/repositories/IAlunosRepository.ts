@@ -1,7 +1,6 @@
-import { Aluno } from "@prisma/client";
-
 import { ICreateAlunosDTO } from "../dtos/alunos/ICreateAlunosDTO";
 import { IUpdateAlunoDTO } from "../dtos/alunos/IUpdateAlunoDTO";
+import { Aluno } from "../infra/entities/Aluno";
 
 export interface IAlunosRepository {
   create({

@@ -22,7 +22,7 @@ ALTER TABLE "AlunosCheckin" ADD COLUMN     "userId" TEXT;
 ALTER TABLE "AlunosRefeicoes" ADD COLUMN     "userId" TEXT;
 
 -- AlterTable
-ALTER TABLE "foods" ALTER COLUMN "createdAt" DROP NOT NULL,
+ALTER TABLE "dishes" ALTER COLUMN "createdAt" DROP NOT NULL,
 ALTER COLUMN "updatedAt" DROP NOT NULL;
 
 -- AlterTable

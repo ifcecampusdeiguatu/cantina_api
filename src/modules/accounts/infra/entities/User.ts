@@ -1,10 +1,8 @@
 import { v4 as uuid } from "uuid";
 
-enum Type {
-  aluno = 1,
-  servidor,
-  funcionario,
-}
+import { Aluno } from "./Aluno";
+
+type Type = "aluno" | "funcionario" | "servidor";
 
 export class User {
   id?: string;
@@ -13,6 +11,8 @@ export class User {
   type: Type;
   createdAt: Date;
   updatedAt: Date;
+
+  alunos?: Array<Aluno>;
 
   constructor() {
     if (this.id == null) {
