@@ -8,16 +8,14 @@ export class CheckinRepositoryInMemory implements ICheckinRepository {
   checkins: Checkin[] = [];
 
   async create({
-    id,
-    status,
     mealId,
     userId,
+    status,
     expiresDate,
-  }: ICreateCheckinDTO): Promise<void> {
+  }: ICreateCheckinDTO): Promise<Checkin> {
     const checkin = new Checkin();
 
     Object.assign(checkin, {
-      id,
       status,
       mealId,
       userId,
@@ -25,6 +23,8 @@ export class CheckinRepositoryInMemory implements ICheckinRepository {
     });
 
     this.checkins.push(checkin);
+
+    return checkin;
   }
 
   async list(): Promise<Checkin[]> {

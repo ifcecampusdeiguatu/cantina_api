@@ -1,16 +1,9 @@
-import { Checkin } from "@prisma/client";
-
 import { ICreateCheckinDTO } from "../dtos/ICreateCheckinDTO";
 import { IUpdateStatusCheckinDTO } from "../dtos/IUpdateStatusCheckinDTO";
+import { Checkin } from "../infra/entities/Checkin";
 
 export interface ICheckinRepository {
-  create({
-    id,
-    status,
-    mealId,
-    userId,
-    expiresDate,
-  }: ICreateCheckinDTO): Promise<void>;
+  create({ ...data }: ICreateCheckinDTO): Promise<Checkin>;
   list(): Promise<Checkin[]>;
   findById(id: string): Promise<Checkin>;
   updateStatus({ id, status }: IUpdateStatusCheckinDTO): Promise<void>;

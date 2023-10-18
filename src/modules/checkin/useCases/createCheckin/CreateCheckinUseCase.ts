@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { Checkin } from "@modules/checkin/infra/entities/Checkin";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
 import { Status } from "@modules/checkin/types";
 import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
@@ -24,11 +25,19 @@ export class CreateCheckinUseCase {
     private dayjsProvider: IDateProvider
   ) {}
 
-  async execute({ id, status, mealId, userId }: IRequest) {
+  async execute({ id, mealId, status, userId }: IRequest): Promise<Checkin> {
     const meal = await this.MealsRepository.findMealById(mealId);
 
-    const dateNow = this.dayjsProvider.dateNow();
-    const expiresDate = this.dayjsProvider.setHours(dateNow, {
+    const dateNow = new Date();
+
+    const daysToExpires = this.dayjsProvider.compareInDays(
+      new Date(),
+      meal.schedule
+    );
+
+    const lastDay = this.dayjsProvider.addDays(dateNow, daysToExpires - 1);
+
+    const expiresDate = this.dayjsProvider.setHours(lastDay, {
       hours: 23,
       minutes: 59,
       seconds: 59,
@@ -38,21 +47,23 @@ export class CreateCheckinUseCase {
       throw new AppError("Meal not found");
     }
 
-    const compareDays = this.dayjsProvider.compareInDays(
-      dateNow,
-      meal.schedule
-    );
+    // const compareDays = this.dayjsProvider.compareInDays(
+    //   dateNow,
+    //   meal.schedule
+    // );
 
-    if (compareDays === 0 || compareDays > 1) {
-      throw new AppError("Checkin não está disponível", 400);
-    }
+    // if (compareDays === 0 || compareDays > 1) {
+    //   throw new AppError("Checkin não está disponível", 400);
+    // }
 
-    await this.checkinRepository.create({
+    const checkin = await this.checkinRepository.create({
       id,
-      status,
       mealId,
       userId,
+      status,
       expiresDate,
     });
+
+    return checkin;
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { AddIngredientToDishController } from "@modules/meal/useCases/addIngredientToDish/AddIngredientToDishController";
+import { AddIngredientToDishController } from "@modules/meal/useCases/addIngredientToFood/AddIngredientToFoodController";
 import { CreateDishController } from "@modules/meal/useCases/createDish/CreateDishController";
 
 const createDishController = new CreateDishController();
