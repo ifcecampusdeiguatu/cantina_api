@@ -9,6 +9,7 @@ import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
 import { MealsRepositoryInMemory } from "@modules/meal/repositories/in-memory/MealRepositoryInMemory";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { DayjsProvider } from "@shared/container/providers/DateProvider/implementations/DayjsProvider";
+import { AppError } from "@shared/errors/AppError";
 
 import { CreateCheckinUseCase } from "./CreateCheckinUseCase";
 
@@ -30,8 +31,10 @@ describe("Create a checkin", () => {
   });
 
   it("should be able create a checkin", async () => {
+    const schedule = dayjsProvider.addDays(new Date(), 2);
+
     const meal = await mealsRepositoryInMemory.create({
-      schedule: new Date("2023-10-18T19:49:33.899Z"),
+      schedule,
       dishId: "id_fake",
       localId: "local_fake",
     });
@@ -90,5 +93,23 @@ describe("Create a checkin", () => {
     for (let count = 0; count < checkins.length; count += 1) {
       expect(checkins[count].expiresDate).toEqual(expiresDates[count]);
     }
+  });
+
+  it("Check-in should not be carried out from the date of creation or after the day of the meal", async () => {
+    const schedule = new Date("2023-10-18T19:49:33.899Z");
+
+    const meal = await mealsRepositoryInMemory.create({
+      schedule,
+      dishId: "id_fake",
+      localId: "local_fake",
+    });
+
+    await expect(
+      createCheckinUseCase.execute({
+        mealId: meal.id,
+        status: "reseved",
+        userId: "user_fake",
+      })
+    ).rejects.toEqual(new AppError("Meal unavailable for check in", 400));
   });
 });

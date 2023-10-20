@@ -47,14 +47,9 @@ export class CreateCheckinUseCase {
       throw new AppError("Meal not found");
     }
 
-    // const compareDays = this.dayjsProvider.compareInDays(
-    //   dateNow,
-    //   meal.schedule
-    // );
-
-    // if (compareDays === 0 || compareDays > 1) {
-    //   throw new AppError("Checkin não está disponível", 400);
-    // }
+    if (daysToExpires <= 0) {
+      throw new AppError("Meal unavailable for check in", 400);
+    }
 
     const checkin = await this.checkinRepository.create({
       id,
