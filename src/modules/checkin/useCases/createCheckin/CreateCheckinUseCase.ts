@@ -31,7 +31,7 @@ export class CreateCheckinUseCase {
     const dateNow = new Date();
 
     const daysToExpires = this.dayjsProvider.compareInDays(
-      new Date(),
+      dateNow,
       meal.schedule
     );
 
