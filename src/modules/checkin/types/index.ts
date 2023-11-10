@@ -1,1 +1,1 @@
-export type Status = "reseved" | "done" | "canceled" | "lacked";
+export type Status = "reserved" | "done" | "canceled" | "lacked";

@@ -17,7 +17,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('reseved', 'done', 'canceled', 'lacked');
+CREATE TYPE "Status" AS ENUM ('reserved', 'done', 'canceled', 'lacked');
 
 -- DropForeignKey
 ALTER TABLE "AlunosCheckin" DROP CONSTRAINT "AlunosCheckin_checkinId_fkey";
@@ -53,7 +53,7 @@ DROP INDEX "Checkin_confirmar_intencao_key";
 ALTER TABLE "Checkin" DROP COLUMN "confirmar_intencao",
 DROP COLUMN "intencao",
 ADD COLUMN     "menu_id" TEXT NOT NULL,
-ADD COLUMN     "status" "Status" NOT NULL DEFAULT 'reseved',
+ADD COLUMN     "status" "Status" NOT NULL DEFAULT 'reserved',
 ADD COLUMN     "user_id" TEXT NOT NULL;
 
 -- AlterTable

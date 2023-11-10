@@ -14,7 +14,7 @@ enum Type {
 }
 
 enum Status {
-  reseved
+  reserved
   done
   canceled
   lacked
@@ -29,7 +29,7 @@ model CheckinToken {
 
 model Checkin {
   id           String         @id @default(uuid())
-  status       Status         @default(reseved)
+  status       Status         @default(reserved)
   createdAt    DateTime       @db.Timestamp(6)
   updatedAt    DateTime       @db.Timestamp(6)
   expiresDate  DateTime       @db.Timestamp(6)
