@@ -123,4 +123,36 @@ describe("Create a checkin", () => {
       })
     ).rejects.toEqual(new AppError("Meal unavailable for check in", 400));
   });
+
+  it("should not be possible to create a check-in after the fifth day of the current date", async () => {
+    const month = String(date.month).padStart(2, "0");
+    const day = (add = 0) => String(date.day + add).padStart(2, "0");
+
+    const schedule = new Date(`2023-${month}-${day(6)}T23:40:00.000Z`);
+
+    const meal = await mealsRepositoryInMemory.create({
+      schedule,
+      dishId: "id_fake",
+      localId: "local_fake",
+    });
+
+    const checkin = await createCheckinUseCase.execute(
+      {
+        mealId: meal.id,
+        status: "reserved",
+        userId: "user_fake",
+      },
+      new Date(`2023-${month}-${day(1)}T11:40:00.000Z`)
+    );
+
+    await expect(
+      createCheckinUseCase.execute({
+        mealId: meal.id,
+        status: "reserved",
+        userId: "user_fake",
+      })
+    ).rejects.toEqual(new AppError("Meal not yet available for check-in", 400));
+
+    expect(checkin).toHaveProperty("id");
+  });
 });

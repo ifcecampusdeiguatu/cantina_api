@@ -28,18 +28,28 @@ model CheckinToken {
 }
 
 model Checkin {
-  id           String         @id @default(uuid())
-  status       Status         @default(reserved)
-  createdAt    DateTime       @db.Timestamp(6)
-  updatedAt    DateTime       @db.Timestamp(6)
-  expiresDate  DateTime       @db.Timestamp(6)
-  user         User           @relation(fields: [userId], references: [id])
-  userId       String         @map("user_id")
-  meal         Meal           @relation(fields: [mealId], references: [id])
-  mealId       String         @map("meal_id")
-  CheckinToken CheckinToken[]
+  id              String         @id @default(uuid())
+  status          Status         @default(reserved)
+  createdAt       DateTime       @db.Timestamp(6)
+  updatedAt       DateTime       @db.Timestamp(6)
+  expiresDate     DateTime       @db.Timestamp(6)
+  user            User           @relation(fields: [userId], references: [id])
+  userId          String         @map("user_id")
+  meal            Meal           @relation(fields: [mealId], references: [id])
+  mealId          String         @map("meal_id")
+  cancelCheckin   CancelCheckin? @relation(fields: [cancelCheckinId], references: [id])
+  cancelCheckinId String?        @unique
+  CheckinToken    CheckinToken[]
 
   @@map("checkin")
+}
+
+model CancelCheckin {
+  id        String   @id @unique
+  reason    String   @db.VarChar(255)
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
+  Checkin   Checkin?
 }
 
 model User {

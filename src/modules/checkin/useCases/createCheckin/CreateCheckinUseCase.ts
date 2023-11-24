@@ -25,10 +25,13 @@ export class CreateCheckinUseCase {
     private dayjsProvider: IDateProvider
   ) {}
 
-  async execute({ id, mealId, status, userId }: IRequest): Promise<Checkin> {
+  async execute(
+    { id, mealId, status, userId }: IRequest,
+    date_start?: Date
+  ): Promise<Checkin> {
     const meal = await this.MealsRepository.findMealById(mealId);
 
-    const dateNow = new Date();
+    const dateNow = date_start || new Date();
 
     const daysToExpires = this.dayjsProvider.compareInDays(
       dateNow,
@@ -49,6 +52,10 @@ export class CreateCheckinUseCase {
 
     if (daysToExpires <= 0) {
       throw new AppError("Meal unavailable for check in", 400);
+    }
+
+    if (daysToExpires > 5) {
+      throw new AppError("Meal not yet available for check-in");
     }
 
     const checkin = await this.checkinRepository.create({
