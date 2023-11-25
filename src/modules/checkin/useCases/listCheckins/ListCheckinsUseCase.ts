@@ -10,17 +10,33 @@ export class ListCheckinsUseCase {
     @inject("CheckinRepository")
     private checkinRepository: ICheckinRepository,
     @inject("DayjsProvider")
-    private dayjsProvider: IDateProvider,
+    private dayjsProvider: IDateProvider
   ) {}
 
   async execute(): Promise<Checkin[]> {
+    const updates: Array<Promise<void>> = [];
+
     const checkins = await this.checkinRepository.list();
 
-    for (const checkin of checkins) {
-      if(!this.dayjsProvider.compareIfBefore(new Date(), checkin.expiresDate)){
-        await this.checkinRepository.updateStatus({id: checkin.id, status:"lacked"});
+    for (let i = 0; i < checkins.length; i += 1) {
+      const isExpires = !this.dayjsProvider.compareIfBefore(
+        new Date(),
+        checkins[i].expiresDate
+      );
+
+      if (isExpires) {
+        checkins[i].status = "lacked";
+
+        updates.push(
+          this.checkinRepository.updateStatus({
+            id: checkins[i].id,
+            status: "lacked",
+          })
+        );
       }
     }
+
+    await Promise.all(updates);
 
     return this.checkinRepository.list();
   }
