@@ -27,4 +27,14 @@ export class MealsRepositoryInMemory implements IMealsRepository {
   async findMealById(id: string): Promise<Meal> {
     return this.meals.find((meal) => meal.id === id);
   }
+
+  async findLatest(): Promise<Meal[]> {
+    const meals = [...this.meals];
+
+    const m = meals
+      .sort((a, b) => b.schedule.getTime() - a.schedule.getTime())
+      .slice(0, 3);
+
+    return m;
+  }
 }

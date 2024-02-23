@@ -1,8 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
+import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
 import { Checkin } from "@prisma/client";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 export class ListCheckinsUseCase {
@@ -10,13 +12,24 @@ export class ListCheckinsUseCase {
     @inject("CheckinRepository")
     private checkinRepository: ICheckinRepository,
     @inject("DayjsProvider")
-    private dayjsProvider: IDateProvider
+    private dayjsProvider: IDateProvider,
+    @inject("MealsRepository")
+    private mealsRepository: IMealsRepository
   ) {}
 
   async execute(): Promise<Checkin[]> {
     const updates: Array<Promise<void>> = [];
 
+    const meals = await this.mealsRepository.findLatest();
     const checkins = await this.checkinRepository.list();
+
+    const didNotCheckin = meals.every(
+      (meal) => !checkins.some((checkin) => checkin.mealId === meal.id)
+    );
+
+    if (didNotCheckin) {
+      throw new AppError(`Deu erro`);
+    }
 
     for (let i = 0; i < checkins.length; i += 1) {
       const isExpires = !this.dayjsProvider.compareIfBefore(

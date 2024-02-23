@@ -22,6 +22,20 @@ const date = {
   day: dateNow.getDate(),
 };
 
+function calcDate(add = 0) {
+  const dayAdded = date.day + add;
+
+  return dayAdded > 30
+    ? {
+        d: String(dayAdded - 30).padStart(2, "0"),
+        m: String(date.month + 1).padStart(2, "0"),
+      }
+    : {
+        d: String(dayAdded).padStart(2, "0"),
+        m: String(date.month).padStart(2, "0"),
+      };
+}
+
 describe("Update Status UseCase", () => {
   beforeAll(() => {
     checkinRepositoryInMemoryUseCase = new CheckinRepositoryInMemory();
@@ -35,8 +49,7 @@ describe("Update Status UseCase", () => {
   });
 
   it("should be possible to cancel a checkin", async () => {
-    const month = String(date.month).padStart(2, "0");
-    const day = String(date.day + 3).padStart(2, "0");
+    const { d: day, m: month } = calcDate(3);
 
     const schedule = `2023-${month}-${day}T11:30:00.000Z`;
     const expiresDate = `2023-${month}-${day}T02:59:59.000Z`;

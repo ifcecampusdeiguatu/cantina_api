@@ -1,48 +1,61 @@
 import "reflect-metadata";
-import { Checkin } from "@modules/checkin/infra/entities/Checkin";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
 import { CheckinRepositoryInMemory } from "@modules/checkin/repositories/in-memory/CheckinRepositoryInMemory";
+import { Meal } from "@modules/meal/infra/entities/Meal";
+import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
+import { MealsRepositoryInMemory } from "@modules/meal/repositories/in-memory/MealRepositoryInMemory";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { DayjsProvider } from "@shared/container/providers/DateProvider/implementations/DayjsProvider";
+import { AppError } from "@shared/errors/AppError";
 
 import { ListCheckinsUseCase } from "./ListCheckinsUseCase";
 
+let dateNow: Date;
+
 let checkinRepositoryInMemory: ICheckinRepository;
+let mealsRepositoryInMemory: IMealsRepository;
 let dayjsProvider: IDateProvider;
 let listCheckinsUseCase: ListCheckinsUseCase;
 
 describe("List Checkins UseCase", () => {
   beforeEach(() => {
+    dateNow = new Date();
+
     checkinRepositoryInMemory = new CheckinRepositoryInMemory();
+    mealsRepositoryInMemory = new MealsRepositoryInMemory();
     dayjsProvider = new DayjsProvider();
     listCheckinsUseCase = new ListCheckinsUseCase(
       checkinRepositoryInMemory,
-      dayjsProvider
+      dayjsProvider,
+      mealsRepositoryInMemory
     );
   });
 
   it("should be able to list all checkins", async () => {
-    const promises: Array<Promise<Checkin>> = [];
-
-    const dateNow = new Date();
-
-    const checkins: Checkin[] = [];
+    const promises: Array<Promise<Meal>> = [];
 
     for (let i = 0; i < 5; i += 1) {
       promises.push(
-        checkinRepositoryInMemory.create({
-          mealId: `meal_id_${i}`,
-          expiresDate: dateNow,
-          userId: `user_id_${i}`,
-          status: "reserved",
+        mealsRepositoryInMemory.create({
+          dishId: `dish_id_${i}`,
+          localId: `local_id_${i}`,
+          schedule: new Date(`2023-11-0${i + 1}T23:40:00.000Z`),
         })
       );
     }
-    await Promise.all(promises).then((responses) => {
-      responses.forEach((checkin) => {
-        checkins.push(checkin);
-      });
-    });
+
+    const meals = await Promise.all(promises);
+
+    const checkins = await Promise.all(
+      meals.map((meal) => {
+        return checkinRepositoryInMemory.create({
+          mealId: meal.id,
+          expiresDate: dateNow,
+          userId: `user_id`,
+          status: "reserved",
+        });
+      })
+    );
 
     expect(checkins.length).toBe(5);
     expect(checkins[0].status).toEqual("reserved");
@@ -53,11 +66,41 @@ describe("List Checkins UseCase", () => {
     expect(listCheckins[0].status).toEqual("lacked");
     expect(listCheckins[0]).toEqual({
       id: checkins[0].id,
-      mealId: `meal_id_0`,
+      mealId: meals[0].id,
       expiresDate: dateNow,
       updatedAt: listCheckins[0].updatedAt,
-      userId: `user_id_0`,
+      userId: `user_id`,
       status: "lacked",
     });
+  });
+
+  it("must block the student if they have not checked in for 3 consecutive times", async () => {
+    const promises: Array<Promise<Meal>> = [];
+
+    for (let i = 0; i < 5; i += 1) {
+      promises.push(
+        mealsRepositoryInMemory.create({
+          dishId: `dish_id_${i}`,
+          localId: `local_id_${i}`,
+          schedule: new Date(`2023-11-0${i + 1}T23:40:00.000Z`),
+        })
+      );
+    }
+
+    const meals = await Promise.all(promises);
+
+    meals.forEach(async (meal) => {
+      if (Number(meal.dishId.split("_")[2]) < 2)
+        await checkinRepositoryInMemory.create({
+          mealId: meal.id,
+          expiresDate: dateNow,
+          userId: `user_id`,
+          status: "reserved",
+        });
+    });
+
+    await expect(listCheckinsUseCase.execute()).rejects.toEqual(
+      new AppError("Deu erro")
+    );
   });
 });

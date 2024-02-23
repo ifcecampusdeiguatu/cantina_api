@@ -5,4 +5,5 @@ export interface IMealsRepository {
   create({ schedule, localId, dishId }: ICreateMealDTO): Promise<Meal>;
   findMealBySchedule(schedule: Date): Promise<Meal>;
   findMealById(id: string): Promise<Meal>;
+  findLatest(): Promise<Meal[]>;
 }

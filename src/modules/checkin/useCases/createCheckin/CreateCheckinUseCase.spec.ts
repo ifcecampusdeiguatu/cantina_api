@@ -26,6 +26,23 @@ const date = {
   day: dateNow.getDate(),
 };
 
+function calcDate(add = 0) {
+  let dayAdded = date.day + add;
+  let nextMonth = date.month;
+
+  if (dayAdded > 30) {
+    dayAdded -= 30;
+    nextMonth += 1;
+  }
+
+  if (nextMonth > 12) nextMonth = 1;
+
+  return {
+    d: String(dayAdded).padStart(2, "0"),
+    m: String(nextMonth).padStart(2, "0"),
+  };
+}
+
 describe("Create a checkin", () => {
   beforeAll(() => {
     checkinRepositoryInMemory = new CheckinRepositoryInMemory();
@@ -58,8 +75,8 @@ describe("Create a checkin", () => {
 
   it("should be available until 23:59:59 the day before the meal", async () => {
     // PS: UTC-0 (11:30 in UTC-0 -> 8:30 in GMT-0300 Brazilian)
-    const month = String(date.month).padStart(2, "0");
-    const day = (add = 0) => String(date.day + add).padStart(2, "0");
+    const { m: month } = calcDate(3);
+    const day = (add = 0) => calcDate(add).d;
 
     const schedules = [
       new Date(`2023-${month}-${day(3)}T11:30:00.000Z`),
@@ -125,10 +142,12 @@ describe("Create a checkin", () => {
   });
 
   it("should not be possible to create a check-in after the fifth day of the current date", async () => {
-    const month = String(date.month).padStart(2, "0");
-    const day = (add = 0) => String(date.day + add).padStart(2, "0");
+    const dAndM6 = calcDate(6);
+    const dAndM1 = calcDate(1);
 
-    const schedule = new Date(`2023-${month}-${day(6)}T23:40:00.000Z`);
+    const dateString = `2023-${dAndM6.m}-${dAndM6.d}T23:40:00.000Z`;
+
+    const schedule = new Date(dateString);
 
     const meal = await mealsRepositoryInMemory.create({
       schedule,
@@ -142,7 +161,7 @@ describe("Create a checkin", () => {
         status: "reserved",
         userId: "user_fake",
       },
-      new Date(`2023-${month}-${day(1)}T11:40:00.000Z`)
+      new Date(`2023-${dAndM1.m}-${dAndM1.d}T11:40:00.000Z`)
     );
 
     await expect(
