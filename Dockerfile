@@ -1,17 +1,19 @@
-FROM node:20-alpine
+FROM node:20.5.1-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/usr/app/node_modules && chown -R node:node /home/usr/app
 
-WORKDIR /usr/app
+WORKDIR /home/usr/app
 
 COPY package*.json ./
 
-USER node
+RUN npm i --legacy-peer-deps
 
-RUN npm install yarn
+COPY . .
 
 COPY --chown=node:node . .
 
+USER node
+
 EXPOSE 3333
 
-CMD ["yarn","dev"]
+CMD ["npm","run","dev"]

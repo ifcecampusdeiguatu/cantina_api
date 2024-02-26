@@ -47,8 +47,8 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "dev": "cross-env TZ=America/Fortaleza ts-node-dev --exit-child --respawn --inspect -r tsconfig-paths/register --transpile-only --ignore-watch node_modules  src/shared/infra/http/server.ts",
-    "test": "cross-env TZ=America/Fortaleza jest --runInBand --detectOpenHandles"
+    "dev": "ts-node-dev --exit-child --respawn --inspect -r tsconfig-paths/register --transpile-only --ignore-watch node_modules  src/shared/infra/http/server.ts",
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "repository": "git@github.com:ifcecampusdeiguatu/cantina_api.git",
   "author": "Nalisson Gomes <nalissongm.pro@gmail.com>"

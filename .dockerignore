@@ -4,3 +4,6 @@ Dockerfile
 .dockerignore
 .git
 .vscode
+.yarn.lock
+.yarn-error.log
+README.md
