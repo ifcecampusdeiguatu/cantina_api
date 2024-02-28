@@ -11,7 +11,7 @@ services:
     ports:
       - "${DOCKER_PORT_DATABASE}:${DOCKER_PORT_DATABASE}"
     networks:
-      - app
+      - bridge
     environment:
       POSTGRES_USER: "${DOCKER_USER_DATABASE}"
       POSTGRES_PASSWORD: "${DOCKER_PASSWORD_DATABASE}"
@@ -29,16 +29,16 @@ services:
     ports:
       - 3333:3333
     networks:
-      - app
+      - bridge
     volumes:
-      - .:/home/usr/app
+      - /app
     links:
       - database
     depends_on: 
       - database
 
 networks:
-  app:
+  bridge:
 
 volumes:
   pgdata:

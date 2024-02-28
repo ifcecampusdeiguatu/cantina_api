@@ -1,12 +1,13 @@
 FROM node:20.5.1-alpine
 
-RUN mkdir -p /home/usr/app/node_modules && chown -R node:node /home/usr/app
+RUN mkdir -p /app/node_modules && chown -R node:node /app
 
-WORKDIR /home/usr/app
+WORKDIR /app
 
 COPY package*.json ./
 
 RUN npm i --legacy-peer-deps
+RUN npm i -g ts-node-dev
 
 COPY . .
 
