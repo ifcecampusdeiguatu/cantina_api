@@ -1,17 +1,30 @@
 version: "3.7"
 
 services:
+  app:
+      build: .
+      container_name: sisref_api
+      command: "npm run dev"
+      restart: always
+      env_file:
+        - .env
+      ports:
+        - 3333:3333
+      volumes:
+        - .:/app
+      links:
+        - database
+      depends_on: 
+        - database
+      networks:
+        - app-connect
   database:
     env_file:
       - .env
     image: "postgres"
     restart: always
-    expose:
-      - ${DOCKER_PORT_DATABASE}
     ports:
-      - "${DOCKER_PORT_DATABASE}:${DOCKER_PORT_DATABASE}"
-    networks:
-      - bridge
+      - "5433:${DOCKER_PORT_DATABASE}"
     environment:
       POSTGRES_USER: "${DOCKER_USER_DATABASE}"
       POSTGRES_PASSWORD: "${DOCKER_PASSWORD_DATABASE}"
@@ -19,27 +32,13 @@ services:
     volumes:
       - pgdata:/data/ifce/postgres
     command: -p ${DOCKER_PORT_DATABASE}
-  app:
-    build: .
-    container_name: sisref_api
-    command: "npm run dev"
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - 3333:3333
     networks:
-      - bridge
-    volumes:
-      - /app
-    links:
-      - database
-    depends_on: 
-      - database
-
-networks:
-  bridge:
-
+      - app-connect
+  
 volumes:
   pgdata:
     driver: local
+
+networks:
+  app-connect:
+      driver: bridge
