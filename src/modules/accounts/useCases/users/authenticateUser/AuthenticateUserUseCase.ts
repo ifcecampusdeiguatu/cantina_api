@@ -44,19 +44,26 @@ export class AuthenticateUserUseCase {
       );
     }
 
-    const tokenData = matricula ? {email: user.email, type: user.type, matricula} : {email, type: user.type};
+    const tokenData = matricula
+      ? { email: user.email, type: user.type, matricula }
+      : { email, type: user.type };
 
-    const token = sign({ user: {...tokenData}}, auth.secret_token, {
+    const token = sign({ user: { ...tokenData } }, auth.secret_token, {
       subject: user.id,
       expiresIn: auth.expires_in_token,
     });
 
-    const refreshToken = sign({ user: {...tokenData}}, auth.secret_refresh_token, {
-      subject: user.id,
-      expiresIn: auth.expires_in_refresh_token,
-    });
+    const refreshToken = sign(
+      { user: { ...tokenData } },
+      auth.secret_refresh_token,
+      {
+        subject: user.id,
+        expiresIn: auth.expires_in_refresh_token,
+      }
+    );
 
     const refreshTokenExpireDate = this.dateProvider.addDays(
+      new Date(),
       auth.expires_refresh_token_days
     );
 

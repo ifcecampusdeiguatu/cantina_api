@@ -29,7 +29,9 @@ export class IngredientsRepository implements IIngredientsRepository {
       description,
     };
 
-    return this.repository.ingredient.create({ data: ingredient });
+    return this.repository.ingredient.create({
+      data: { ...ingredient, createdAt: new Date(), updatedAt: new Date() },
+    });
   }
 
   async findIngredientByName(name: string): Promise<Ingredient> {

@@ -3,7 +3,6 @@ import { verify } from "jsonwebtoken";
 
 import auth from "@config/auth";
 import { AppError } from "@shared/errors/AppError";
-import { Type } from "@prisma/client";
 
 interface IPayload {
   sub: string;
@@ -11,7 +10,7 @@ interface IPayload {
     email: string;
     type: "aluno" | "servidor" | "funcionario";
     matricula?: string;
-  }
+  };
 }
 
 export async function ensureAuthenticate(
@@ -28,15 +27,16 @@ export async function ensureAuthenticate(
   const token = authHeader.split(" ")[1];
 
   try {
+    console.log(token);
     const { sub: userId, user } = verify(token, auth.secret_token) as IPayload;
 
     request.user = {
-      id: userId, 
-      type: user.type
+      id: userId,
+      type: user.type,
     };
 
     next();
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     throw new AppError("Token inválido", 401);
   }

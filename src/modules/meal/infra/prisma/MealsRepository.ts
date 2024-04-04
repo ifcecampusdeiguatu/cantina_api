@@ -18,6 +18,10 @@ export class MealsRepository implements IMealsRepository {
     this.repository = prisma.getConnection();
   }
 
+  findLatest(): Promise<Meal[]> {
+    throw new Error("Method not implemented.");
+  }
+
   async findMealById(id: string): Promise<Meal> {
     const meal = this.repository.meal.findUnique({ where: { id } });
 

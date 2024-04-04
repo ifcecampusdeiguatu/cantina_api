@@ -6,5 +6,8 @@ export interface IDateProvider {
   addDays(start_date: Date, days: number): Date;
   addHours(hours: number): Date;
   compareIfBefore(start_date: Date, end_date: Date): boolean;
-  setHours(start_date: Date, { hours = 0, minutes = 0, seconds = 0 }): Date;
+  setHours(
+    start_date: Date,
+    options: { hours?: number; minutes?: number; seconds?: number }
+  ): Date;
 }

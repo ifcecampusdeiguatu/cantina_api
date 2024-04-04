@@ -37,15 +37,15 @@ export class DishesRepository implements IDishesRepository {
   }
 
   async addIngredientToDish({
-    dishID,
-    ingredientID,
+    dishId,
+    ingredientId,
   }: IAddIngredientToDishDTO): Promise<Dish> {
     const dish = await this.repository.dish.update({
-      where: { id: dishID },
+      where: { id: dishId },
       data: {
         updatedAt: new Date(),
         ingredients: {
-          connect: { id: ingredientID },
+          connect: { id: ingredientId },
         },
       },
       include: { ingredients: true },

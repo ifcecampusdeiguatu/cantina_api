@@ -1,10 +1,8 @@
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import tokens from "@config/tokens";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
 import { ICheckinTokensRepository } from "@modules/checkin/repositories/ICheckinTokensRepository";
-import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 import { codeGenerator } from "@utils/codeGenerator";
@@ -22,7 +20,7 @@ export class CreateCheckinTokenUseCase {
 
   async execute(checkinId: string): Promise<void> {
     const checkin = await this.checkinRepository.findById(checkinId);
-    const dateNow = this.dayjsProvider.dateNow();
+    const dateNow = new Date();
 
     const minutes = this.dayjsProvider.compareInMinutes(
       dateNow,
@@ -46,7 +44,7 @@ export class CreateCheckinTokenUseCase {
       expiresIn: `${minutes}m`,
     });
 
-    const checkinToken = await this.checkinTokensRepository.create({
+    await this.checkinTokensRepository.create({
       checkinId,
       token,
       checkinCode,

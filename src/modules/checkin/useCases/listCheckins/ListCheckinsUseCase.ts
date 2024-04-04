@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
+import { Checkin } from "@modules/checkin/infra/entities/Checkin";
 import { ICheckinRepository } from "@modules/checkin/repositories/ICheckinRepository";
 import { IMealsRepository } from "@modules/meal/repositories/IMealsRepository";
-import { Checkin } from "@prisma/client";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+// import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 export class ListCheckinsUseCase {
@@ -18,39 +18,39 @@ export class ListCheckinsUseCase {
   ) {}
 
   async execute(): Promise<Checkin[]> {
-    const updates: Array<Promise<void>> = [];
+    // const updates: Array<Promise<void>> = [];
 
-    const meals = await this.mealsRepository.findLatest();
-    const checkins = await this.checkinRepository.list();
+    // const meals = await this.mealsRepository.findLatest();
+    const checkins = this.checkinRepository.list();
 
-    const didNotCheckin = meals.every(
-      (meal) => !checkins.some((checkin) => checkin.mealId === meal.id)
-    );
+    // //const didNotCheckin = meals.every(
+    //   (meal) => !checkins.some((checkin) => checkin.mealId === meal.id)
+    // );
 
-    if (didNotCheckin) {
-      throw new AppError(`Deu erro`);
-    }
+    // if (didNotCheckin) {
+    //   throw new AppError(`Deu erro`);
+    // }
 
-    for (let i = 0; i < checkins.length; i += 1) {
-      const isExpires = !this.dayjsProvider.compareIfBefore(
-        new Date(),
-        checkins[i].expiresDate
-      );
+    // for (let i = 0; i < checkins.length; i += 1) {
+    //   const isExpires = !this.dayjsProvider.compareIfBefore(
+    //     new Date(),
+    //     checkins[i].expiresDate
+    //   );
 
-      if (isExpires) {
-        checkins[i].status = "lacked";
+    //   if (isExpires) {
+    //     checkins[i].status = "lacked";
 
-        updates.push(
-          this.checkinRepository.updateStatus({
-            id: checkins[i].id,
-            status: "lacked",
-          })
-        );
-      }
-    }
+    //     // updates.push(
+    //     //   this.checkinRepository.updateStatus({
+    //     //     id: checkins[i].id,
+    //     //     status: "lacked",
+    //     //   })
+    //     // );
+    //   }
+    // }
 
-    await Promise.all(updates);
+    // await Promise.all(updates);
 
-    return this.checkinRepository.list();
+    return checkins;
   }
 }

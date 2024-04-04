@@ -4,7 +4,7 @@ services:
   app:
       build: .
       container_name: sisref_api
-      command: "npm run dev"
+      # command: "npm run dev"
       restart: always
       env_file:
         - .env

@@ -17,7 +17,7 @@ interface IPayload {
     email: string;
     type: "aluno" | "servidor" | "funcionario";
     matricula?: string;
-  }
+  };
 }
 
 @injectable()
@@ -47,19 +47,26 @@ export class RefreshTokenUseCase {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const tokenData = user.matricula ? {email: user.email, type: user.type, matricula: user.matricula} : {email: user.email, type: user.type};
+    const tokenData = user.matricula
+      ? { email: user.email, type: user.type, matricula: user.matricula }
+      : { email: user.email, type: user.type };
 
-    const token = sign({user: {...tokenData}}, auth.secret_token, {
+    const token = sign({ user: { ...tokenData } }, auth.secret_token, {
       subject: userToken.userId,
       expiresIn: auth.expires_in_token,
     });
-    
-    const newRefreshToken = sign({user: {...tokenData}}, auth.secret_refresh_token, {
-      subject: userToken.userId,
-      expiresIn: auth.expires_in_refresh_token,
-    });
+
+    const newRefreshToken = sign(
+      { user: { ...tokenData } },
+      auth.secret_refresh_token,
+      {
+        subject: userToken.userId,
+        expiresIn: auth.expires_in_refresh_token,
+      }
+    );
 
     const refreshTokenExpireDate = this.dateProvider.addDays(
+      new Date(),
       auth.expires_refresh_token_days
     );
 
