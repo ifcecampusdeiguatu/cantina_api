@@ -8,32 +8,24 @@ Com o docker rodando, execute no terminal:
   docker-compose up -d --build
 ```
 
-O próximo passo é instalar as depêndencias:
+O próximo passo é configurar o prisma dentro do container criado:
 
 ```shell 
-  # Utilizando o yarn
-  yarn
+  # Listando os containers e pegando o ID
+  docker ps
 
-  # Utilizando o npm
-  npm install
-```
+  # Abrindo Shell do container 
+  docker exec -it IdDoContainer sh
 
-Depois é necessário rodar a migration para criar as tabelas no banco:
-
-```shell 
-  # Utilizando o yarn
+  # Submetendo as migrations para o prisma utilizando o yarn
   yarn prisma db push
 
-  # Utilizando o npm
+  # Submetendo as migrations para o prisma utilizando o npm
   npm run prisma db push
 ```
 
-Para iniciar o servidor basta executar:
+## Documentação
 
-```shell
-  # Utilizando o yarn
-  yarn dev
-  
-  # Utilizando o npm
-  npm run dev
-```
+Com o container devidamente configurado, basta acessar a documentação em http://localhost:3333/docs e consultar os recursos disponíveis até o devido momento.
+
+Outra alternativa é utilizar o *Insomnia Api Client* e importar as configurações de projeto disponíveis na pasta `docs`.
