@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/77</span>
+                <span class='fraction'>0/84</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/77</span>
+                <span class='fraction'>0/84</span>
             </div>
         
             
@@ -140,7 +140,21 @@
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -236,7 +250,7 @@
 <span class="cstat-no" title="statement not covered" >    email: string;</span>
 <span class="cstat-no" title="statement not covered" >    type: "aluno" | "servidor" | "funcionario";</span>
 <span class="cstat-no" title="statement not covered" >    matricula?: string;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  };</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
@@ -266,19 +280,26 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    await this.usersTokensRepository.deleteById(userToken.id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const tokenData = user.matricula ? {email: user.email, type: user.type, matricula: user.matricula} : {email: user.email, type: user.type};</span>
+<span class="cstat-no" title="statement not covered" >    const tokenData = user.matricula</span>
+<span class="cstat-no" title="statement not covered" >      ? { email: user.email, type: user.type, matricula: user.matricula }</span>
+<span class="cstat-no" title="statement not covered" >      : { email: user.email, type: user.type };</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const token = sign({user: {...tokenData}}, auth.secret_token, {</span>
+<span class="cstat-no" title="statement not covered" >    const token = sign({ user: { ...tokenData } }, auth.secret_token, {</span>
 <span class="cstat-no" title="statement not covered" >      subject: userToken.userId,</span>
 <span class="cstat-no" title="statement not covered" >      expiresIn: auth.expires_in_token,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >    </span>
-<span class="cstat-no" title="statement not covered" >    const newRefreshToken = sign({user: {...tokenData}}, auth.secret_refresh_token, {</span>
-<span class="cstat-no" title="statement not covered" >      subject: userToken.userId,</span>
-<span class="cstat-no" title="statement not covered" >      expiresIn: auth.expires_in_refresh_token,</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const newRefreshToken = sign(</span>
+<span class="cstat-no" title="statement not covered" >      { user: { ...tokenData } },</span>
+<span class="cstat-no" title="statement not covered" >      auth.secret_refresh_token,</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        subject: userToken.userId,</span>
+<span class="cstat-no" title="statement not covered" >        expiresIn: auth.expires_in_refresh_token,</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    );</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const refreshTokenExpireDate = this.dateProvider.addDays(</span>
+<span class="cstat-no" title="statement not covered" >      new Date(),</span>
 <span class="cstat-no" title="statement not covered" >      auth.expires_refresh_token_days</span>
 <span class="cstat-no" title="statement not covered" >    );</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -301,7 +322,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-17T00:20:22.642Z
+                at 2024-04-08T19:41:20.446Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

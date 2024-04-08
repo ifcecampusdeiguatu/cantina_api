@@ -18,38 +18,29 @@ export class ListCheckinsUseCase {
   ) {}
 
   async execute(): Promise<Checkin[]> {
-    // const updates: Array<Promise<void>> = [];
+    const updates: Array<Promise<void>> = [];
 
-    // const meals = await this.mealsRepository.findLatest();
-    const checkins = this.checkinRepository.list();
+    const checkins = await this.checkinRepository.list();
 
-    // //const didNotCheckin = meals.every(
-    //   (meal) => !checkins.some((checkin) => checkin.mealId === meal.id)
-    // );
+    for (let i = 0; i < checkins.length; i += 1) {
+      const isExpires = !this.dayjsProvider.compareIfBefore(
+        new Date(),
+        checkins[i].expiresDate
+      );
 
-    // if (didNotCheckin) {
-    //   throw new AppError(`Deu erro`);
-    // }
+      if (isExpires) {
+        checkins[i].status = "lacked";
 
-    // for (let i = 0; i < checkins.length; i += 1) {
-    //   const isExpires = !this.dayjsProvider.compareIfBefore(
-    //     new Date(),
-    //     checkins[i].expiresDate
-    //   );
+        updates.push(
+          this.checkinRepository.updateStatus({
+            id: checkins[i].id,
+            status: "lacked",
+          })
+        );
+      }
+    }
 
-    //   if (isExpires) {
-    //     checkins[i].status = "lacked";
-
-    //     // updates.push(
-    //     //   this.checkinRepository.updateStatus({
-    //     //     id: checkins[i].id,
-    //     //     status: "lacked",
-    //     //   })
-    //     // );
-    //   }
-    // }
-
-    // await Promise.all(updates);
+    await Promise.all(updates);
 
     return checkins;
   }

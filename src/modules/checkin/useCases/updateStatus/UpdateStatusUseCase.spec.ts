@@ -51,8 +51,8 @@ describe("Update Status UseCase", () => {
   it("should be possible to cancel a checkin", async () => {
     const { d: day, m: month } = calcDate(3);
 
-    const schedule = `2023-${month}-${day}T11:30:00.000Z`;
-    const expiresDate = `2023-${month}-${day}T02:59:59.000Z`;
+    const schedule = `${date.year}-${month}-${day}T11:30:00.000Z`;
+    const expiresDate = `${date.year}-${month}-${day}T02:59:59.000Z`;
 
     const meal = await mealsRepositoryInMemory.create({
       schedule: new Date(schedule),
@@ -87,9 +87,9 @@ describe("Update Status UseCase", () => {
     const month = String(date.month).padStart(2, "0");
     const day = String(date.day).padStart(2, "0");
 
-    const schedule = `2023-${month}-${day}T11:30:00.000Z`;
-    const expiresDate = `2023-${month}-${day}T02:59:59.000Z`;
-    const date_start = `2023-${month}-${day}T09:10:00.000Z`;
+    const schedule = `${date.year}-${month}-${day}T11:30:00.000Z`;
+    const expiresDate = `${date.year}-${month}-${day}T02:59:59.000Z`;
+    const date_start = `${date.year}-${month}-${day}T09:10:00.000Z`;
 
     const meal = await mealsRepositoryInMemory.create({
       schedule: new Date(schedule),
@@ -122,10 +122,10 @@ describe("Update Status UseCase", () => {
   it("should not be able to cancel Afternoon Snack after 11am on the day of the meal", async () => {
     const month = date.month.toString().padStart(2, "0");
     const day = String(date.day).padStart(2, "0");
-    const date_start = `2023-${month}-${day}T14:10:00.000Z`;
+    const date_start = `${date.year}-${month}-${day}T14:10:00.000Z`;
 
-    const schedule = `2023-${month}-${day}T18:30:00.000Z`;
-    const expiresDate = `2023-${month}-${day}T02:59:59.000Z`;
+    const schedule = `${date.year}-${month}-${day}T18:30:00.000Z`;
+    const expiresDate = `${date.year}-${month}-${day}T02:59:59.000Z`;
 
     const meal = await mealsRepositoryInMemory.create({
       schedule: new Date(schedule),
@@ -158,10 +158,10 @@ describe("Update Status UseCase", () => {
   it("should not be able to cancel Night Snack after 16pm on the day of the meal", async () => {
     const month = date.month.toString().padStart(2, "0");
     const day = String(date.day).padStart(2, "0");
-    const date_start = `2023-${month}-${day}T21:10:00.000Z`;
+    const date_start = `${date.year}-${month}-${day}T21:10:00.000Z`;
 
-    const schedule = `2023-${month}-${day}T23:30:00.000Z`;
-    const expiresDate = `2023-${month}-${day}T02:59:59.000Z`;
+    const schedule = `${date.year}-${month}-${day}T23:30:00.000Z`;
+    const expiresDate = `${date.year}-${month}-${day}T02:59:59.000Z`;
 
     const meal = await mealsRepositoryInMemory.create({
       schedule: new Date(schedule),

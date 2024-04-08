@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/39</span>
+                <span class='fraction'>0/59</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/39</span>
+                <span class='fraction'>0/59</span>
             </div>
         
             
@@ -101,7 +101,28 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -139,10 +160,32 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { ICheckinTokensRepository } from "@modules/checkin/repositories/ICheckinTokensRepository";</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { codeGenerator } from "@utils/codeGenerator";</span>
-<span class="cstat-no" title="statement not covered" >import { qrcodeGenerator } from "@utils/qrcodeGenerator";</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import fs from "fs";</span></span></span>
 <span class="cstat-no" title="statement not covered" >import { inject, injectable } from "tsyringe";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import { ICheckinTokensRepository } from "@modules/checkin/repositories/ICheckinTokensRepository";</span>
+<span class="cstat-no" title="statement not covered" >import { qrcodeGenerator } from "@utils/qrcodeGenerator";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >interface IResponse {</span>
 <span class="cstat-no" title="statement not covered" >  qrcode: string;</span>
@@ -152,39 +195,59 @@
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
 <span class="cstat-no" title="statement not covered" >export class GetCheckinTokenUseCase {</span>
 <span class="cstat-no" title="statement not covered" >  constructor(</span>
-<span class="cstat-no" title="statement not covered" >    @inject('CheckinTokensRepository')</span>
+<span class="cstat-no" title="statement not covered" >    @inject("CheckinTokensRepository")</span>
 <span class="cstat-no" title="statement not covered" >    private checkinTokensRepository: ICheckinTokensRepository</span>
-<span class="cstat-no" title="statement not covered" >  ){}</span>
+<span class="cstat-no" title="statement not covered" >  ) {}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  async execute(checkinId): Promise&lt;IResponse&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const checkinToken = await this.checkinTokensRepository.findByCheckinId(checkinId);</span>
-<span class="cstat-no" title="statement not covered" >    </span>
-<span class="cstat-no" title="statement not covered" >    const qrcode = await qrcodeGenerator(checkinToken.token)</span>
+<span class="cstat-no" title="statement not covered" >    const checkinToken = await this.checkinTokensRepository.findByCheckinId(</span>
+<span class="cstat-no" title="statement not covered" >      checkinId</span>
+<span class="cstat-no" title="statement not covered" >    );</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const code = checkinToken.checkin_code.split('').map((str,index,arr) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      const er = /^[0-9]+$/;</span>
+<span class="cstat-no" title="statement not covered" >    // const dataQrCode = {</span>
+<span class="cstat-no" title="statement not covered" >    //   token: checkinToken.token,</span>
+<span class="cstat-no" title="statement not covered" >    //   checkinCode: checkinToken.checkin_code,</span>
+<span class="cstat-no" title="statement not covered" >    // };</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      if(er.test(str)){</span>
-<span class="cstat-no" title="statement not covered" >        const prev = arr[index - 1];</span>
+<span class="cstat-no" title="statement not covered" >    // const qrcode = await qrcodeGenerator(JSON.stringify(dataQrCode));</span>
+<span class="cstat-no" title="statement not covered" >    const qrcode = await qrcodeGenerator(</span>
+<span class="cstat-no" title="statement not covered" >      `${checkinToken.token} ${checkinToken.checkin_code}`</span>
+<span class="cstat-no" title="statement not covered" >    );</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if(!er.test(prev)) {</span>
-<span class="cstat-no" title="statement not covered" >          return `-${str}`;</span>
+<span class="cstat-no" title="statement not covered" >    const code = checkinToken.checkin_code</span>
+<span class="cstat-no" title="statement not covered" >      .split("")</span>
+<span class="cstat-no" title="statement not covered" >      .map((str, index, arr) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const er = /^[0-9]+$/;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        if (er.test(str)) {</span>
+<span class="cstat-no" title="statement not covered" >          const prev = arr[index - 1];</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >          if (!er.test(prev)) {</span>
+<span class="cstat-no" title="statement not covered" >            return `-${str}`;</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      return str;</span>
-<span class="cstat-no" title="statement not covered" >    }).join('');</span>
+<span class="cstat-no" title="statement not covered" >        return str;</span>
+<span class="cstat-no" title="statement not covered" >      })</span>
+<span class="cstat-no" title="statement not covered" >      .join("");</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return {qrcode: qrcode.url, checkinCode: code}</span>
+<span class="cstat-no" title="statement not covered" >    this.createOrRewriteFile("./tmp/qrcode.svg", qrcode.url);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    return { qrcode: qrcode.url, checkinCode: code };</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  createOrRewriteFile(filePath: string, content: string): void {</span>
+<span class="cstat-no" title="statement not covered" >    fs.writeFileSync(filePath, content);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-17T00:20:22.642Z
+                at 2024-04-08T19:41:20.446Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

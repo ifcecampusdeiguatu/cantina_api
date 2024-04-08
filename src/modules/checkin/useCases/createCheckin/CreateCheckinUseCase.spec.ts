@@ -79,25 +79,25 @@ describe("Create a checkin", () => {
     const day = (add = 0) => calcDate(add).d;
 
     const schedules = [
-      new Date(`2023-${month}-${day(3)}T11:30:00.000Z`),
-      new Date(`2023-${month}-${day(3)}T14:40:00.000Z`),
-      new Date(`2023-${month}-${day(3)}T18:30:00.000Z`),
-      new Date(`2023-${month}-${day(3)}T23:40:00.000Z`),
-      new Date(`2023-${month}-${day(4)}T11:30:00.000Z`),
-      new Date(`2023-${month}-${day(4)}T14:40:00.000Z`),
-      new Date(`2023-${month}-${day(4)}T18:30:00.000Z`),
-      new Date(`2023-${month}-${day(4)}T23:40:00.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T11:30:00.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T14:40:00.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T18:30:00.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T23:40:00.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T11:30:00.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T14:40:00.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T18:30:00.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T23:40:00.000Z`),
     ];
 
     const expiresDates = [
-      new Date(`2023-${month}-${day(3)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(3)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(3)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(3)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(4)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(4)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(4)}T02:59:59.000Z`),
-      new Date(`2023-${month}-${day(4)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(3)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T02:59:59.000Z`),
+      new Date(`${date.year}-${month}-${day(4)}T02:59:59.000Z`),
     ];
 
     const checkins: Checkin[] = [];
@@ -124,7 +124,10 @@ describe("Create a checkin", () => {
   });
 
   it("Check-in should not be carried out from the date of creation or after the day of the meal", async () => {
-    const schedule = new Date("2023-10-18T19:49:33.899Z");
+    const { m: month } = calcDate(3);
+    const day = (add = 0) => calcDate(add).d;
+
+    const schedule = new Date(`${date.year}-${month}-${day(0)}T19:49:33.899Z`);
 
     const meal = await mealsRepositoryInMemory.create({
       schedule,
@@ -145,7 +148,7 @@ describe("Create a checkin", () => {
     const dAndM6 = calcDate(6);
     const dAndM1 = calcDate(1);
 
-    const dateString = `2023-${dAndM6.m}-${dAndM6.d}T23:40:00.000Z`;
+    const dateString = `${date.year}-${dAndM6.m}-${dAndM6.d}T23:40:00.000Z`;
 
     const schedule = new Date(dateString);
 
@@ -161,7 +164,7 @@ describe("Create a checkin", () => {
         status: "reserved",
         userId: "user_fake",
       },
-      new Date(`2023-${dAndM1.m}-${dAndM1.d}T11:40:00.000Z`)
+      new Date(`${date.year}-${dAndM1.m}-${dAndM1.d}T11:40:00.000Z`)
     );
 
     await expect(
