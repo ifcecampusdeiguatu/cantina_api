@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import bcrypt from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
@@ -24,7 +24,10 @@ export class CreateUserUseCase {
       throw new AppError("User already exists");
     }
 
-    const hashPassword = await hash(data.password, 10);
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+
+    const hashPassword = await bcrypt.hash(data.password, salt);
 
     await this.userRepository.create({ ...data, password: hashPassword });
   }

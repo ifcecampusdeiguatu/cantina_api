@@ -7,6 +7,8 @@ export class AuthenticateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { matricula, email, password } = request.body;
 
+    console.log(matricula, email, password);
+
     const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase);
 
     try {

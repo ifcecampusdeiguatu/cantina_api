@@ -4,3 +4,4 @@ node_modules
 todo.md
 prod.env
 dev.env
+core

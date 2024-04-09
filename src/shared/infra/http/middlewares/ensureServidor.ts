@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import { UsersRepository } from "@modules/accounts/infra/prisma/repositories/UsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-export async function ensureFuncionario(
+export async function ensureServidor(
   request: Request,
   _response: Response,
   next: NextFunction
@@ -15,7 +15,7 @@ export async function ensureFuncionario(
 
   const user = await usersRepository.findUserById(id);
 
-  if (user && user.type !== "funcionario") {
+  if (user && user.type !== "servidor") {
     throw new AppError("Usuário não tem permissão", 401);
   }
 
