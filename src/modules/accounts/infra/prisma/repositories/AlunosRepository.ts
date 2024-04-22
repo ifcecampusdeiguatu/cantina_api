@@ -20,9 +20,14 @@ export class AlunosRepository implements IAlunosRepository {
   async create({
     matricula,
     name,
+    sexo,
+    situacao,
+    turno,
     turmaId,
     cursoId,
     userId,
+    createdAt,
+    updatedAt,
   }: ICreateAlunosDTO): Promise<void> {
     const dateNow = new Date();
 
@@ -30,11 +35,14 @@ export class AlunosRepository implements IAlunosRepository {
       data: {
         matricula,
         name,
+        sexo,
         cursoId,
         turmaId,
         userId,
-        createdAt: dateNow,
-        updatedAt: dateNow,
+        situacao,
+        turno,
+        createdAt: createdAt || dateNow,
+        updatedAt: updatedAt || dateNow,
       },
     });
   }

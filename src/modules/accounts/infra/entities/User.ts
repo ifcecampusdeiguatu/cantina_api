@@ -5,8 +5,8 @@ import { Aluno } from "./Aluno";
 type Type = "aluno" | "funcionario" | "servidor";
 
 export class User {
-  id?: string;
-  email: string;
+  id: string;
+  email?: string;
   password: string;
   type: Type;
   createdAt: Date;

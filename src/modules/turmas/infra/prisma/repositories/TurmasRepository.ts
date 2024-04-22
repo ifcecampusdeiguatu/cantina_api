@@ -35,14 +35,7 @@ export class TurmasRepository implements ITurmasRepository {
   }
 
   async findTurmaByName(name: string): Promise<Turma> {
-    const turma = await this.repository.turma.findFirst({
-      where: {
-        name: {
-          equals: name,
-          mode: "insensitive",
-        },
-      },
-    });
+    const turma = await this.repository.turma.findUnique({ where: { name } });
 
     return turma;
   }

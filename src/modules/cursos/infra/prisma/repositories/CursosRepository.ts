@@ -35,14 +35,7 @@ export class CursosRepository implements ICursosRepository {
   }
 
   async findCursoByName(name: string): Promise<Curso> {
-    const curso = await this.repository.curso.findFirst({
-      where: {
-        name: {
-          equals: name,
-          mode: "insensitive",
-        },
-      },
-    });
+    const curso = await this.repository.curso.findUnique({ where: { name } });
 
     return curso;
   }

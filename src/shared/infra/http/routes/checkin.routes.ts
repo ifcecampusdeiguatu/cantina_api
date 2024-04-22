@@ -1,15 +1,15 @@
 import { Router } from "express";
 
 import { CreateCheckinController } from "@modules/checkin/useCases/createCheckin/CreateCheckinController";
+import { CreateCheckinCodeController } from "@modules/checkin/useCases/createCheckinCode/CreateCheckinCodeController";
+import { CreateCheckinTokenController } from "@modules/checkin/useCases/createCheckinToken/CreateCheckinTokenController";
+import { GetCheckinByCodeController } from "@modules/checkin/useCases/getCheckinByCode/GetCheckinByCodeController";
+import { GetCheckinTokenController } from "@modules/checkin/useCases/getCheckinToken/GetCheckinTokenController";
 import { ListCheckinsController } from "@modules/checkin/useCases/listCheckins/ListCheckinsController";
+import { UpdateStatusController } from "@modules/checkin/useCases/updateStatus/UpdateStatusController";
 
 import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
-import { CreateCheckinTokenController } from "@modules/checkin/useCases/createCheckinToken/CreateCheckinTokenController";
-import { GetCheckinTokenController } from "@modules/checkin/useCases/getCheckinToken/GetCheckinTokenController";
-import { UpdateStatusController } from "@modules/checkin/useCases/updateStatus/UpdateStatusController";
-import { ensureFuncionario } from "../middlewares/ensureFuncionario";
-import { GetCheckinByCodeController } from "@modules/checkin/useCases/getCheckinByCode/GetCheckinByCodeController";
-import { CreateCheckinCodeController } from "@modules/checkin/useCases/createCheckinCode/CreateCheckinCodeController";
+// import { ensureServidor } from "../middlewares/ensureServidor";
 
 const createCheckinController = new CreateCheckinController();
 const listCheckinsController = new ListCheckinsController();
@@ -32,8 +32,5 @@ checkinRoutes.get("/token/:id", getCheckinTokenController.handle);
 
 checkinRoutes.get("/verify", getCheckinByCodeController.handle);
 checkinRoutes.post("/verify", createCheckinCodeController.handle);
-
-
-
 
 export { checkinRoutes };

@@ -3,7 +3,7 @@ import { User } from "../infra/entities/User";
 import { ParsedUser } from "../mappers/UserMap";
 
 export interface IUsersRepository {
-  create({ email, password, type }: ICreateUserDTO): Promise<void>;
+  create({ id, email, password, type }: ICreateUserDTO): Promise<void>;
   list(): Promise<ParsedUser[]>;
   findUserByEmail(email: string): Promise<User>;
   findUserById(id: string): Promise<User>;

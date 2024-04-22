@@ -6,9 +6,12 @@ export interface IAlunosRepository {
   create({
     matricula,
     name,
+    sexo,
     turmaId,
     cursoId,
     userId,
+    situacao,
+    turno,
   }: ICreateAlunosDTO): Promise<void>;
   findAlunoByMatricula(matricula: string): Promise<Aluno>;
   list(): Promise<Aluno[]>;

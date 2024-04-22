@@ -1,8 +1,10 @@
 import { Router } from "express";
+import multer from "multer";
 
 import { CreateAlunosController } from "@modules/accounts/useCases/alunos/createAlunos/CreateAlunosController";
 import { DeleteAlunoController } from "@modules/accounts/useCases/alunos/deleteAluno/DeleteAlunoController";
 import { GetAlunosController } from "@modules/accounts/useCases/alunos/getAluno/GetAlunoController";
+import { ImportAlunosController } from "@modules/accounts/useCases/alunos/importAlunos/ImportAlunoController";
 import { ListAlunosController } from "@modules/accounts/useCases/alunos/listAlunos/ListAlunosController";
 import { UpdateAlunoController } from "@modules/accounts/useCases/alunos/updateAluno/UpdateAlunoController";
 import { CreateFuncionarioController } from "@modules/accounts/useCases/funcionarios/createFuncionario/CreateFuncionarioController";
@@ -11,7 +13,7 @@ import { CreateUserController } from "@modules/accounts/useCases/users/createUse
 import { ListUsersController } from "@modules/accounts/useCases/users/listUsers/ListUsersController";
 
 import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
-import { ensureFuncionario } from "../middlewares/ensureFuncionario";
+import { ensureServidor } from "../middlewares/ensureServidor";
 
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
@@ -21,6 +23,7 @@ const listAlunosController = new ListAlunosController();
 const getAlunosController = new GetAlunosController();
 const updateAlunoController = new UpdateAlunoController();
 const deleteAlunoController = new DeleteAlunoController();
+const importAlunosController = new ImportAlunosController();
 
 const createFuncionarioController = new CreateFuncionarioController();
 
@@ -38,13 +41,23 @@ accountsRoutes.get("/users", listUsersController.handle);
  * ensureAuthenticate -> verifica autenticação
  * ensureFuncionario -> verifica se usuário é um funcionário
  */
-accountsRoutes.use(ensureAuthenticate, ensureFuncionario);
+accountsRoutes.use(ensureAuthenticate, ensureServidor);
 
 accountsRoutes.post("/alunos", createAlunosController.handle);
 accountsRoutes.get("/alunos", listAlunosController.handle);
 accountsRoutes.get("/alunos/:matricula", getAlunosController.handle);
 accountsRoutes.put("/alunos/:matricula", updateAlunoController.handle);
 accountsRoutes.delete("/alunos/:matricula", deleteAlunoController.handle);
+
+const upload = multer({
+  dest: "./tmp",
+});
+
+accountsRoutes.post(
+  "/alunos/import",
+  upload.single("file"),
+  importAlunosController.handle
+);
 
 accountsRoutes.post("/funcionarios", createFuncionarioController.handle);
 

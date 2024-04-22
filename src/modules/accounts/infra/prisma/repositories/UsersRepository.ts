@@ -19,6 +19,7 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async create({
+    id = uuid(),
     email,
     password,
     type = "aluno",
@@ -27,7 +28,7 @@ export class UsersRepository implements IUsersRepository {
 
     await this.repository.user.create({
       data: {
-        id: uuid(),
+        id,
         email,
         password,
         type,

@@ -1,5 +1,6 @@
 export interface ICreateUserDTO {
-  email: string;
+  id?: string;
+  email?: string;
   password: string;
   type?: "aluno" | "funcionario" | "servidor";
 }

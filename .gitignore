@@ -5,3 +5,4 @@ todo.md
 prod.env
 dev.env
 core
+tmp/*

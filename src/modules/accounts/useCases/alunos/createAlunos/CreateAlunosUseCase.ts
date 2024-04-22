@@ -9,10 +9,15 @@ import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
   matricula: string;
-  name: string;
+  name?: string;
+  sexo?: string;
   turmaId?: string;
   cursoId?: string;
-  userId: string;
+  userId?: string;
+  situacao?: "matriculado" | "concludente";
+  createdAt?: Date;
+  updatedAt?: Date;
+  turno?: "vespertino" | "integral" | "noturno" | "matutino";
 }
 
 @injectable()
@@ -30,10 +35,15 @@ export class CreateAlunosUseCase {
 
   async execute({
     matricula,
+    sexo,
+    createdAt,
+    updatedAt,
+    turno,
+    situacao,
     name,
+    userId,
     turmaId,
     cursoId,
-    userId,
   }: IRequest): Promise<void> {
     const alunoAlreadyExists = await this.alunosRepository.findAlunoByMatricula(
       matricula
@@ -75,6 +85,11 @@ export class CreateAlunosUseCase {
 
     await this.alunosRepository.create({
       matricula,
+      sexo,
+      createdAt,
+      situacao,
+      turno,
+      updatedAt,
       name,
       userId,
       turmaId,
