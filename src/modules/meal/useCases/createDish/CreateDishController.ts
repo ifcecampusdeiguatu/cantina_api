@@ -7,8 +7,6 @@ export class CreateDishController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, description } = request.body;
 
-    console.log(name, description);
-
     const createDishUseCase = container.resolve(CreateDishUseCase);
 
     try {

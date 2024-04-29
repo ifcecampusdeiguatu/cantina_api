@@ -27,7 +27,6 @@ export async function ensureAuthenticate(
   const token = authHeader.split(" ")[1];
 
   try {
-    console.log(token);
     const { sub: userId, user } = verify(token, auth.secret_token) as IPayload;
 
     request.user = {
@@ -37,7 +36,6 @@ export async function ensureAuthenticate(
 
     next();
   } catch (err) {
-    console.log(err);
     throw new AppError("Token inválido", 401);
   }
 

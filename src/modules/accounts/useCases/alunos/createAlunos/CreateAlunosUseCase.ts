@@ -9,15 +9,16 @@ import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
   matricula: string;
-  name?: string;
-  sexo?: string;
+  name: string;
+  sexo: string;
   turmaId?: string;
   cursoId?: string;
-  userId?: string;
-  situacao?: "matriculado" | "concludente";
+  userId: string;
+  situacao: "matriculado" | "concludente";
   createdAt?: Date;
   updatedAt?: Date;
-  turno?: "vespertino" | "integral" | "noturno" | "matutino";
+  turno: "vespertino" | "integral" | "noturno" | "matutino";
+  cidadeId?: string;
 }
 
 @injectable()

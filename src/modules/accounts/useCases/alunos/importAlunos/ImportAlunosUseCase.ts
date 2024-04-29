@@ -312,8 +312,6 @@ export class ImportAlunosUseCase {
                   cursoId: aluno.cursoId ? addAluno.cursoId : null,
                   userId: checkEmail ? checkEmail.id : user.id,
                 });
-
-                console.log(`Aluno ${aluno.name} criado`);
               } catch (error) {
                 console.log("Error--------------------");
                 console.log(aluno);

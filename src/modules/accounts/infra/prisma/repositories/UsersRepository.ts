@@ -4,8 +4,9 @@ import { v4 as uuid } from "uuid";
 import { ICreateUserDTO } from "@modules/accounts/dtos/users/ICreateUserDTO";
 import { ParsedUser, UsersMap } from "@modules/accounts/mappers/UserMap";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { PrismaClient, User } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
+import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
@@ -47,7 +48,16 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findUserByEmail(email: string): Promise<User> {
-    return this.repository.user.findFirst({ where: { email } });
+    try {
+      const user = await this.repository.user.findUnique({ where: { email } });
+
+      return user;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new AppError(error.message, 404);
+      }
+      throw new Error(error);
+    }
   }
 
   async findUserById(id: string): Promise<User> {

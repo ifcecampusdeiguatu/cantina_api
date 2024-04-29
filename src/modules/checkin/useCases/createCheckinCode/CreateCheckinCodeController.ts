@@ -13,7 +13,7 @@ export class CreateCheckinCodeController {
 
       return res.status(204).json({code})
     }catch (err) {
-      console.log(err);
+      (err);
       return res.status(err.statusCode).json({err: err.message});
     }
   }
