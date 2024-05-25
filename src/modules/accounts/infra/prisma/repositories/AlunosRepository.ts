@@ -1,10 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICreateAlunosDTO } from "@modules/accounts/dtos/alunos/ICreateAlunosDTO";
+import { IDeleteAlunoDTO } from "@modules/accounts/dtos/alunos/IDeleteAlunoDTO";
 import { IUpdateAlunoDTO } from "@modules/accounts/dtos/alunos/IUpdateAlunoDTO";
 import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
-import { Aluno, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
+
+import { Aluno } from "../../entities/Aluno";
 
 @injectable()
 export class AlunosRepository implements IAlunosRepository {
@@ -18,41 +21,39 @@ export class AlunosRepository implements IAlunosRepository {
   }
 
   async create({
-    matricula,
-    name,
+    cpf,
+    nome,
     sexo,
-    situacao,
-    turno,
-    turmaId,
-    cursoId,
+    cidade,
     userId,
-    createdAt,
-    updatedAt,
-  }: ICreateAlunosDTO): Promise<void> {
+  }: ICreateAlunosDTO): Promise<Aluno> {
+    const alunoData = new Aluno();
     const dateNow = new Date();
 
-    await this.repository.aluno.create({
-      data: {
-        matricula,
-        name,
-        sexo,
-        cursoId,
-        turmaId,
-        userId,
-        situacao,
-        turno,
-        createdAt: createdAt || dateNow,
-        updatedAt: updatedAt || dateNow,
-      },
+    Object.assign(alunoData, {
+      cpf,
+      nome,
+      sexo,
+      cidade,
+      createdAt: dateNow,
+      updatedAt: dateNow,
+      userId,
     });
+    console.log(alunoData);
+
+    try {
+      const aluno = await this.repository.aluno.create({
+        data: { ...alunoData },
+      });
+
+      return aluno;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async findAlunoByMatricula(matricula: string): Promise<Aluno> {
-    const aluno = await this.repository.aluno.findUnique({
-      where: { matricula },
-    });
-
-    return aluno;
+    throw new Error(`Method not implemented. ${matricula}`);
   }
 
   async list(): Promise<Aluno[]> {
@@ -60,6 +61,15 @@ export class AlunosRepository implements IAlunosRepository {
 
     return alunos;
   }
+
+  async findAlunoByCpf(cpf: string): Promise<Aluno> {
+    const aluno = await this.repository.aluno.findUnique({
+      where: { cpf },
+    });
+
+    return aluno;
+  }
+  findAlunoByUserId(cpf: string): Promise<Aluno> {}
 
   async update({
     matricula,
@@ -80,9 +90,17 @@ export class AlunosRepository implements IAlunosRepository {
     });
   }
 
-  async delete(matricula: string): Promise<void> {
-    await this.repository.aluno.delete({
-      where: { matricula },
-    });
+  async delete({ cpf, userId }: IDeleteAlunoDTO): Promise<void> {
+    if (cpf) {
+      await this.repository.aluno.delete({
+        where: { cpf },
+      });
+    }
+
+    if (userId) {
+      await this.repository.aluno.delete({
+        where: { userId },
+      });
+    }
   }
 }

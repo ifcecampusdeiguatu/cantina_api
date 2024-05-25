@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm i --legacy-peer-deps
-# RUN npm i -g ts-node-dev
+RUN npm i -g ts-node-dev
 
 COPY . .
 

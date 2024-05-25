@@ -1,5 +1,8 @@
 type codeGeneratorData = string;
-export function codeGenerator(amountOfLetter = 2, amountOfNumber = 4): codeGeneratorData {
+export function codeGenerator(
+  amountOfLetter = 2,
+  amountOfNumber = 4
+): codeGeneratorData {
   let strings = "";
   let numbers = "";
 
@@ -13,5 +16,5 @@ export function codeGenerator(amountOfLetter = 2, amountOfNumber = 4): codeGener
     numbers += Math.floor(Math.random() * 10);
   }
 
-  return strings + numbers
+  return strings + numbers;
 }

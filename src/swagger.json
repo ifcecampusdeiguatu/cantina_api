@@ -12,14 +12,159 @@
     {
       "url": "http://localhost:3333/api/",
       "description": "Servidor de testes"
+    },
+    {
+      "url": "http://200.17.32.148:3333/api/",
+      "description": "Servidor de produção"
     }
   ],
   "paths": {
+    "/sessions": {
+      "post": {
+        "summary": "Autenticar usuário",
+        "description": "Autentica um usuário e retorna um token de acesso",
+        "tags": ["Autenticação"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "matricula": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["password"]
+              },
+              "examples": {
+                "aluno - email": {
+                  "value": {
+                    "email": "joao@gmail.com",
+                    "password": "JL.78945"
+                  }
+                },
+                "aluno - matricula": {
+                  "value": {
+                    "matricula": "20242078945",
+                    "password": "JL.78945"
+                  }
+                },
+                "servidor e funcionario": {
+                  "value": {
+                    "email": "paulo@gmail.com",
+                    "password": "admin123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Matricula, email ou senha inválidos"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "cpf": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "refreshToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Aluno com email": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "joao@gmail.com",
+                        "type": "aluno"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Aluno sem email": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "type": "aluno"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Servidor": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "paulo@gmail.com",
+                        "type": "servidor"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Funcionario": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "carlos@gmail.com",
+                        "type": "funcionario"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/accounts/alunos": {
       "post": {
         "summary": "Criar um aluno",
         "description": "Rota para criar um novo aluno",
         "tags": ["Alunos"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -29,11 +174,20 @@
                 "examples": {
                   "aluno": {
                     "value": {
-                      "matricula": "888888",
-                      "name": "Carlos Serafim",
-                      "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                      "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c",
-                      "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da"
+                      "cpf": "01234567890",
+                      "nome": "Carlos Serafim",
+                      "sexo": "M",
+                      "cidade": "Iguatu-CE",
+                      "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
+                      "matriculas": [
+                        {
+                          "matricula": "3333333333",
+                          "situacao": "matriculado",
+                          "turno": "integrado",
+                          "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
+                          "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                        }
+                      ]
                     }
                   }
                 }
@@ -41,11 +195,11 @@
             }
         },
         "responses": {
-          "400": {
-            "description": "Possíveis erros: aluno já foi cadastrado, usuário não existe, usuário não é um aluno ou usuário já está associado a outra conta."
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
           },
-          "404": {
-            "description": "Possíveis erros: turma não encontrado ou turma não encontrada."
+          "400": {
+            "description": "Possíveis erros: parâmetros insuficientes, matrícula pertence a outro aluno, aluno já foi cadastrado, usuário não existe, usuário não é um aluno ou usuário já está associado a outra conta."
           },
           "201":{
             "description": "Aluno foi criado com sucesso."
@@ -111,6 +265,9 @@
           }
         ],
         "responses": {
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
           "404": {
             "description": "Aluno não encontrado"
           },
@@ -713,23 +870,53 @@
       "Aluno": {
         "type": "object",
         "properties": {
+          "cpf": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "sexo": {
+            "type": "string"
+          },
+          "cidade": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "matriculas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Matrícula"
+            }
+          }
+        },
+        "required": ["cpf", "nome", "sexo", "userId", "matriculas"]
+      },
+      "Matrícula": {
+        "type": "object",
+        "properties": {
           "matricula": {
             "type": "string"
           },
-          "name": {
+          "situacao": {
             "type": "string"
           },
-          "turmaId": {
+          "turno": {
+            "type": "string"
+          },
+          "alunoCpf": { 
             "type": "string"
           },
           "cursoId": {
             "type": "string"
           },
-          "userId": {
+          "turmaId": {
             "type": "string"
           }
         },
-        "required": ["matricula", "name", "userId"]
+        "required": ["matricula"]
       },
       "Curso": {
         "type": "object",
@@ -766,6 +953,18 @@
           }
         },
         "required": ["name"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Usuário não autorizado"
       }
     }
   } 

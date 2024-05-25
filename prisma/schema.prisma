@@ -20,6 +20,12 @@ enum Status {
   lacked
 }
 
+enum StatusUser {
+  ativo
+  bloqueado
+  inativo
+}
+
 enum Turno {
   vespertino
   integral
@@ -69,6 +75,7 @@ model User {
   id          String        @id @default(uuid())
   email       String?       @unique @db.VarChar(50)
   password    String        @db.Char(60)
+  status      StatusUser    @default(ativo)
   type        Type          @default(aluno)
   createdAt   DateTime      @db.Timestamp(6)
   updatedAt   DateTime      @db.Timestamp(6)
@@ -82,23 +89,33 @@ model User {
 }
 
 model Aluno {
-  matricula String   @id
-  name      String   @db.VarChar(255)
-  sexo      String   @db.Char(1)
-  createdAt DateTime @map("created_at") @db.Timestamp(6)
-  updatedAt DateTime @map("updated_at") @db.Timestamp(6)
-  situacao  Situacao @default(matriculado) @map("situacao_matricula")
-  turno     Turno    @default(integral) @map("turno")
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @unique @map("user_id")
-  turma     Turma?   @relation(fields: [turmaId], references: [id])
-  turmaId   String?  @map("turma_id")
-  curso     Curso?   @relation(fields: [cursoId], references: [id])
-  cursoId   String?  @map("curso_id")
-  Cidade    Cidade?  @relation(fields: [cidadeId], references: [id])
-  cidadeId  String?
+  cpf        String      @id @db.VarChar(11)
+  nome       String      @db.VarChar(255)
+  sexo       String      @db.Char(1)
+  cidade     String?     @db.VarChar(100)
+  createdAt  DateTime    @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime    @map("updated_at") @db.Timestamp(6)
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String      @unique @map("user_id")
+  Matriculas Matricula[]
 
   @@map("alunos")
+}
+
+model Matricula {
+  matricula         String   @id @db.VarChar(14)
+  situacaoMatricula Situacao @default(matriculado) @map("situacao_matricula")
+  turno             Turno    @default(integral)
+  createdAt         DateTime @db.Timestamp(6)
+  updatedAt         DateTime @db.Timestamp(6)
+  alunoCpf          String   @map("aluno_cpf")
+  aluno             Aluno    @relation(fields: [alunoCpf], references: [cpf])
+  turmaId           String?  @map("turma_id")
+  turma             Turma?   @relation(fields: [turmaId], references: [id])
+  cursoId           String?  @map("curso_id")
+  curso             Curso?   @relation(fields: [cursoId], references: [id])
+
+  @@map("matriculas")
 }
 
 model Funcionario {
@@ -126,21 +143,21 @@ model Servidor {
 }
 
 model Turma {
-  id        String   @id @default(uuid())
-  name      String   @unique @db.VarChar()
-  createdAt DateTime @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
-  Aluno     Aluno[]
+  id        String      @id @default(uuid())
+  name      String      @unique @db.VarChar()
+  createdAt DateTime    @db.Timestamp(6)
+  updatedAt DateTime    @db.Timestamp(6)
+  Matricula Matricula[]
 
   @@map("turmas")
 }
 
 model Curso {
-  id        String   @id @default(uuid())
-  name      String   @unique @db.VarChar()
-  createdAt DateTime @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
-  Aluno     Aluno[]
+  id        String      @id @default(uuid())
+  name      String      @unique @db.VarChar()
+  createdAt DateTime    @db.Timestamp(6)
+  updatedAt DateTime    @db.Timestamp(6)
+  Matricula Matricula[]
 
   @@map("cursos")
 }
@@ -180,14 +197,6 @@ model Ingredient {
   dishes      Dish[]   @relation("DishToIngredient")
 
   @@map("ingredients")
-}
-
-model Cidade {
-  id    String  @id @default(uuid())
-  name  String  @db.VarChar(100)
-  Aluno Aluno[]
-
-  @@map("cidades")
 }
 
 model Local {

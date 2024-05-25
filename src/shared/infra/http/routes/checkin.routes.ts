@@ -9,7 +9,6 @@ import { ListCheckinsController } from "@modules/checkin/useCases/listCheckins/L
 import { UpdateStatusController } from "@modules/checkin/useCases/updateStatus/UpdateStatusController";
 
 import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
-// import { ensureServidor } from "../middlewares/ensureServidor";
 
 const createCheckinController = new CreateCheckinController();
 const listCheckinsController = new ListCheckinsController();

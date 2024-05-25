@@ -21,7 +21,7 @@ export async function ensureAuthenticate(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError("Token faltando");
+    throw new AppError("Token faltando", 401);
   }
 
   const token = authHeader.split(" ")[1];

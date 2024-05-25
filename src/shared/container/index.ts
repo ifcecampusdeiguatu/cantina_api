@@ -5,11 +5,13 @@ import "./providers";
 
 import { AlunosRepository } from "@modules/accounts/infra/prisma/repositories/AlunosRepository";
 import { FuncionariosRepository } from "@modules/accounts/infra/prisma/repositories/FuncionariosRepository";
+import { MatriculaRepository } from "@modules/accounts/infra/prisma/repositories/MatriculasRepository";
 import { ServidoresRepository } from "@modules/accounts/infra/prisma/repositories/ServidoresRepository";
 import { UsersRepository } from "@modules/accounts/infra/prisma/repositories/UsersRepository";
 import { UsersTokensRepository } from "@modules/accounts/infra/prisma/repositories/UsersTokensRepository";
 import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
 import { IFuncionariosRepository } from "@modules/accounts/repositories/IFuncionariosRepository";
+import { IMatriculasRepository } from "@modules/accounts/repositories/IMatriculasRepository";
 import { IServidoresRepository } from "@modules/accounts/repositories/IServidoresRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
@@ -33,6 +35,11 @@ import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepositor
 container.registerSingleton<IAlunosRepository>(
   "AlunosRepository",
   AlunosRepository
+);
+
+container.registerSingleton<IMatriculasRepository>(
+  "MatriculasRepository",
+  MatriculaRepository
 );
 
 container.registerSingleton<IFuncionariosRepository>(

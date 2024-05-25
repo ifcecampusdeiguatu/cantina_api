@@ -1,6 +1,7 @@
 export interface IUpdateAlunoDTO {
-  matricula: string;
-  name?: string;
-  turmaId?: string;
-  cursoId?: string;
+  userId: string;
+  cpf?: string;
+  nome?: string;
+  sexo?: string;
+  cidade?: string;
 }

@@ -1,24 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
 import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosRepository";
+import { IMatriculasRepository } from "@modules/accounts/repositories/IMatriculasRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUser } from "@modules/accounts/types";
 import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 import { AppError } from "@shared/errors/AppError";
 
-interface IRequest {
+type MatriculaData = {
   matricula: string;
-  name: string;
-  sexo: string;
+  situacao: "matriculado" | "concludente";
+  turno: "vespertino" | "integral" | "noturno" | "matutino";
   turmaId?: string;
   cursoId?: string;
+};
+
+interface IRequest {
+  cpf: string;
+  nome: string;
+  sexo: string;
   userId: string;
-  situacao: "matriculado" | "concludente";
-  createdAt?: Date;
-  updatedAt?: Date;
-  turno: "vespertino" | "integral" | "noturno" | "matutino";
-  cidadeId?: string;
+  cidade?: string;
+  matriculas: MatriculaData[];
 }
 
 @injectable()
@@ -31,29 +35,87 @@ export class CreateAlunosUseCase {
     @inject("CursosRepository")
     private cursosRepository: ICursosRepository,
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("MatriculasRepository")
+    private matriculaRepository: IMatriculasRepository
   ) {}
 
   async execute({
-    matricula,
+    cpf,
+    nome,
     sexo,
-    createdAt,
-    updatedAt,
-    turno,
-    situacao,
-    name,
+    cidade,
     userId,
-    turmaId,
-    cursoId,
+    matriculas,
   }: IRequest): Promise<void> {
-    const alunoAlreadyExists = await this.alunosRepository.findAlunoByMatricula(
-      matricula
-    );
+    const alunoAlreadyExists = await this.alunosRepository.findAlunoByCpf(cpf);
 
     if (alunoAlreadyExists) {
       throw new AppError("Aluno já foi cadastrado");
     }
 
+    await this.validateUserId(userId);
+
+    const matriculasData = await this.validateMatricula(matriculas, cpf);
+
+    await this.alunosRepository.create({
+      cpf,
+      nome,
+      sexo,
+      cidade,
+      userId,
+    });
+
+    await this.createMatriculas(matriculasData, cpf);
+  }
+
+  async createMatriculas(
+    matriculas: MatriculaData[],
+    alunoCpf: string
+  ): Promise<void> {
+    const promises = matriculas.map(async (matriculaData) => {
+      const curso = matriculaData.cursoId
+        ? await this.cursosRepository.findCursoById(matriculaData.cursoId)
+        : null;
+      const turma = matriculaData.turmaId
+        ? await this.turmasRepository.findTurmaById(matriculaData.turmaId)
+        : null;
+
+      return this.matriculaRepository.create({
+        matricula: matriculaData.matricula,
+        situacaoMatricula: matriculaData.situacao,
+        turno: matriculaData.turno,
+        alunoCpf,
+        turmaId: turma.id || null,
+        cursoId: curso.id || null,
+      });
+    });
+
+    await Promise.all(promises);
+  }
+
+  async validateMatricula(
+    matriculas: MatriculaData[],
+    userCpf: string
+  ): Promise<MatriculaData[]> {
+    const promises = matriculas.map(async (matriculaData) => {
+      const matricula = await this.matriculaRepository.findMatricula(
+        matriculaData.matricula
+      );
+
+      if (matricula && matricula.alunoCpf !== userCpf) {
+        throw new AppError("Matrícula pertence a outro aluno", 400);
+      }
+
+      return matriculaData;
+    });
+
+    const arrMatriculas = await Promise.all(promises);
+
+    return arrMatriculas.filter((matricula) => matricula !== null);
+  }
+
+  async validateUserId(userId: string): Promise<void> {
     const user: IUser = await this.usersRepository.findUserById(userId);
 
     if (!user) {
@@ -65,36 +127,7 @@ export class CreateAlunosUseCase {
     }
 
     if (user.aluno) {
-      throw new AppError("Usuário já está associado a outra conta");
+      throw new AppError("Usuário já está associado a um aluno");
     }
-
-    const curso = cursoId
-      ? await this.cursosRepository.findCursoById(cursoId)
-      : undefined;
-
-    const turma = turmaId
-      ? await this.turmasRepository.findTurmaById(turmaId)
-      : undefined;
-
-    if (curso === null) {
-      throw new AppError("Curso não encontrado", 404);
-    }
-
-    if (turma === null) {
-      throw new AppError("Turma não encontrada", 404);
-    }
-
-    await this.alunosRepository.create({
-      matricula,
-      sexo,
-      createdAt,
-      situacao,
-      turno,
-      updatedAt,
-      name,
-      userId,
-      turmaId,
-      cursoId,
-    });
   }
 }

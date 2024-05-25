@@ -17,6 +17,12 @@ export class DeleteAlunoUseCase {
       throw new AppError("Aluno não encontrado", 404);
     }
 
-    await this.alunosRepository.delete(matricula);
+    await this.alunosRepository.delete({
+      cpf: "6545656465",
+    });
+
+    await this.alunosRepository.delete({
+      userId: "6545656465",
+    });
   }
 }

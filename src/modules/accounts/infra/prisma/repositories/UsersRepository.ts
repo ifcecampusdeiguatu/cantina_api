@@ -48,16 +48,9 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findUserByEmail(email: string): Promise<User> {
-    try {
-      const user = await this.repository.user.findUnique({ where: { email } });
+    const user = await this.repository.user.findFirst({ where: { email } });
 
-      return user;
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        throw new AppError(error.message, 404);
-      }
-      throw new Error(error);
-    }
+    return user;
   }
 
   async findUserById(id: string): Promise<User> {
@@ -75,7 +68,7 @@ export class UsersRepository implements IUsersRepository {
     const user = await this.repository.user.findFirst({
       where: {
         aluno: {
-          matricula,
+          Matricula: { some: { matricula } },
         },
       },
     });

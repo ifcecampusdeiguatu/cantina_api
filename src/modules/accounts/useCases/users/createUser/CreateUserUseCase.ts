@@ -20,6 +20,8 @@ export class CreateUserUseCase {
   async execute(data: IRequest) {
     const user = await this.userRepository.findUserByEmail(data.email);
 
+    console.log(user);
+
     if (user) {
       throw new AppError("User already exists");
     }
