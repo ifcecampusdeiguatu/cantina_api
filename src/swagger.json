@@ -22,7 +22,7 @@
     "/sessions": {
       "post": {
         "summary": "Autenticar usuário",
-        "description": "Autentica um usuário e retorna um token de acesso",
+        "description": "Autentica um usuário e retorna um token de acesso JWT que deve ser passado no cabeçalho das as requisições que necessitam de autentificação. O token tem validade de 30 minutos e deve ser renovado com o refresh token.",
         "tags": ["Autenticação"],
         "requestBody": {
           "content": {
@@ -68,6 +68,147 @@
         "responses": {
           "400": {
             "description": "Matricula, email ou senha inválidos"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "cpf": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "refreshToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Aluno com email": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "joao@gmail.com",
+                        "type": "aluno"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Aluno sem email": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "type": "aluno"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Servidor": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "paulo@gmail.com",
+                        "type": "servidor"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  },
+                  "Funcionario": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c",
+                      "user": {
+                        "id": "0ede456c-191e-4568-953d-5c0c47d54db8",
+                        "email": "carlos@gmail.com",
+                        "type": "funcionario"
+                      },
+                      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE5MTkyMjUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.NzNLmIut-f8FIHrBQ5JWRKHubs92AB7I9oXLy4STGNM"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refreshToken": {
+      "post": {
+        "summary": "Renovar Token",
+        "description": "Recebe o refresh token pelo header, body ou query e renova o token de acesso retornando um novo token e um novo refresh token. O Refresh Token tem validade de 7 dias.",
+        "tags": ["Autenticação"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Refresh Token via Cabeçalho",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "token",
+            "description": "Refresh Token via Query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Token via Body": {
+                  "value": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2Vydmlzb3IuYWRtaW5AZW1haWwuY29tIiwidHlwZSI6InNlcnZpZG9yIn0sImlhdCI6MTcxNjYwMDI1MCwiZXhwIjoxNzE2NjAzODUwLCJzdWIiOiIwZWRlNDU2Yy0xOTFlLTQ1NjgtOTUzZC01YzBjNDdkNTRkYjgifQ.gvxM_t1BbPhy3rEasQf_BHL2CeRyyeCGwlJXHeLCv_c"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Refresh Token expirado, inválido ou ausente"
+          },
+          "404": {
+            "description": "Refresh Token não encontrado ou não existe"
           },
           "200": {
             "description": "Ok",

@@ -11,6 +11,10 @@ export class RefreshTokenController {
       request.headers["x-access-token"] ||
       request.query.token;
 
+    if (!refreshToken) {
+      return response.status(400).json({ error: "Token ausente" });
+    }
+
     const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
 
     try {
@@ -19,7 +23,9 @@ export class RefreshTokenController {
       return response.json(tokens);
     } catch (err) {
       if (err instanceof TokenExpiredError) {
-        return response.status(400).json({ error: "JWT expired" });
+        return response
+          .status(400)
+          .json({ error: "Token expirado ou inválido" });
       }
 
       return response.status(err.statusCode).json({ error: err.message });
