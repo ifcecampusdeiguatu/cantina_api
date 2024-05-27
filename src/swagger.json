@@ -157,7 +157,7 @@
         }
       }
     },
-    "/refreshToken": {
+    "/refresh-token": {
       "post": {
         "summary": "Renovar Token",
         "description": "Recebe o refresh token pelo header, body ou query e renova o token de acesso retornando um novo token e um novo refresh token. O Refresh Token tem validade de 7 dias.",
@@ -206,6 +206,9 @@
         "responses": {
           "400": {
             "description": "Refresh Token expirado, inválido ou ausente"
+          },
+          "401": {
+            "description": "Assinatura inválida"
           },
           "404": {
             "description": "Refresh Token não encontrado ou não existe"

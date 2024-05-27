@@ -1,17 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
 
 import auth from "@config/auth";
 import { AppError } from "@shared/errors/AppError";
-
-interface IPayload {
-  sub: string;
-  user: {
-    email: string;
-    type: "aluno" | "servidor" | "funcionario";
-    matricula?: string;
-  };
-}
+import { verifyToken } from "@utils/verifyToken";
 
 export async function ensureAuthenticate(
   request: Request,
@@ -26,18 +17,14 @@ export async function ensureAuthenticate(
 
   const token = authHeader.split(" ")[1];
 
-  try {
-    const { sub: userId, user } = verify(token, auth.secret_token) as IPayload;
+  const { userId, user } = verifyToken(token, auth.secret_token);
 
-    request.user = {
-      id: userId,
-      type: user.type,
-    };
+  request.user = {
+    id: userId,
+    type: user.type,
+  };
 
-    next();
-  } catch (err) {
-    throw new AppError("Token inválido", 401);
-  }
+  next();
 
   return null;
 }

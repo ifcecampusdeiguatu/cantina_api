@@ -82,7 +82,7 @@ export class AlunosRepository implements IAlunosRepository {
         matricula,
       },
       data: {
-        name,
+        nome,
         cursoId,
         turmaId,
         updatedAt: new Date(),

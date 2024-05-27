@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { ICreateUserRefreshTokenDTO } from "@modules/accounts/dtos/usersTokens/ICreateUserRefreshTokenDTO";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
-import { PrismaClient, User, UsersTokens } from "@prisma/client";
+import { PrismaClient, UsersTokens } from "@prisma/client";
 import { IPrismaService } from "@shared/container/services/prisma/IPrismaService";
 
 @injectable()
@@ -38,8 +38,8 @@ export class UsersTokensRepository implements IUsersTokensRepository {
         refreshToken,
       },
       include: {
-        user: true
-      }
+        user: true,
+      },
     });
 
     return userToken;
@@ -51,5 +51,19 @@ export class UsersTokensRepository implements IUsersTokensRepository {
         id,
       },
     });
+  }
+
+  async deleteTokensByUserId(userId: string): Promise<boolean> {
+    try {
+      await this.repository.usersTokens.deleteMany({
+        where: {
+          userId,
+        },
+      });
+
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }

@@ -1,23 +1,15 @@
-import { sign, verify } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import auth from "@config/auth";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
+import { verifyToken } from "@utils/verifyToken";
 
 interface ITokens {
   token: string;
   refreshToken: string;
-}
-
-interface IPayload {
-  sub: string;
-  user: {
-    email: string;
-    type: "aluno" | "servidor" | "funcionario";
-    matricula?: string;
-  };
 }
 
 @injectable()
@@ -30,10 +22,10 @@ export class RefreshTokenUseCase {
   ) {}
 
   async execute(refreshToken: string): Promise<ITokens> {
-    const { sub: userId, user } = verify(
+    const { userId, user } = verifyToken(
       refreshToken,
       auth.secret_refresh_token
-    ) as IPayload;
+    );
 
     const userToken =
       await this.usersTokensRepository.findByUserIdAndRefreshToken({
@@ -47,9 +39,7 @@ export class RefreshTokenUseCase {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const tokenData = user.matricula
-      ? { email: user.email, type: user.type, matricula: user.matricula }
-      : { email: user.email, type: user.type };
+    const tokenData = { id: user.id, email: user.email, type: user.type };
 
     const token = sign({ user: { ...tokenData } }, auth.secret_token, {
       subject: userToken.userId,

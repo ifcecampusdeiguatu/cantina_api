@@ -1,4 +1,4 @@
-import { User, UsersTokens } from "@prisma/client";
+import { UsersTokens } from "@prisma/client";
 
 import { ICreateUserRefreshTokenDTO } from "../dtos/usersTokens/ICreateUserRefreshTokenDTO";
 import { IFindByUserIdAndRefreshTokenDTO } from "../dtos/usersTokens/IFindByUserIdAndRefreshTokenDTO";
@@ -14,4 +14,5 @@ export interface IUsersTokensRepository {
     refreshToken,
   }: IFindByUserIdAndRefreshTokenDTO): Promise<UsersTokens>;
   deleteById(id: string): Promise<void>;
+  deleteTokensByUserId(userId: string): Promise<boolean>;
 }
