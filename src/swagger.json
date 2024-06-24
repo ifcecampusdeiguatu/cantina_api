@@ -605,21 +605,21 @@
       }, 
       "delete": {
         "summary": "Delete aluno",
-        "description": "Rota para deletar um aluno pela matrícula.",
+        "description": "Rota para deleta o aluno pelo **CPF** e todas as suas matrículas.",
         "tags": ["Alunos"],
         "security": [
           {"bearerAuth": []}
         ],
          "parameters": [
           {
-            "name": "matricula",
+            "name": "CPF",
             "in": "path",
-            "description": "Matrícula do aluno",
+            "description": "CPF do aluno",
             "required": true,
             "schema": {
               "type": "string"
             },
-            "example": "88888888"
+            "example": "11122233300"
           }
         ],
         "responses": {

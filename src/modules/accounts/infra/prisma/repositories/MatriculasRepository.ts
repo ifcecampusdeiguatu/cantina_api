@@ -18,7 +18,7 @@ export class MatriculaRepository implements IMatriculasRepository {
   ) {
     this.repository = prisma.getConnection();
   }
-
+  
   async create({
     matricula,
     situacaoMatricula,
@@ -28,7 +28,7 @@ export class MatriculaRepository implements IMatriculasRepository {
     cursoId,
   }: ICreateMatriculaDTO): Promise<Matricula> {
     const matriculaCreated = new Matricula();
-
+    
     Object.assign(matriculaCreated, {
       matricula,
       situacaoMatricula,
@@ -39,17 +39,17 @@ export class MatriculaRepository implements IMatriculasRepository {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
+    
     await this.repository.matricula.create({
       data: { ...matriculaCreated },
     });
-
+    
     return matriculaCreated;
   }
-
+  
   async list(): Promise<Matricula[]> {
     const matriculas = await this.repository.matricula.findMany();
-
+    
     return matriculas;
   }
 
@@ -75,25 +75,29 @@ export class MatriculaRepository implements IMatriculasRepository {
         createdAt: new Date(),
       },
     });
-
+    
     return matriculaUpdated;
   }
-
+  
   async delete(matricula: string): Promise<void> {
     await this.repository.matricula.delete({ where: { matricula } });
   }
-
+  
   async findMatriculasByAlunoCpf(cpf: string): Promise<Matricula> {
     const matricula = await this.repository.matricula.findFirst({
       where: { alunoCpf: cpf },
     });
-
+    
     return matricula;
   }
-
+  
   async findMatricula(matricula: string): Promise<Matricula> {
     return this.repository.matricula.findFirst({
       where: { matricula },
     });
+  }
+
+  async deleteAllRecordsByCpf(cpf: string): Promise<void> {
+    await this.repository.matricula.deleteMany({ where: { alunoCpf: cpf }});
   }
 }

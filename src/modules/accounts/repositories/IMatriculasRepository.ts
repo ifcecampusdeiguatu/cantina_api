@@ -24,4 +24,5 @@ export interface IMatriculasRepository {
   delete(matricula: string): Promise<void>;
   findMatriculasByAlunoCpf(cpf: string): Promise<Matricula>;
   findMatricula(matricula: string): Promise<Matricula>;
+  deleteAllRecordsByCpf(cpf: string): Promise<void>;
 }

@@ -49,7 +49,7 @@ export class CreateAlunosUseCase {
     userId,
     matriculas,
   }: IRequest): Promise<void> {
-    const alunoAlreadyExists = await this.alunosRepository.findAlunoByCpf(cpf);
+    const alunoAlreadyExists = await this.alunosRepository.findAlunoByCpf({cpf, matriculas: false});
 
     if (alunoAlreadyExists) {
       throw new AppError("Aluno já foi cadastrado");

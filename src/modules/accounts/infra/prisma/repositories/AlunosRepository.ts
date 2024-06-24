@@ -95,16 +95,21 @@ export class AlunosRepository implements IAlunosRepository {
   }
 
   async delete({ cpf, userId }: IDeleteAlunoDTO): Promise<void> {
-    if (cpf) {
-      await this.repository.aluno.delete({
-        where: { cpf },
-      });
-    }
+    try {
 
-    if (userId) {
-      await this.repository.aluno.delete({
-        where: { userId },
-      });
+      if (cpf) {
+        await this.repository.aluno.delete({
+          where: { cpf },
+        });
+      }
+      
+      if (userId) {
+        await this.repository.aluno.delete({
+          where: { userId },
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }
+  } 
 }
