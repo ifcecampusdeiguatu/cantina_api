@@ -7,6 +7,7 @@ import { IUser } from "@modules/accounts/types";
 import { ICursosRepository } from "@modules/cursos/repositories/ICursosRepository";
 import { ITurmasRepository } from "@modules/turmas/repositories/ITurmasRepository";
 import { AppError } from "@shared/errors/AppError";
+import { Turno } from "@prisma/client";
 
 type MatriculaData = {
   matricula: string;
@@ -66,7 +67,12 @@ export class CreateAlunosUseCase {
       userId,
     });
 
-    await this.createMatriculas(matriculasData, cpf);
+    try {
+      await this.createMatriculas(matriculasData, cpf);
+    } catch (error) {
+      console.log(error);
+      throw new AppError("Erro ao criar matrículas", 500);
+    }
   }
 
   async createMatriculas(
@@ -79,15 +85,15 @@ export class CreateAlunosUseCase {
         : null;
       const turma = matriculaData.turmaId
         ? await this.turmasRepository.findTurmaById(matriculaData.turmaId)
-        : null;
+        : null; 
 
       return this.matriculaRepository.create({
         matricula: matriculaData.matricula,
         situacaoMatricula: matriculaData.situacao,
-        turno: matriculaData.turno,
+        turno: ["vespertino", "integral", "noturno", "matutino"].includes(matriculaData.turno) ? matriculaData.turno : undefined,
         alunoCpf,
-        turmaId: turma.id || null,
-        cursoId: curso.id || null,
+        turmaId: turma?.id || undefined,
+        cursoId: curso?.id || undefined,
       });
     });
 

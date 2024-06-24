@@ -367,22 +367,56 @@
                 },
                 "example": [
                   {
-                    "matricula": "3333333333",
-                    "name": "Fonseca",
-                    "createdAt": "2023-07-06T14:03:39.916Z",
-                    "updatedAt": "2023-07-06T14:03:39.916Z",
-                    "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cpf": "01234567891",
+                    "nome": "Abner Peixeira",
+                    "sexo": "M",
+                    "cidade": null,
+                    "createdAt": "2024-06-20T19:57:32.464Z",
+                    "updatedAt": "2024-06-20T19:57:32.464Z",
+                    "userId": "73a70cec-98fd-4038-885f-211a07e4bae4",
+                    "Matricula": [
+                      {
+                        "matricula": "33333387378945",
+                        "situacaoMatricula": "matriculado",
+                        "turno": "integral",
+                        "createdAt": "2024-06-20T19:57:32.472Z",
+                        "updatedAt": "2024-06-20T19:57:32.472Z",
+                        "alunoCpf": "01234567891",
+                        "turmaId": null,
+                        "cursoId": null
+                      }
+                    ]
                   },
                   {
-                    "matricula": "88888888",
-                    "name": "Teló",
-                    "createdAt": "2023-07-06T14:03:39.916Z",
-                    "updatedAt": "2023-07-06T14:03:39.916Z",
-                    "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                    "cpf": "07471215321",
+                    "nome": "Carlos Serafim",
+                    "sexo": "M",
+                    "cidade": "Iguatu-CE",
+                    "createdAt": "2024-05-25T01:45:16.981Z",
+                    "updatedAt": "2024-05-25T01:45:16.981Z",
+                    "userId": "2e732844-5f9f-460e-8522-7f93dd3255c7",
+                    "Matricula": [
+                      {
+                        "matricula": "123456",
+                        "situacaoMatricula": "matriculado",
+                        "turno": "integral",
+                        "createdAt": "2024-05-25T01:45:16.986Z",
+                        "updatedAt": "2024-05-25T01:45:16.986Z",
+                        "alunoCpf": "07471215321",
+                        "turmaId": null,
+                        "cursoId": null
+                      },
+                      {
+                        "matricula": "888888",
+                        "situacaoMatricula": "matriculado",
+                        "turno": "integral",
+                        "createdAt": "2024-05-25T01:45:16.986Z",
+                        "updatedAt": "2024-05-25T01:45:16.986Z",
+                        "alunoCpf": "07471215321",
+                        "turmaId": null,
+                        "cursoId": null
+                      }
+                    ]
                   }
                 ]
               }

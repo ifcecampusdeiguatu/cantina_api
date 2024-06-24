@@ -8,7 +8,7 @@ export interface IAlunosRepository {
   findAlunoByMatricula(matricula: string): Promise<Aluno>;
   findAlunoByCpf(cpf: string): Promise<Aluno>;
   findAlunoByUserId(cpf: string): Promise<Aluno>;
-  list(): Promise<Aluno[]>;
+  list({order, limit, matriculas}:{order?: "asc" | "desc", limit?: number, matriculas?: boolean}): Promise<Aluno[]>;
   update({ userId, cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void>;
   delete({ cpf, userId }: IDeleteAlunoDTO): Promise<void>;
 }

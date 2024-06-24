@@ -10,8 +10,12 @@ export class ListAlunosUseCase {
   ) {}
 
   async execute() {
-    const alunos = await this.alunosRepository.list();
+    try{
+    const alunos = await this.alunosRepository.list({});
 
     return alunos;
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

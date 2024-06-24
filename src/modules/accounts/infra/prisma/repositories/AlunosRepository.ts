@@ -56,8 +56,13 @@ export class AlunosRepository implements IAlunosRepository {
     throw new Error(`Method not implemented. ${matricula}`);
   }
 
-  async list(): Promise<Aluno[]> {
-    const alunos = await this.repository.aluno.findMany();
+  async list({order='asc', limit=-1, matriculas=true}:{order?: "asc" | "desc", limit?: number, matriculas?: boolean}): Promise<Aluno[]> {
+    const alunos = await this.repository.aluno.findMany(
+      { 
+        take: limit > 0 ? limit : undefined,
+        include: {Matricula: matriculas},
+        orderBy: { nome: order },
+      });
 
     return alunos;
   }
@@ -69,22 +74,19 @@ export class AlunosRepository implements IAlunosRepository {
 
     return aluno;
   }
-  findAlunoByUserId(cpf: string): Promise<Aluno> {}
+  findAlunoByUserId(cpf: string): Promise<Aluno> {
+    throw new Error("Method not implemented.");
+  }
 
-  async update({
-    matricula,
-    name,
-    cursoId,
-    turmaId,
-  }: IUpdateAlunoDTO): Promise<void> {
+  async update({ userId, cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void> {
     await this.repository.aluno.update({
       where: {
-        matricula,
+        cpf,
       },
       data: {
         nome,
-        cursoId,
-        turmaId,
+        cidade,
+        sexo,
         updatedAt: new Date(),
       },
     });

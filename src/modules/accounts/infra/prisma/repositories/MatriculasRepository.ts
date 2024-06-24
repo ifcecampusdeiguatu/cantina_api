@@ -72,6 +72,7 @@ export class MatriculaRepository implements IMatriculasRepository {
         turmaId,
         cursoId,
         updatedAt: new Date(),
+        createdAt: new Date(),
       },
     });
 
