@@ -354,6 +354,9 @@
         "summary": "Listar alunos",
         "description": "Rota para listar todos os alunos cadastrados.",
         "tags": ["Alunos"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "responses": {
           "200": {
             "description": "Ok",
@@ -425,21 +428,34 @@
         }
       }
     },
-    "/accounts/alunos/{matricula}":{
+    "/accounts/alunos/{cpf}":{
       "get": {
         "summary": "Buscar um aluno",
-        "description": "Rota para buscar um aluno pela matrícula",
+        "description": "A rota recebe o CPF nos parâmetros da requisição e retorna os dados do aluno correspondente junto com as suas matrículas. Também é possível definir se o retorno conterá as matrículas ou não através da query 'matriculas'. Por padrão, o retorno contém as matrículas.",
         "tags": ["Alunos"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "parameters": [
           {
-            "name": "matricula",
+            "name": "cpf",
             "in": "path",
-            "description": "Matrícula do aluno",
+            "description": "CPF do aluno",
             "required": true,
             "schema": {
               "type": "string"
             },
-            "example": "88888888"
+            "example": "00011122214"
+          },
+          {
+            "name": "matriculas",
+            "in": "query",
+            "description": "Recebe 'true' ou 'false' para definir se o retorno conterá as matrículas ou não. 'true' por padrão.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -453,19 +469,59 @@
             "description": "Ok",
             "content": {
               "application/json": {
+
                 "items": {
                   "schema": {
                     "$ref": "#/components/schemas/Aluno"
                   }
                 },
-                "example": {
-                    "matricula": "3333333333",
-                    "name": "Fonseca",
-                    "createdAt": "2023-07-06T14:03:39.916Z",
-                    "updatedAt": "2023-07-06T14:03:39.916Z",
-                    "userId": "54764e0e-3b9e-434d-a8ff-61ad920b25da",
-                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
+                "examples": {
+                  "Com matrículas": {
+                    "description": "Retorna o aluno com as matrículas.",
+                    "value": {
+                      "cpf": "07471215321",
+                      "nome": "Carlos Serafim",
+                      "sexo": "M",
+                      "cidade": "Iguatu-CE",
+                      "createdAt": "2024-05-25T01:45:16.981Z",
+                      "updatedAt": "2024-05-25T01:45:16.981Z",
+                      "userId": "2e732844-5f9f-460e-8522-7f93dd3255c7",
+                      "Matricula": [
+                        {
+                          "matricula": "123456",
+                          "situacaoMatricula": "matriculado",
+                          "turno": "integral",
+                          "createdAt": "2024-05-25T01:45:16.986Z",
+                          "updatedAt": "2024-05-25T01:45:16.986Z",
+                          "alunoCpf": "07471215321",
+                          "turmaId": null,
+                          "cursoId": null
+                        },
+                        {
+                          "matricula": "888888",
+                          "situacaoMatricula": "matriculado",
+                          "turno": "integral",
+                          "createdAt": "2024-05-25T01:45:16.986Z",
+                          "updatedAt": "2024-05-25T01:45:16.986Z",
+                          "alunoCpf": "07471215321",
+                          "turmaId": null,
+                          "cursoId": null
+                        }
+                      ]
+                    }
+                  },
+                  "Sem matrículas": {
+                    "description": "Retorna o aluno sem as matrículas.",
+                    "value": {
+                      "cpf": "07471215321",
+                      "nome": "Carlos Serafim",
+                      "sexo": "M",
+                      "cidade": "Iguatu-CE",
+                      "createdAt": "2024-05-25T01:45:16.981Z",
+                      "updatedAt": "2024-05-25T01:45:16.981Z",
+                      "userId": "2e732844-5f9f-460e-8522-7f93dd3255c7"
+                    }
+                  }
                 }
               }
             }
@@ -476,6 +532,9 @@
         "summary": "Atualizar aluno",
         "description": "Rota para atualizar dados do aluno",
         "tags": ["Alunos"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "parameters": [
           {
             "name": "matricula",
@@ -548,6 +607,9 @@
         "summary": "Delete aluno",
         "description": "Rota para deletar um aluno pela matrícula.",
         "tags": ["Alunos"],
+        "security": [
+          {"bearerAuth": []}
+        ],
          "parameters": [
           {
             "name": "matricula",

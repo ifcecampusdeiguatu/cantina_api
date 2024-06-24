@@ -67,13 +67,15 @@ export class AlunosRepository implements IAlunosRepository {
     return alunos;
   }
 
-  async findAlunoByCpf(cpf: string): Promise<Aluno> {
+  async findAlunoByCpf({cpf, matriculas}:{cpf: string, matriculas: boolean}): Promise<Aluno> {
     const aluno = await this.repository.aluno.findUnique({
       where: { cpf },
+      include: { Matricula: matriculas },
     });
 
     return aluno;
   }
+
   findAlunoByUserId(cpf: string): Promise<Aluno> {
     throw new Error("Method not implemented.");
   }

@@ -11,8 +11,8 @@ export class GetAlunosUseCase {
     private alunosRepository: IAlunosRepository
   ) {}
 
-  async execute(matricula: string): Promise<Aluno> {
-    const aluno = await this.alunosRepository.findAlunoByMatricula(matricula);
+  async execute({cpf, matriculas=true}: {cpf: string, matriculas: boolean}): Promise<Aluno> {
+    const aluno = await this.alunosRepository.findAlunoByCpf({cpf, matriculas});
 
     if (!aluno) {
       throw new AppError("Aluno não encontrado", 404);

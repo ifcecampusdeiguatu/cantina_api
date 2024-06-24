@@ -45,9 +45,9 @@ accountsRoutes.use(ensureAuthenticate, ensureServidor);
 
 accountsRoutes.post("/alunos", createAlunosController.handle);
 accountsRoutes.get("/alunos", listAlunosController.handle);
-accountsRoutes.get("/alunos/:matricula", getAlunosController.handle);
-accountsRoutes.put("/alunos/:matricula", updateAlunoController.handle);
-accountsRoutes.delete("/alunos/:matricula", deleteAlunoController.handle);
+accountsRoutes.get("/alunos/:cpf", getAlunosController.handle);
+accountsRoutes.put("/alunos/:cpf", updateAlunoController.handle);
+accountsRoutes.delete("/alunos/:cpf", deleteAlunoController.handle);
 
 const upload = multer({
   dest: "./tmp",
