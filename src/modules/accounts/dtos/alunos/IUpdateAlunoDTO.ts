@@ -1,6 +1,5 @@
 export interface IUpdateAlunoDTO {
-  userId: string;
-  cpf?: string;
+  cpf: string;
   nome?: string;
   sexo?: string;
   cidade?: string;

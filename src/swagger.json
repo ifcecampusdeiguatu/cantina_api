@@ -530,21 +530,21 @@
       },
       "put": {
         "summary": "Atualizar aluno",
-        "description": "Rota para atualizar dados do aluno",
+        "description": "A rota recebe o **CPF** nos parâmetros da requisição e os dados do aluno a serem atualizados no corpo da requisição. É possível alterar o **nome**, o **sexo** e a **cidade**.",
         "tags": ["Alunos"],
         "security": [
           {"bearerAuth": []}
         ],
         "parameters": [
           {
-            "name": "matricula",
+            "name": "CPF",
             "in": "path",
-            "description": "Matrícula do aluno",
+            "description": "CPF do aluno",
             "required": true,
             "schema": {
               "type": "string"
             },
-            "example": "88888888"
+            "example": "11122233300"
           }
         ],
         "requestBody": {
@@ -568,35 +568,20 @@
                     
                   }
               },
-              "examples": {
-                "Alterar dados": {
-                  "description": "Alterar nome, turma e turma referente ao aluno.",
-                  "value": {
-                    "name": "João Carlos",
-                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
-                  }
-                },
-                "Alterar nome": {
-                  "description": "Alterar apenas o nome do aluno.",
-                  "value": {
-                    "name": "João Carlos"
-                  }                  
-                },
-                "Alterar turma e/ou turma": {
-                  "description": "Alterar turma e/ou turma referente ao aluno.",
-                  "value": {
-                    "cursoId": "3231819e-c237-4d19-a55a-15cdee38b41a",
-                    "turmaId": "f725d928-02ee-40f4-b207-276a8dcdf30c"
-                  }
-                }
+              "example": {
+                "nome": "Carlos Serafim",
+                "cidade": "Iguatu-CE",
+                "sexo": "M"
               }
             }
           }
         },
         "responses": {
           "404": {
-            "description": "Aluno não encontrado"
+            "description": "Aluno não encontrado."
+          },
+          "422": {
+            "description": "Argumentos inválidos."
           },
           "204": {
             "description": "Os dados foram atualizados com sucesso."

@@ -9,6 +9,6 @@ export interface IAlunosRepository {
   findAlunoByCpf({cpf, matriculas}: {cpf: string, matriculas: boolean}): Promise<Aluno>;
   findAlunoByUserId(cpf: string): Promise<Aluno>;
   list({order, limit, matriculas}:{order?: "asc" | "desc", limit?: number, matriculas?: boolean}): Promise<Aluno[]>;
-  update({ userId, cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void>;
+  update({ cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void>;
   delete({ cpf, userId }: IDeleteAlunoDTO): Promise<void>;
 }

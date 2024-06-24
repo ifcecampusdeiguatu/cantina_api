@@ -4,10 +4,10 @@ import { IAlunosRepository } from "@modules/accounts/repositories/IAlunosReposit
 import { AppError } from "@shared/errors/AppError";
 
 export interface IRequest {
-  matricula: string;
-  name?: string;
-  turmaId?: string;
-  cursoId?: string;
+  cpf: string;
+  nome?: string;
+  cidade?: string;
+  sexo?: string;
 }
 
 @injectable()
@@ -17,13 +17,19 @@ export class UpdateAlunoUseCase {
     private alunosRepository: IAlunosRepository
   ) {}
 
-  async execute({ matricula, name, cursoId, turmaId }: IRequest) {
-    const aluno = await this.alunosRepository.findAlunoByMatricula(matricula);
+  async execute({ cpf, nome, cidade, sexo }: IRequest) {
+    const aluno = await this.alunosRepository.findAlunoByCpf({ cpf, matriculas: false });
 
     if (!aluno) {
       throw new AppError("Aluno não encontrado", 404);
     }
 
-    await this.alunosRepository.update({ matricula, name, cursoId, turmaId });
+    const sexValidation = ["M", "F"].includes(sexo.toUpperCase());
+
+    if (!sexValidation) {
+      throw new AppError("Argumento inválido", 422);
+    }
+
+    await this.alunosRepository.update({ cpf, nome, cidade, sexo });
   }
 }

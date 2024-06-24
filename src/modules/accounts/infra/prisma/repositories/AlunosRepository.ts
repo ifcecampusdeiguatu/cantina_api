@@ -80,7 +80,7 @@ export class AlunosRepository implements IAlunosRepository {
     throw new Error("Method not implemented.");
   }
 
-  async update({ userId, cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void> {
+  async update({ cpf, cidade, nome, sexo }: IUpdateAlunoDTO): Promise<void> {
     await this.repository.aluno.update({
       where: {
         cpf,

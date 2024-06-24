@@ -5,13 +5,14 @@ import { UpdateAlunoUseCase } from "./UpdateAlunoUseCase";
 
 export class UpdateAlunoController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { matricula } = request.params;
-    const { name, cursoId, turmaId } = request.body;
+    const { cpf } = request.params;
+
+    const { nome, cidade, sexo } = request.body;
 
     const updateAlunoUseCase = container.resolve(UpdateAlunoUseCase);
 
     try {
-      await updateAlunoUseCase.execute({ matricula, name, cursoId, turmaId });
+      await updateAlunoUseCase.execute({ cpf, nome, cidade, sexo});
 
       return response.status(204).send();
     } catch (err) {
